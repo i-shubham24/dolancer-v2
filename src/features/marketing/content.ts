@@ -11,14 +11,12 @@ export interface Category {
 }
 
 export const CATEGORIES: Category[] = [
-  { name: "Writing & Content", blurb: "Articles, editing, technical writing, product content and copy." },
-  { name: "Design", blurb: "Brand identity, UI and UX, presentations, illustration and print." },
-  { name: "Creative & Media", blurb: "Video, motion, audio, photo retouching and social assets." },
-  { name: "IT & Software", blurb: "Web development, apps, scripts, APIs, QA and integrations." },
-  { name: "AI Agents & Automations", blurb: "Workflow automation, integrations, data processing and AI pipelines." },
-  { name: "Marketing", blurb: "SEO, paid media, social, email and content strategy." },
-  { name: "Research & Business", blurb: "Market research, competitor analysis, business plans and data work." },
-  { name: "Something Else", blurb: "Tell us what you need. A coordinator will categorise it internally." },
+  { name: "Words & storytelling", blurb: "Articles, copy, scripts and research." },
+  { name: "Visual & brand design", blurb: "Logos, identities, layouts and interfaces." },
+  { name: "Audio, video & motion", blurb: "Editing, animation, voiceover and sound." },
+  { name: "Code & engineering", blurb: "Websites, apps, automations and integrations." },
+  { name: "Security & systems", blurb: "Audits, testing, hardening and compliance." },
+  { name: "Research, data & strategy", blurb: "Analysis, reports, research and planning." },
 ];
 
 export interface Step {

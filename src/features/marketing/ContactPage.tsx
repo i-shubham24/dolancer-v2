@@ -1,139 +1,131 @@
 import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
-import { Mail, Clock, Scale, LifeBuoy } from "lucide-react";
-import { StitchBadge, StitchCard, StitchSection } from "@/components/stitch/StitchPrimitives";
-import { Button } from "@/components/ui/button";
+import { EnvelopeSimple, Clock, Scales, Lifebuoy } from "@phosphor-icons/react";
 import { useAuth } from "@/providers/AuthProvider";
 import { CONTACT } from "./content";
 import { ContactForm } from "./ContactForm";
-import { MicroFloaties } from "./MicroFloaties";
+import { PageBackdrop } from "./cine/PageBackdrop";
 
-/**
- * Contact.
- *
- * The form routes by who is asking: a signed-in doer opens a real support ticket
- * attached to their account, and a visitor composes a mail they keep a copy of.
- * Neither path posts into a void. See ContactForm for why that matters.
- */
 export function ContactPage() {
   const { session } = useAuth();
   const reduceMotion = useReducedMotion();
 
   return (
-    <div className="fresh-page fresh-contact-page">
-      <StitchSection className="fresh-hero fresh-editorial-hero fresh-contact-hero">
-        <MicroFloaties zone="contact-hero" />
-      <div className="fresh-container fresh-contact-hero-grid">
-        <div className="relative z-10">
-          <StitchBadge>We are here to help</StitchBadge>
-          <motion.h1 initial={reduceMotion ? false : { opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65 }} className="mt-5 max-w-2xl">
-            Talk to <span className="fresh-highlight fresh-underline fresh-underline-pink">a person.</span>
-          </motion.h1>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">
+    <div className="bg-bone">
+      <div className="fresh-container relative pt-[130px] md:pt-[150px]">
+        <PageBackdrop word="TALK" dark={false} />
+        <div className="flex items-center justify-between border-y-2 border-ink py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-2">
+          <span>Support desk</span>
+          <span>Every message answered</span>
+        </div>
+
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65 }}
+          className="max-w-3xl py-10 md:py-14"
+        >
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-2">Contact</p>
+          <h1 className="mt-4 font-display text-[clamp(2.6rem,6vw,4.8rem)] font-extrabold leading-[0.98] tracking-[-0.02em] text-ink">
+            Talk to a person.
+          </h1>
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-2">
             Questions about payments, verification, a project you are on, or your account.
             Someone answers every one of them.
           </p>
-        </div>
-        <motion.div
-          className="fresh-contact-scene"
-          initial={reduceMotion ? false : { opacity: 0, y: 18, rotate: 2 }}
-          animate={reduceMotion ? undefined : { opacity: 1, y: 0, rotate: 0 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          aria-hidden="true"
-        >
-          <div className="fresh-contact-scene-main">
-            <Mail />
-            <strong>We read every message.</strong>
-            <span>Support that feels human.</span>
+          <div className="mt-8 grid border-t-2 border-ink sm:grid-cols-3">
+            <a href={`mailto:${CONTACT.email}`} className="group border-b border-ink/25 py-4 sm:border-b-0 sm:pr-6">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-3">01 / Support</p>
+              <p className="mt-1 break-all text-sm font-extrabold text-ink underline decoration-primary decoration-2 underline-offset-4">
+                {CONTACT.email}
+              </p>
+            </a>
+            <a href={`mailto:${CONTACT.grievanceEmail}`} className="border-b border-ink/25 py-4 sm:border-b-0 sm:border-l sm:border-ink/25 sm:px-6">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-3">02 / Grievance</p>
+              <p className="mt-1 break-all text-sm font-extrabold text-ink underline decoration-primary decoration-2 underline-offset-4">
+                {CONTACT.grievanceEmail}
+              </p>
+            </a>
+            <div className="py-4 sm:px-6 sm:border-l sm:border-ink/25">
+              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-3">03 / Hours</p>
+              <p className="mt-1 text-sm font-extrabold text-ink">{CONTACT.hours}</p>
+            </div>
           </div>
-          <div className="fresh-contact-scene-float fresh-contact-scene-float-one">Reply within a day</div>
-          <div className="fresh-contact-scene-float fresh-contact-scene-float-two"><LifeBuoy /> Here to help</div>
-          <span className="fresh-contact-scene-dot fresh-contact-scene-dot-one" />
-          <span className="fresh-contact-scene-dot fresh-contact-scene-dot-two" />
         </motion.div>
       </div>
-      </StitchSection>
 
-      <div className="fresh-container fresh-contact-content relative grid gap-6 pb-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:pb-24">
-        <MicroFloaties zone="contact-form" />
-        <div className="fresh-contact-form-wrap">
-          <ContactForm />
-        </div>
+      <div className="border-t-2 border-ink bg-bone">
+        <div className="fresh-container grid gap-8 py-14 md:py-20 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <ContactForm />
+          </div>
 
-        <div className="fresh-contact-aside space-y-4">
-          {session ? (
-            <StitchCard className="bg-success-bg p-6">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface">
-                <LifeBuoy className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <h2 className="mt-4 text-lg font-extrabold tracking-[-0.03em]">
-                Already have tickets open?
-              </h2>
-              <p className="mt-2 text-sm leading-relaxed text-ink/75">
-                Everything you have raised, and every reply, lives in one place.
+          <div className="space-y-5 lg:col-span-5">
+            {session ? (
+              <div className="border-2 border-ink bg-field p-6">
+                <Lifebuoy className="h-6 w-6 text-primary" aria-hidden="true" />
+                <h2 className="mt-3 font-display text-xl font-extrabold text-ink">Already have tickets open?</h2>
+                <p className="mt-2 text-sm leading-relaxed text-ink-2">
+                  Everything you have raised, and every reply, lives in one place.
+                </p>
+                <Link to="/tickets" className="mt-4 inline-block bg-ink px-5 py-2.5 text-sm font-extrabold text-bone">
+                  Go to support
+                </Link>
+              </div>
+            ) : (
+              <div className="border-2 border-ink bg-field p-6">
+                <EnvelopeSimple className="h-6 w-6 text-primary" aria-hidden="true" />
+                <h2 className="mt-3 font-display text-xl font-extrabold text-ink">Or email directly</h2>
+                <a
+                  href={`mailto:${CONTACT.email}`}
+                  className="mt-2 inline-block break-all text-sm font-bold text-ink underline decoration-primary decoration-2 underline-offset-4"
+                >
+                  {CONTACT.email}
+                </a>
+              </div>
+            )}
+
+            <div className="border-2 border-ink bg-field p-6">
+              <Clock className="h-6 w-6 text-primary" aria-hidden="true" />
+              <h2 className="mt-3 font-display text-xl font-extrabold text-ink">When we are around</h2>
+              <p className="mt-2 text-sm font-bold text-ink">{CONTACT.hours}</p>
+              <p className="mt-3 text-xs leading-relaxed text-ink-2">
+                Anything about a project you are actively working on is best raised with your
+                supervisor in that project thread. They will see it soonest.
               </p>
-              <Button asChild variant="dark" className="mt-4">
-                <Link to="/tickets">Go to support</Link>
-              </Button>
-            </StitchCard>
-          ) : (
-            <StitchCard className="bg-highlight-light p-6">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-surface">
-                <Mail className="h-5 w-5" aria-hidden="true" />
-              </span>
-              <h2 className="mt-4 text-lg font-extrabold tracking-[-0.03em]">Or email directly</h2>
+            </div>
+
+            <div className="border-2 border-ink bg-field p-6">
+              <Scales className="h-6 w-6 text-primary" aria-hidden="true" />
+              <h2 className="mt-3 font-display text-xl font-extrabold text-ink">Grievances</h2>
+              <p className="mt-2 text-sm leading-relaxed text-ink-2">
+                If something has not been resolved through support, or concerns how your data has
+                been handled, our grievance officer is reachable directly.
+              </p>
               <a
-                href={`mailto:${CONTACT.email}`}
-                className="mt-2 inline-block break-all text-sm font-bold underline decoration-2 underline-offset-2"
+                href={`mailto:${CONTACT.grievanceEmail}`}
+                className="mt-3 inline-block break-all text-sm font-bold text-ink underline decoration-primary decoration-2 underline-offset-4"
               >
-                {CONTACT.email}
+                {CONTACT.grievanceEmail}
               </a>
-            </StitchCard>
-          )}
-
-          <StitchCard className="bg-highlight-light p-6">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-highlight text-inverse">
-              <Clock className="h-5 w-5" aria-hidden="true" />
-            </span>
-            <h2 className="mt-4 text-lg font-extrabold tracking-[-0.03em]">When we are around</h2>
-            <p className="mt-2 text-sm font-bold">{CONTACT.hours}</p>
-            <p className="mt-3 text-xs leading-relaxed text-ink-2">
-              Anything about a project you are actively working on is best raised with your
-              supervisor in that project's thread. They will see it soonest.
-            </p>
-          </StitchCard>
-
-          <StitchCard className="stitch-card-pink p-6">
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-highlight text-inverse">
-              <Scale className="h-5 w-5" aria-hidden="true" />
-            </span>
-            <h2 className="mt-4 text-lg font-extrabold tracking-[-0.03em]">Grievances</h2>
-            <p className="mt-2 text-sm leading-relaxed text-ink-2">
-              If something has not been resolved through support, or concerns how your data has
-              been handled, our grievance officer is reachable directly.
-            </p>
-            <a
-              href={`mailto:${CONTACT.grievanceEmail}`}
-              className="mt-3 inline-flex items-center gap-2 break-all text-sm font-bold text-highlight underline decoration-2 underline-offset-2"
-            >
-              <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-              {CONTACT.grievanceEmail}
-            </a>
-          </StitchCard>
+            </div>
+          </div>
         </div>
       </div>
 
-      <p className="fresh-container mt-10 pb-10 text-xs leading-relaxed text-ink-muted">
-        Dolancer is operated by {CONTACT.company}, {CONTACT.jurisdiction}. See our{" "}
-        <Link to="/legal/terms" className="underline underline-offset-2 hover:text-ink">
-          terms
-        </Link>{" "}
-        and{" "}
-        <Link to="/legal/privacy" className="underline underline-offset-2 hover:text-ink">
-          privacy policy
-        </Link>
-        .
-      </p>
+      <div className="border-t border-ink/25 bg-bone">
+        <p className="fresh-container py-8 text-xs leading-relaxed text-ink-3">
+          Dolancer is operated by {CONTACT.company}, {CONTACT.jurisdiction}. See our{" "}
+          <Link to="/legal/terms" className="underline underline-offset-2">
+            terms
+          </Link>{" "}
+          and{" "}
+          <Link to="/legal/privacy" className="underline underline-offset-2">
+            privacy policy
+          </Link>
+          .
+        </p>
+      </div>
     </div>
   );
 }

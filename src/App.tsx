@@ -11,10 +11,11 @@ export default function App() {
   const palette = useUiStore((state) => state.palette);
 
   useLayoutEffect(() => {
-    document.documentElement.dataset.palette = palette;
+    const key = PALETTE_META[palette] ? palette : "forest";
+    document.documentElement.dataset.palette = key;
     // Keep the mobile browser chrome in the same theme colour.
     const meta = document.querySelector('meta[name="theme-color"]');
-    const primary = PALETTE_META[palette]?.swatches[0];
+    const primary = PALETTE_META[key]?.swatches[0];
     if (meta && primary) meta.setAttribute("content", primary);
   }, [palette]);
 

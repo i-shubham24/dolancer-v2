@@ -152,7 +152,13 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Back to main site
           </Link>
-          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-ink">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-line-card bg-surface-2 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-widest text-primary">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden="true" />
+            {stage === "email" ? "Step 1 of 2 · Email" : "Step 2 of 2 · Code"}
+          </span>
+        </div>
+        <div className="mb-2">
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-ink">
             {isSignUp ? "Create your account" : "Welcome back"}
           </h1>
         </div>
@@ -191,7 +197,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
         </div>
       </div>
 
-      <StitchCard className="relative p-5 sm:p-7">
+      <StitchCard className="relative rounded-[2rem] border-line-card p-5 shadow-sm sm:p-7">
       {stage === "email" ? (
         <form onSubmit={handleSendCode} className="space-y-4">
           <div className="space-y-2">
@@ -205,21 +211,21 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               placeholder="you@example.com"
-              className="min-h-[44px]"
+              className="min-h-[44px] rounded-none border-2 border-ink bg-field shadow-none"
             />
           </div>
           {isSignUp ? (
             <div className="space-y-3 rounded-2xl border border-line-card bg-surface-2 p-4 text-sm text-ink-2">
               <label className="flex items-start gap-3">
-                <input type="checkbox" checked={ageConfirmed} onChange={(event) => setAgeConfirmed(event.target.checked)} className="mt-0.5 h-4 w-4 accent-highlight" />
+                <input type="checkbox" checked={ageConfirmed} onChange={(event) => setAgeConfirmed(event.target.checked)} className="mt-0.5 h-4 w-4 accent-[#10A969]" />
                 <span>I confirm that I am 18 years of age or older.</span>
               </label>
               <label className="flex items-start gap-3">
-                <input type="checkbox" checked={termsAccepted} onChange={(event) => setTermsAccepted(event.target.checked)} className="mt-0.5 h-4 w-4 accent-highlight" />
+                <input type="checkbox" checked={termsAccepted} onChange={(event) => setTermsAccepted(event.target.checked)} className="mt-0.5 h-4 w-4 accent-[#10A969]" />
                 <span>I agree to the <Link to="/legal/terms" className="font-bold underline underline-offset-2">Terms of Service</Link>.</span>
               </label>
               <label className="flex items-start gap-3">
-                <input type="checkbox" checked={privacyAccepted} onChange={(event) => setPrivacyAccepted(event.target.checked)} className="mt-0.5 h-4 w-4 accent-highlight" />
+                <input type="checkbox" checked={privacyAccepted} onChange={(event) => setPrivacyAccepted(event.target.checked)} className="mt-0.5 h-4 w-4 accent-[#10A969]" />
                 <span>I have read the <Link to="/legal/privacy" className="font-bold underline underline-offset-2">Privacy Policy</Link>.</span>
               </label>
             </div>
@@ -260,7 +266,7 @@ export function SignInPage({ mode }: { mode: "sign-in" | "sign-up" }) {
               value={code}
               onChange={(event) => setCode(event.target.value)}
               placeholder="123456"
-              className="text-center text-2xl font-extrabold tracking-[0.4em] min-h-[56px]"
+              className="text-center text-2xl font-extrabold tracking-[0.4em] min-h-[56px] rounded-none border-2 border-ink bg-field shadow-none"
             />
             <p className="text-xs text-ink-muted">Sent to {email}. It expires shortly.</p>
           </div>

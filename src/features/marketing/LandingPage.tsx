@@ -1,92 +1,82 @@
-import { HowItWorksSteps } from "./HowItWorksSteps";
-import { FeaturesGrid } from "./FeaturesGrid";
-import { PayoutExplainer } from "./PayoutExplainer";
-import { TestimonialsSection } from "./TestimonialsSection";
-import { CtaBanner } from "./CtaBanner";
-import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
-import { BackdropLetter } from "./BackdropLetter";
-import { MicroFloaties } from "./MicroFloaties";
-import { CurvedLoop } from "./CurvedLoop";
-import { HeroMarquee } from "./HeroMarquee";
-import { NetworkNumbers } from "./NetworkNumbers";
-import { DisciplineOfferCards } from "./DisciplineOfferCards";
-import { HeroSpectacular } from "./HeroSpectacular";
+import { CineHero } from "./cine/CineHero";
+import { SectionTicker } from "./SectionTicker";
+import { DisciplineJourney } from "./cine/DisciplineJourney";
+import { OfferStage } from "./cine/OfferStage";
+import { StickySteps } from "./StickySteps";
+import { FitQuiz } from "./cine/FitQuiz";
+import { StatsBand, ReceiptsBand, useRefreshOnLoad } from "./cine/ProofBands";
+import { SafetySection } from "./SafetySection";
+import { FinalCta } from "./FinalCta";
+
+const WORKFLOW_STEPS = [
+  {
+    n: "01",
+    title: "Join and create a profile",
+    body: "Tell us what you can do, and how to reach you.",
+  },
+  {
+    n: "02",
+    title: "Find a suitable opportunity",
+    body: "Get briefs that match your profile. No names, no bidding.",
+  },
+  {
+    n: "03",
+    title: "Review requirements and terms",
+    body: "Read the full brief first. Scope, pay, deadline, everything.",
+  },
+  {
+    n: "04",
+    title: "Complete the work safely",
+    body: "Do the work as briefed. Your supervisor is one message away.",
+  },
+  {
+    n: "05",
+    title: "Submit work and track status",
+    body: "Submit your work and track it all the way to payout.",
+  },
+  {
+    n: "06",
+    title: "Receive payout per disclosed terms",
+    body: "The payout lands per the brief terms.",
+  },
+];
+
+const WORKFLOW_IMAGES = [
+  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
+];
 
 export function LandingPage() {
+  useRefreshOnLoad();
   return (
-    <div className="fresh-page !overflow-visible -mt-[120px]">
-      {/* Redesigned Hero Section aligning with HowItWorks / About theme */}
-      <HeroSpectacular />
-
-      {/* Straight auto-running ribbon flush below the hero */}
-      <HeroMarquee />
-
-      {/* Disciplines - D */}
-      <div className="relative overflow-clip">
-        <BackdropLetter letter="D" position="left" offsetY="15%" />
-        <DisciplineOfferCards />
-      </div>
-
-      <div className="relative overflow-clip mt-8 md:mt-12" aria-hidden="true">
-        <CurvedLoop
-          marqueeText="CONTENT ✦ DESIGN ✦ CREATIVE & MEDIA ✦ IT & SOFTWARE ✦ AI AGENTS & AUTOMATIONS ✦ MARKETING ✦ RESEARCH & BUSINESS ✦ SOMETHING ELSE ✦ "
-          speed={1.6}
-          curveAmount={-170}
-          direction="right"
-          interactive
-        />
-      </div>
-
-      {/* 3 Steps: How Dolancers Earn - O */}
-      <div className="relative overflow-clip">
-        <BackdropLetter letter="O" position="right" offsetY="16%" />
-        <MicroFloaties zone="how" />
-        <HowItWorksSteps />
-      </div>
-
-      {/* Why Dolancers Love It / 8 Benefits - L (dark section, light ink) */}
-      <div className="relative overflow-clip">
-        <BackdropLetter letter="L" position="left" offsetY="20%" tone="light" />
-        <MicroFloaties zone="features" />
-        <FeaturesGrid />
-      </div>
-
-      {/* Follow-every-payout - A */}
-      <div className="fresh-section py-20 bg-[#0b0f19] relative overflow-clip">
-        <BackdropLetter letter="A" position="right" offsetY="12%" tone="light" />
-        <MicroFloaties zone="payout" />
-        <div className="fresh-container">
-          <PayoutExplainer />
+    <div className="bg-[#0A1912]">
+      <CineHero />
+      <SectionTicker />
+      <DisciplineJourney />
+      <OfferStage />
+      <section id="workflow" className="border-t border-white/15 bg-[#0A1912] py-16 md:py-24 scroll-mt-16">
+        <div className="mx-auto max-w-[1400px] px-4 md:px-8">
+          <StickySteps
+            dark
+            kicker="How Dolancer works"
+            title="From join to payout, in the open."
+            steps={WORKFLOW_STEPS}
+            images={WORKFLOW_IMAGES}
+          />
         </div>
-        <CurvedSectionDivider variant="wave" position="bottom" fillColor="fill-[var(--color-canvas)]" showBorderLine={false} showAccentGlow={false} />
+      </section>
+      <FitQuiz />
+      <StatsBand />
+      <ReceiptsBand />
+      <div className="bg-bone">
+        <SafetySection />
       </div>
-      
-
-      {/* Live Network Numbers - N (light wash below the dark pair) */}
-      <div className="relative overflow-clip">
-        <BackdropLetter letter="N" position="left" offsetY="20%" />
-        <MicroFloaties zone="numbers" />
-        <NetworkNumbers />
-      </div>
-
-      {/* Real Dolancers, Real Earnings Testimonials - C (original position) */}
-      <div className="relative overflow-clip">
-        <BackdropLetter letter="C" position="right" />
-        <MicroFloaties zone="testimonials" />
-        <TestimonialsSection />
-      </div>
-
-      {/* High-Converting CTA Banner - E (original position) */}
-      <div className="relative overflow-clip">
-        <BackdropLetter letter="E" position="left" offsetY="35%" className="-ml-2" />
-        <MicroFloaties zone="cta" />
-        <CtaBanner />
-      </div>
-
-      {/* R - right, just before footer to complete DOLANCER */}
-      <div className="relative -mt-10 h-44 overflow-clip md:h-56" aria-hidden="true">
-        <BackdropLetter letter="R" position="right" className="text-[10rem] md:text-[13rem]" />
-        <MicroFloaties zone="prefooter" />
+      <div className="bg-bone">
+        <FinalCta />
       </div>
     </div>
   );

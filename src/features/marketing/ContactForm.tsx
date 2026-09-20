@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Send, Mail, Check } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { PaperPlaneTilt, EnvelopeSimple, Check } from "@phosphor-icons/react";
 import { Input, Textarea, Label } from "@/components/ui/input";
 import { useAuth } from "@/providers/AuthProvider";
 import { toUserError } from "@/lib/user-error";
@@ -76,7 +75,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-[1.75rem] border border-line-card bg-surface p-6 shadow-soft-lg lg:p-8"
+      className="border-2 border-ink bg-field p-6 lg:p-8"
     >
       <h2 className="text-2xl font-extrabold tracking-[-0.03em]">Send us a message</h2>
       <p className="mt-2 text-sm leading-relaxed text-ink-2">
@@ -96,6 +95,7 @@ export function ContactForm() {
                 onChange={(event) => setName(event.target.value)}
                 autoComplete="name"
                 required
+                className="rounded-none border-2 border-ink bg-field shadow-none"
               />
             </div>
             <div className="space-y-2">
@@ -107,11 +107,12 @@ export function ContactForm() {
                 onChange={(event) => setEmail(event.target.value)}
                 autoComplete="email"
                 required
+                className="rounded-none border-2 border-ink bg-field shadow-none"
               />
             </div>
           </div>
         ) : (
-          <p className="rounded-xl border border-line-card bg-subtle px-3 py-2.5 text-xs text-ink-2">
+          <p className="border border-ink/25 bg-bone px-3 py-2.5 text-xs text-ink-2">
             Sending as {user?.email}
           </p>
         )}
@@ -122,7 +123,7 @@ export function ContactForm() {
             id="contact-category"
             value={category}
             onChange={(event) => setCategory(event.target.value)}
-            className="w-full rounded-xl border border-line-card bg-surface px-4 py-[11px] text-sm font-medium shadow-soft-sm outline-none transition-all focus:border-highlight focus:ring-4 focus:ring-highlight/15"
+            className="w-full border-2 border-ink bg-field px-4 py-[11px] text-sm font-medium outline-none focus:border-primary"
           >
             {TICKET_CATEGORIES.map((option) => (
               <option key={option.id} value={option.id}>
@@ -134,27 +135,29 @@ export function ContactForm() {
 
         <div className="space-y-2">
           <Label htmlFor="contact-subject">Subject</Label>
-          <Input
-            id="contact-subject"
-            value={subject}
-            maxLength={120}
-            onChange={(event) => setSubject(event.target.value)}
-            placeholder="A short summary"
-            required
-          />
+            <Input
+              id="contact-subject"
+              value={subject}
+              maxLength={120}
+              onChange={(event) => setSubject(event.target.value)}
+              placeholder="A short summary"
+              required
+              className="rounded-none border-2 border-ink bg-field shadow-none"
+            />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="contact-message">Message</Label>
-          <Textarea
-            id="contact-message"
-            rows={5}
-            value={message}
-            maxLength={4000}
-            onChange={(event) => setMessage(event.target.value)}
-            placeholder="Tell us what is going on."
-            required
-          />
+            <Textarea
+              id="contact-message"
+              rows={5}
+              value={message}
+              maxLength={4000}
+              onChange={(event) => setMessage(event.target.value)}
+              placeholder="Tell us what is going on."
+              required
+              className="rounded-none border-2 border-ink bg-field shadow-none"
+            />
         </div>
 
         <div aria-hidden="true" className="absolute -left-[9999px] top-0 h-px w-px overflow-hidden">
@@ -173,7 +176,7 @@ export function ContactForm() {
       {handedOff ? (
         <div
           role="status"
-          className="mt-5 flex items-start gap-2.5 rounded-xl border border-success-ink/20 bg-success-bg px-4 py-3"
+          className="mt-5 flex items-start gap-2.5 border border-success-ink/30 bg-success-bg px-4 py-3"
         >
           <Check className="mt-0.5 h-4 w-4 shrink-0 text-success-ink" aria-hidden="true" />
           <p className="text-xs font-semibold leading-snug text-success-ink">
@@ -183,18 +186,22 @@ export function ContactForm() {
         </div>
       ) : null}
 
-      <Button type="submit" size="lg" className="mt-6 w-full" disabled={!ready || ticket.isPending}>
+      <button
+        type="submit"
+        disabled={!ready || ticket.isPending}
+        className="mt-6 flex w-full items-center justify-center gap-2 bg-primary px-6 py-3.5 text-sm font-extrabold text-white active:scale-[0.99] disabled:opacity-50"
+      >
         {session ? (
-          <Send className="h-4 w-4" aria-hidden="true" />
+          <PaperPlaneTilt className="h-4 w-4" aria-hidden="true" />
         ) : (
-          <Mail className="h-4 w-4" aria-hidden="true" />
+          <EnvelopeSimple className="h-4 w-4" aria-hidden="true" />
         )}
         {ticket.isPending
           ? "Opening ticket..."
           : session
             ? "Open a support ticket"
             : "Compose the message"}
-      </Button>
+      </button>
 
       {!ready ? (
         <p className="mt-3 text-center text-xs text-ink-muted">

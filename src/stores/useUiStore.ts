@@ -2,17 +2,17 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { WorkBucket } from "@/types/domain";
 
-export const PALETTES = ["cobalt"] as const;
+export const PALETTES = ["forest"] as const;
 export type Palette = (typeof PALETTES)[number];
 
 export const PALETTE_META: Record<
   Palette,
   { label: string; description: string; swatches: [string, string] }
 > = {
-  cobalt: {
-    label: "Cobalt",
-    description: "Dolancer signature blue",
-    swatches: ["#5A7CFF", "#14b8a6"],
+  forest: {
+    label: "Forest",
+    description: "Dolancer signature green",
+    swatches: ["#10A969", "#0A1912"],
   },
 };
 
@@ -41,7 +41,7 @@ export const useUiStore = create<UiState>()(
       sidebarCollapsed: false,
       mobileNavOpen: false,
       workBucket: "active",
-      palette: "cobalt",
+      palette: "forest",
       dismissedPrompts: [],
       toggleSidebar: () => set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
       setMobileNavOpen: (mobileNavOpen) => set({ mobileNavOpen }),

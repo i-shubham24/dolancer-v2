@@ -1,158 +1,138 @@
+import { useLayoutEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Mail } from "lucide-react";
+import { EnvelopeSimple, ArrowUp } from "@phosphor-icons/react";
 import { CONTACT } from "./content";
-import { cn } from "@/lib/cn";
+import { ensureGsap, gsap, motionOK } from "@/lib/scrollMotion";
 
-const MOSAIC: { col: number; row: number; solid: boolean }[] = [
-  { col: 2, row: 0, solid: true },
-  { col: 5, row: 0, solid: false },
-  { col: 9, row: 0, solid: true },
-  { col: 14, row: 0, solid: false },
-  { col: 18, row: 0, solid: true },
-  { col: 23, row: 0, solid: false },
-  { col: 1, row: 1, solid: false },
-  { col: 4, row: 1, solid: true },
-  { col: 7, row: 1, solid: true },
-  { col: 11, row: 1, solid: false },
-  { col: 13, row: 1, solid: true },
-  { col: 17, row: 1, solid: true },
-  { col: 20, row: 1, solid: false },
-  { col: 22, row: 1, solid: true },
-  { col: 25, row: 1, solid: false },
+const COLS: { head: string; links: { to: string; label: string }[] }[] = [
+  {
+    head: "Work",
+    links: [
+      { to: "/how-it-works", label: "How it works" },
+      { to: "/sign-up", label: "Start earning" },
+      { to: "/sign-in", label: "Sign in" },
+    ],
+  },
+  {
+    head: "Studio",
+    links: [
+      { to: "/about", label: "About" },
+      { to: "/contact", label: "Contact" },
+      { to: "/tickets", label: "Report work" },
+    ],
+  },
+  {
+    head: "Legal",
+    links: [
+      { to: "/legal/terms", label: "Terms of service" },
+      { to: "/legal/privacy", label: "Privacy policy" },
+      { to: "/contact", label: "Grievances" },
+    ],
+  },
 ];
-
-function Mosaic() {
-  return (
-    <div aria-hidden="true" className="relative h-[72px] overflow-hidden -mb-px">
-      {MOSAIC.map((tile) => (
-        <span
-          key={`${tile.col}-${tile.row}`}
-          className={cn(
-            "absolute h-9 w-9 rounded-[3px]",
-            tile.solid ? "bg-[#0b0f19]" : "bg-[#0b0f19]/25"
-          )}
-          style={{
-            left: `${tile.col * 4}%`,
-            bottom: tile.row === 0 ? 36 : 0,
-          }}
-        />
-      ))}
-      <span className="absolute inset-x-0 bottom-0 h-9 bg-[#0b0f19]" />
-    </div>
-  );
-}
 
 export function SiteFooter() {
   const currentYear = new Date().getFullYear();
+  const scopeRef = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    ensureGsap();
+    if (!motionOK()) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        "[data-footer-wm]",
+        { xPercent: 5 },
+        {
+          xPercent: -9,
+          ease: "none",
+          scrollTrigger: { trigger: scopeRef.current, start: "top bottom", end: "bottom top", scrub: true },
+        }
+      );
+    }, scopeRef);
+    return () => ctx.revert();
+  }, []);
+
+  function toTop() {
+    window.scrollTo({ top: 0, behavior: motionOK() ? "smooth" : "auto" });
+  }
 
   return (
-    <footer className="relative text-slate-300">
-      <Mosaic />
-      {/* Main Dark Footer Content */}
-      <div className="bg-[#0b0f19] relative overflow-hidden">
-        {/* Ambient Top Glow */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[160px] bg-gradient-to-b from-secondary/15 via-highlight/10 to-transparent blur-3xl pointer-events-none" />
-
-        <div className="mx-auto max-w-7xl px-6 pt-10 pb-8 sm:px-8 sm:pt-14 sm:pb-10 relative z-10">
-        {/* Top 3-Column Area */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 sm:gap-8">
-          {/* Column 1: Brand & Email (Left) */}
-          <div className="md:col-span-6 lg:col-span-6 space-y-4">
-            <Link to="/" className="inline-flex items-center gap-2.5 group">
-              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-secondary text-white shadow-soft-xs font-bold text-base">
-                D
-              </span>
-              <span className="text-xl font-bold tracking-tight text-white font-display">
-                Dolancer<span className="text-[#f97316]">.</span>
-              </span>
-            </Link>
-
-            <p className="text-sm text-slate-300 leading-snug">
-              Skilled work, briefed properly,
-              <br />
-              <span className="text-[#f97316] font-semibold">paid reliably.</span>
-            </p>
-
-            <div>
+    <footer ref={scopeRef} className="relative overflow-clip bg-[#060D0A]">
+      <div className="border-t border-white/15">
+        <div className="mx-auto max-w-[1400px] px-4 pt-12 md:px-8 md:pt-16">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
+            <div className="md:col-span-5">
+              <Link to="/" className="inline-flex items-center gap-2.5" aria-label="Dolancer home">
+                <span className="grid h-9 w-9 place-items-center bg-[#10A969] font-display text-lg font-extrabold text-[#06281a]">
+                  D
+                </span>
+                <span className="font-display text-2xl font-extrabold tracking-[-0.02em] text-[#F3EFE3]">
+                  Dolancer<span className="text-[#10A969]">.</span>
+                </span>
+              </Link>
+              <p className="mt-4 max-w-[32ch] text-sm leading-relaxed text-white/60">
+                Skilled work, briefed properly, paid reliably. Supervisor-routed briefs with terms
+                visible before commitment.
+              </p>
               <a
                 href={`mailto:${CONTACT.email}`}
-                className="mt-2 inline-flex items-center gap-2 rounded-full border border-slate-700/80 bg-slate-900/40 px-3.5 py-1.5 text-xs font-semibold text-slate-200 hover:border-slate-500 hover:text-white transition-colors"
+                className="mt-5 inline-flex items-center gap-2 border border-white/20 px-4 py-2.5 text-xs font-bold text-white/80"
               >
-                <Mail className="h-3.5 w-3.5 text-slate-400" />
+                <EnvelopeSimple className="h-4 w-4 text-[#7FE3A6]" aria-hidden="true" />
                 <span>{CONTACT.email}</span>
               </a>
             </div>
+
+            {COLS.map((col) => (
+              <nav key={col.head} className="md:col-span-2" aria-label={col.head}>
+                <h2 className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7FE3A6]">{col.head}</h2>
+                <ul className="mt-4 space-y-2.5">
+                  {col.links.map((l) => (
+                    <li key={l.label}>
+                      <Link to={l.to} className="text-sm font-semibold text-white/70">
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ))}
+
+            <div className="md:col-span-1 flex md:justify-end items-start">
+              <button
+                type="button"
+                onClick={toTop}
+                aria-label="Back to top"
+                className="grid h-11 w-11 place-items-center border border-white/25 text-[#F3EFE3] active:scale-[0.96]"
+              >
+                <ArrowUp className="h-5 w-5" aria-hidden="true" />
+              </button>
+            </div>
           </div>
 
-          {/* Column 2: PRODUCT */}
-          <div className="md:col-span-3 lg:col-span-3">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 font-display">
-              PRODUCT
-            </h4>
-            <ul className="space-y-2.5 text-sm font-medium text-slate-300">
-              <li>
-                <Link to="/how-it-works" className="hover:text-white transition-colors">
-                  How it works
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="hover:text-white transition-colors">
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-white transition-colors">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link to="/sign-up" className="hover:text-white transition-colors">
-                  Start earning
-                </Link>
-              </li>
-            </ul>
+          <div aria-hidden="true" className="select-none overflow-hidden pt-8">
+            <span
+              data-footer-wm
+              className="block whitespace-nowrap font-display font-extrabold leading-[0.85] tracking-[-0.02em]"
+              style={{
+                fontSize: "clamp(4rem,17vw,15rem)",
+                color: "transparent",
+                WebkitTextStroke: "1.5px rgba(243,239,227,0.22)",
+              }}
+            >
+              DOLANCER
+            </span>
           </div>
 
-          {/* Column 3: LEGAL */}
-          <div className="md:col-span-3 lg:col-span-3">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4 font-display">
-              LEGAL
-            </h4>
-            <ul className="space-y-2.5 text-sm font-medium text-slate-300">
-              <li>
-                <Link to="/legal/terms" className="hover:text-white transition-colors">
-                  Terms of service
-                </Link>
-              </li>
-              <li>
-                <Link to="/legal/privacy" className="hover:text-white transition-colors">
-                  Privacy policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="hover:text-white transition-colors">
-                  Grievances
-                </Link>
-              </li>
-            </ul>
+          <div className="flex flex-col gap-2 border-t border-white/15 py-5 font-mono text-[11px] uppercase tracking-[0.14em] text-white/40 sm:flex-row sm:items-center sm:justify-between">
+            <p>
+              Operated by {CONTACT.company}, {CONTACT.jurisdiction}
+            </p>
+            <p>
+              © {currentYear} · Support {CONTACT.hours}
+            </p>
           </div>
         </div>
-
-        {/* Soft Organic Divider Removed */}
-
-        {/* Giant Watermark Typography matching reference screenshot */}
-        <div className="pt-6 sm:pt-10 pb-4 select-none pointer-events-none text-left px-4 sm:px-8 relative z-0">
-          <span className="text-[12.5vw] sm:text-[90px] md:text-[120px] lg:text-[140px] font-extrabold tracking-tight text-[#141d30] leading-tight block font-display">
-            Dolancer
-          </span>
-        </div>
-
-        {/* Bottom Row */}
-        <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2.5 text-xs text-slate-500 font-medium">
-          <p>Operated by {CONTACT.company}, {CONTACT.jurisdiction}.</p>
-          <p>© {currentYear} {CONTACT.company}. Support {CONTACT.hours}.</p>
-        </div>
-      </div>
       </div>
     </footer>
   );

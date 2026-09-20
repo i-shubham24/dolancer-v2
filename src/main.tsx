@@ -5,11 +5,11 @@ import "./index.css";
 
 // Sync the persisted palette BEFORE first paint so the loader (and every
 // palette-driven surface) renders in the right theme immediately instead of
-// flashing cobalt blue and switching after mount.
+// flashing forest green and switching after mount.
 try {
   const raw = localStorage.getItem("dolancer.ui");
   const palette = raw ? (JSON.parse(raw) as { state?: { palette?: string } }).state?.palette : undefined;
-  if (palette === "cobalt" || palette === "violet" || palette === "mint" || palette === "sunset") {
+  if (palette === "forest") {
     document.documentElement.dataset.palette = palette;
   }
 } catch {

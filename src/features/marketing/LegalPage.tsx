@@ -8,6 +8,7 @@ import { cn } from "@/lib/cn";
 import { Skeleton, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
 import { CONTACT } from "./content";
+import { PageBackdrop } from "./cine/PageBackdrop";
 
 type LegalKind = "terms" | "privacy";
 
@@ -204,33 +205,50 @@ export function LegalPage() {
   const document = useQuery({ queryKey: ["legal", resolved], queryFn: () => fetchLegalDocument(resolved) });
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-16 lg:px-6 lg:py-20">
-      <nav className="mb-8 flex gap-2" aria-label="Legal documents">
-        {(["terms", "privacy"] as const).map((option) => (
-          <Link key={option} to={`/legal/${option}`} className={cn("rounded-full border border-line-card px-4 py-2 text-sm font-extrabold transition-all duration-[120ms]", option === resolved ? "bg-accent shadow-soft-sm" : "bg-surface hover:shadow-soft-sm")}>
-            {option === "terms" ? "Terms of service" : "Privacy policy"}
-          </Link>
-        ))}
-      </nav>
+    <div className="bg-bone">
+      <div className="mx-auto w-full max-w-3xl px-4 pb-16 pt-[130px] md:pt-[150px] lg:px-6 relative">
+        <PageBackdrop word="RECORD" dark={false} />
+        <div className="flex items-center justify-between border-y-2 border-ink py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-2">
+          <span>Legal record</span>
+          <span>Rev 2.6</span>
+        </div>
+        <nav className="mt-8 flex gap-2" aria-label="Legal documents">
+          {(["terms", "privacy"] as const).map((option) => (
+            <Link
+              key={option}
+              to={`/legal/${option}`}
+              aria-current={option === resolved ? "page" : undefined}
+              className={cn(
+                "border-2 px-4 py-2 text-sm font-extrabold",
+                option === resolved ? "border-ink bg-ink text-bone" : "border-ink/40 text-ink-2"
+              )}
+            >
+              {option === "terms" ? "Terms of service" : "Privacy policy"}
+            </Link>
+          ))}
+        </nav>
 
-      {document.isLoading ? (
-        <div className="space-y-4"><LoadingAnnounce label="Loading the document" /><Skeleton className="h-10 w-2/3" /><Skeleton className="h-4 w-40" /><Skeleton className="h-64 w-full" /></div>
-      ) : document.isError ? (
-        <ErrorState description="This document did not load." onRetry={() => void document.refetch()} />
-      ) : !document.data ? (
-        <EmptyState title="Not published yet" description="This document is not available in the current environment. Contact us and we will send the current version." />
-      ) : (
-        <article>
-          <header className="border-b border-line-card pb-6">
-            <h1 className="text-4xl font-extrabold tracking-[-0.04em]">{document.data.title}</h1>
-            <p className="mt-3 text-sm text-ink-muted">Version {document.data.version}{document.data.effectiveAt ? `, effective ${formatDate(document.data.effectiveAt)}` : ""}</p>
-          </header>
-          <div className="mt-8"><LegalBody content={document.data.content} /></div>
-          <footer className="mt-12 border-t border-line-subtle pt-6 text-xs leading-relaxed text-ink-muted">
-            <p>Dolancer is operated by {CONTACT.company}, {CONTACT.jurisdiction}. Questions about this document can go to <a href={`mailto:${CONTACT.email}`} className="underline underline-offset-2 hover:text-ink">{CONTACT.email}</a>.</p>
-          </footer>
-        </article>
-      )}
+        <div className="mt-6 border-2 border-ink bg-field p-6 sm:p-8">
+          {document.isLoading ? (
+            <div className="space-y-4"><LoadingAnnounce label="Loading the document" /><Skeleton className="h-10 w-2/3" /><Skeleton className="h-4 w-40" /><Skeleton className="h-64 w-full" /></div>
+          ) : document.isError ? (
+            <ErrorState description="This document did not load." onRetry={() => void document.refetch()} />
+          ) : !document.data ? (
+            <EmptyState title="Not published yet" description="This document is not available in the current environment. Contact us and we will send the current version." />
+          ) : (
+            <article>
+              <header className="border-b-2 border-ink pb-6">
+                <h1 className="font-display text-4xl font-extrabold tracking-[-0.02em] text-ink">{document.data.title}</h1>
+                <p className="mt-3 font-mono text-xs uppercase tracking-[0.14em] text-ink-3">Version {document.data.version}{document.data.effectiveAt ? `, effective ${formatDate(document.data.effectiveAt)}` : ""}</p>
+              </header>
+              <div className="mt-8"><LegalBody content={document.data.content} /></div>
+              <footer className="mt-12 border-t border-ink/25 pt-6 text-xs leading-relaxed text-ink-3">
+                <p>Dolancer is operated by {CONTACT.company}, {CONTACT.jurisdiction}. Questions about this document can go to <a href={`mailto:${CONTACT.email}`} className="underline underline-offset-2">{CONTACT.email}</a>.</p>
+              </footer>
+            </article>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

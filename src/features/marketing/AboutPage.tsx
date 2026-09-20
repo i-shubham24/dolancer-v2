@@ -1,118 +1,254 @@
-import { Link } from "react-router-dom";
+import { useLayoutEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { CONTACT } from "./content";
-import {
-  StitchBadge,
-  StitchButton,
-  StitchColorCard,
-} from "@/components/stitch/StitchPrimitives";
-import { AboutHeroInteractive } from "./AboutHeroInteractive";
-import { MicroFloaties } from "./MicroFloaties";
-import { AboutComparison } from "./AboutComparison";
+import { ParallaxBand } from "./ParallaxBand";
+import { PageBackdrop } from "./cine/PageBackdrop";
+import { ensureGsap, gsap, motionOK } from "@/lib/scrollMotion";
+
+function AboutManifesto() {
+  const ref = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    ensureGsap();
+    if (!motionOK()) return;
+    const ctx = gsap.context(() => {
+      gsap.from("[data-mani-line] span", {
+        yPercent: 115,
+        duration: 1,
+        stagger: 0.14,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ref.current, start: "top 78%", end: "top 28%", scrub: 0.6 },
+      });
+      gsap.from("[data-mani-fade]", {
+        y: 24,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ref.current, start: "top 60%", end: "top 20%", scrub: 0.6 },
+      });
+    }, ref);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={ref} className="overflow-clip border-t-2 border-ink bg-[#0A1912]">
+      <div className="mx-auto max-w-[1400px] px-4 py-16 md:px-8 md:py-24">
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7FE3A6]">The exchange</p>
+        <h2 className="mt-4 font-display text-[clamp(2.6rem,7vw,6rem)] font-extrabold leading-[0.95] tracking-[-0.02em]">
+          <span data-mani-line className="block overflow-hidden pb-[0.06em]">
+            <span className="block text-[#F3EFE3]">You bring the skill.</span>
+          </span>
+          <span data-mani-line className="block overflow-hidden pb-[0.08em]">
+            <span className="block text-[#10A969]">We bring everything else.</span>
+          </span>
+        </h2>
+        <div className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <p data-mani-fade className="max-w-[46ch] text-base leading-relaxed text-white/65">
+            Client chaos stays on our side. Briefs, review, payout admin, awkward conversations.
+            Your side stays clean: one brief, one deliverable, one receipt.
+          </p>
+          <div data-mani-fade className="flex flex-wrap items-center gap-4">
+            <Link to="/how-it-works" className="bg-[#10A969] px-7 py-3.5 text-sm font-extrabold text-white active:scale-[0.98]">
+              See how it works
+            </Link>
+            <Link to="/sign-up" className="border border-white/30 px-7 py-3.5 text-sm font-extrabold text-white">
+              Join free
+            </Link>
+          </div>
+        </div>
+        <p data-mani-fade className="mt-8 border-t border-white/15 pt-4 font-mono text-[11px] uppercase tracking-[0.16em] text-white/40">
+          No bidding · No client chase · No invoice chasing
+        </p>
+      </div>
+    </section>
+  );
+}
+
+const PRINCIPLES = [
+  {
+    n: "01",
+    title: "You stay anonymous",
+    body: "Clients never learn your name, where you are, what you are paid, or that you work through us. They see a discipline and nothing else. This protects you as much as it protects them.",
+  },
+  {
+    n: "02",
+    title: "You are not an employee",
+    body: "You choose what to accept and when to stop. Nothing is assigned to you against your will, and pausing is a switch you control.",
+  },
+  {
+    n: "03",
+    title: "You are always paid",
+    body: "If work you delivered was sound and the client changed their mind, that is our problem to absorb, not yours. If we ever part ways, anything you have earned is still paid out.",
+  },
+];
+
+const PRINCIPLE_IMAGES = [
+  "https://images.unsplash.com/photo-1497032205916-ac775f0649ae?auto=format&fit=crop&w=600&q=70",
+  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=70",
+  "https://images.unsplash.com/photo-1471107340929-a87cd0f5b5f3?auto=format&fit=crop&w=600&q=70",
+];
+
+const RECORD = [
+  ["Managed, not listed", "A supervisor routes each offer to a vetted doer. There is no public pool, no bidding, no proposal race."],
+  ["Anonymous by design", "The client sees a discipline label. Your name and details stay on this side of the platform."],
+  ["Pay stated upfront", "Every offer shows the doer payout before you accept. No mid-project negotiation."],
+];
 
 export function AboutPage() {
   const reduceMotion = useReducedMotion();
-  const reveal = {
-    hidden: { opacity: 0, y: 18 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] as const } },
-  };
-
-  const principles = [
-    {
-      title: "You stay anonymous",
-      body: "Clients never learn your name, where you are, what you are paid, or that you work through us. They see a discipline and nothing else. This protects you as much as it protects them.",
-      tone: "lilac" as const,
-    },
-    {
-      title: "You are not an employee",
-      body: "You choose what to accept and when to stop. Nothing is assigned to you against your will, and pausing is a switch you control.",
-      tone: "mint" as const,
-    },
-    {
-      title: "You are always paid",
-      body: "If work you delivered was sound and the client changed their mind, that is our problem to absorb, not yours. If we ever part ways, anything you have earned is still paid out.",
-      tone: "pink" as const,
-    },
-  ];
 
   return (
-    <div className="fresh-page !overflow-visible -mt-[120px]">
-      {/* Redesigned High-Craft Editorial & Interactive Hero (Dark Theme) */}
-      <section className="relative pt-[90px] lg:pt-[110px] pb-10 lg:pb-16 bg-[#050914] overflow-hidden">
-        {/* Dark Dotted pattern overlay */}
-        <div className="absolute inset-0 z-0 opacity-[0.15]" style={{ backgroundImage: "radial-gradient(#ffffff 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
-        
-        {/* Dynamic Light Background Orbs */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute top-[-10%] right-[-10%] w-[40%] h-[60%] rounded-full bg-cyan-400/10 blur-[100px] mix-blend-screen" />
-          <div className="absolute bottom-[-20%] left-[10%] w-[60%] h-[50%] rounded-full bg-blue-600/15 blur-[120px] mix-blend-screen" />
+    <div className="bg-bone">
+      <div className="fresh-container relative pt-[130px] md:pt-[150px]">
+        <PageBackdrop word="STEWARD" dark={false} />
+        <div className="flex items-center justify-between border-y-2 border-ink py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-2">
+          <span>About the platform</span>
+          <span>Three rules, kept</span>
         </div>
-        
-        <MicroFloaties zone="about-hero" />
-        <div className="fresh-container relative z-10">
-          <AboutHeroInteractive />
-        </div>
-        
-        {/* Hanging bottom curve to cleanly transition to the next section's background (bg-surface) */}
-        <div className="absolute -bottom-px left-0 w-full overflow-hidden leading-none z-20 pointer-events-none">
-          <svg className="relative block w-full h-[40px] lg:h-[70px]" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M0,0 Q600,120 1200,0 L1200,120 L0,120 Z" className="fill-surface" />
-          </svg>
-        </div>
-      </section>
 
-      <AboutComparison />
-
-      {/* Principles Section with Curvy Framing */}
-      <section className="fresh-section fresh-proof bg-surface-2 pt-16 pb-32 relative overflow-hidden">
-        <MicroFloaties zone="about-principles" />
-        <div className="fresh-container relative z-20">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <StitchBadge>Our Core Principles</StitchBadge>
-            <h2 className="mt-3 text-3xl sm:text-4xl font-extrabold font-display text-ink tracking-tight">
-              Three rules we will not compromise on
-            </h2>
-            <p className="mt-2 text-sm sm:text-base text-ink-2 font-medium">
-              Freelancing works best when incentives are aligned and rules are clear.
+        <motion.div
+          initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.65 }}
+          className="grid gap-10 py-10 md:py-14 lg:grid-cols-12 lg:items-end"
+        >
+          <div className="lg:col-span-7">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-2">About</p>
+            <h1 className="mt-4 font-display text-[clamp(2.6rem,6vw,4.8rem)] font-extrabold leading-[0.98] tracking-[-0.02em] text-ink">
+              Clear work needs clear stewardship.
+            </h1>
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-2">
+              Dolancer is a managed service, not an open marketplace. Freelancing works best when
+              incentives are aligned and rules are clear.
             </p>
           </div>
+          <motion.figure
+            initial={reduceMotion ? false : { clipPath: "inset(0 0 100% 0)" }}
+            animate={{ clipPath: "inset(0 0 0% 0)" }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5"
+          >
+            <img
+              src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=900&q=80"
+              alt=""
+              loading="eager"
+              className="aspect-[4/3] w-full border-2 border-ink object-cover grayscale"
+            />
+            <figcaption className="flex items-center justify-between border-2 border-t-0 border-ink px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-2">
+              <span>Fig. 01</span>
+              <span>Managed service</span>
+            </figcaption>
+          </motion.figure>
+        </motion.div>
+      </div>
 
-          <div className="grid gap-6 md:grid-cols-3">
-            {principles.map((card, index) => (
-              <motion.div key={card.title} initial={reduceMotion ? false : "hidden"} whileInView={reduceMotion ? undefined : "show"} viewport={{ once: true, amount: 0.2 }} variants={reveal}>
-                <StitchColorCard tone={card.tone} className="fresh-principle-card h-full p-7 rounded-3xl">
-                  <span className="text-xs font-bold tracking-[0.08em] text-ink/45 font-mono">0{index + 1}</span>
-                  <h3 className="mt-8 text-xl font-extrabold leading-tight tracking-[-0.03em]">{card.title}</h3>
-                  <p className="mt-3 text-sm leading-relaxed text-ink/75 font-medium">{card.body}</p>
-                </StitchColorCard>
-              </motion.div>
+      <ParallaxBand
+        caption="Field notes · People doing defined work"
+        images={[
+          {
+            src: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=80",
+            label: "Signed terms",
+            speed: 10,
+          },
+          {
+            src: "https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=1200&q=80",
+            label: "Counted payout",
+            speed: 6,
+          },
+          {
+            src: "https://images.unsplash.com/photo-1568992687947-868a62a9f521?auto=format&fit=crop&w=1200&q=80",
+            label: "Guided work",
+            speed: 12,
+          },
+        ]}
+      />
+
+      <div className="border-t-2 border-ink bg-bone">
+        <div className="fresh-container py-14 md:py-20">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-2">The record</p>
+          <ol className="mt-6 border-t-2 border-ink">
+            {RECORD.map(([title, body], i) => (
+              <motion.li
+                key={title}
+                initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.55, delay: Math.min(i, 2) * 0.06 }}
+                className="grid grid-cols-1 gap-2 border-b border-ink/25 py-6 sm:grid-cols-12 sm:gap-6"
+              >
+                <span className="font-display text-4xl font-extrabold leading-none text-primary sm:col-span-2" aria-hidden="true">
+                  0{i + 1}
+                </span>
+                <h2 className="font-display text-2xl font-extrabold leading-tight text-ink sm:col-span-4">{title}</h2>
+                <p className="max-w-md text-sm leading-relaxed text-ink-2 sm:col-span-6">{body}</p>
+              </motion.li>
             ))}
+          </ol>
+        </div>
+      </div>
+
+      <div className="border-t-2 border-ink bg-bone">
+        <div className="fresh-container py-14 md:py-20">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-2">Core principles</p>
+          <h2 className="mt-3 font-display text-3xl sm:text-4xl font-extrabold text-ink">Three rules we will not compromise on</h2>
+          <ol className="mt-8 border-t-2 border-ink">
+            {PRINCIPLES.map((p, i) => (
+              <motion.li
+                key={p.n}
+                initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.55 }}
+                className="grid grid-cols-1 gap-4 border-b border-ink/25 py-6 sm:grid-cols-12 sm:gap-6"
+              >
+                <div className="sm:col-span-4">
+                  <img
+                    src={PRINCIPLE_IMAGES[i] ?? PRINCIPLE_IMAGES[0]}
+                    alt=""
+                    loading="lazy"
+                    className="aspect-[16/10] w-full border-2 border-ink object-cover grayscale"
+                  />
+                </div>
+                <span className="font-mono text-sm font-semibold tracking-[0.18em] text-primary sm:col-span-1" aria-hidden="true">
+                  {p.n}
+                </span>
+                <h3 className="font-display text-2xl font-extrabold leading-tight text-ink sm:col-span-3">{p.title}</h3>
+                <p className="max-w-md text-sm leading-relaxed text-ink-2 sm:col-span-4">{p.body}</p>
+              </motion.li>
+            ))}
+          </ol>
+        </div>
+      </div>
+
+      <AboutManifesto />
+
+      <div className="border-t-2 border-ink bg-bone pb-16 md:pb-24">
+        <div className="fresh-container pt-14 md:pt-20">
+          <div className="grid grid-cols-1 gap-8 border-2 border-ink bg-field p-8 sm:p-10 lg:grid-cols-12">
+            <div className="lg:col-span-8">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-2">Who runs this</p>
+              <h2 className="mt-3 font-display text-3xl sm:text-4xl font-extrabold leading-[1.02] text-ink">
+                Operated in the open.
+              </h2>
+              <p className="mt-4 max-w-2xl text-sm leading-relaxed text-ink-2">
+                Dolancer is operated by {CONTACT.company}, registered in {CONTACT.jurisdiction}. We also run a
+                client-facing brand, which is how work reaches this side of the platform. We do not hide that
+                connection, and you are free to ask about it.
+              </p>
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row lg:col-span-4 lg:flex-col lg:justify-end">
+              <Link to="/sign-up" className="bg-primary px-7 py-3.5 text-center text-sm font-extrabold text-white active:scale-[0.98]">
+                Start earning
+              </Link>
+              <Link to="/contact" className="border-2 border-ink px-7 py-3.5 text-center text-sm font-extrabold text-ink">
+                Ask us something
+              </Link>
+            </div>
           </div>
         </div>
-
-        
-      </section>
-
-      <section className="fresh-section fresh-final">
-        <div className="fresh-container">
-          <div className="fresh-final-card max-w-5xl mx-auto">
-            <div>
-              <StitchBadge className="fresh-who-runs-badge">Who runs this</StitchBadge>
-              <h2>Clear work needs clear stewardship.</h2>
-              <p>Dolancer is operated by {CONTACT.company}, registered in {CONTACT.jurisdiction}. We also run a client-facing brand, which is how work reaches this side of the platform. We do not hide that connection, and you are free to ask about it.</p>
-            </div>
-            <div className="flex flex-col gap-3 shrink-0">
-              <StitchButton asChild className="w-full">
-                <Link to="/sign-up">Start earning <ArrowRight className="h-4 w-4 ml-1.5" aria-hidden="true" /></Link>
-              </StitchButton>
-              <StitchButton asChild variant="outline" className="w-full bg-surface">
-                <Link to="/contact">Ask us something</Link>
-              </StitchButton>
-            </div>
-          </div>
-        </div>
-      </section>
+      </div>
     </div>
   );
 }

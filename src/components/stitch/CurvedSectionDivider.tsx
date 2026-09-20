@@ -71,7 +71,7 @@ export function CurvedSectionDivider({
           )}
           <defs>
             <linearGradient id="wave-gradient" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#f97316" stopOpacity="0.8" />
+              <stop stopColor="#10a969" stopOpacity="0.8" />
               <stop offset="0.5" stopColor="#3b82f6" stopOpacity="0.8" />
               <stop offset="1" stopColor="#10b981" stopOpacity="0.8" />
             </linearGradient>
@@ -111,7 +111,7 @@ export function CurvedSectionDivider({
           )}
           <defs>
             <linearGradient id="arch-gradient" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#f97316" stopOpacity="0.75" />
+              <stop stopColor="#10a969" stopOpacity="0.75" />
               <stop offset="0.5" stopColor="#8b5cf6" stopOpacity="0.75" />
               <stop offset="1" stopColor="#3b82f6" stopOpacity="0.75" />
             </linearGradient>
@@ -151,7 +151,7 @@ export function CurvedSectionDivider({
           )}
           <defs>
             <linearGradient id="curve-gradient" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
-              <stop stopColor="#f97316" stopOpacity="0.7" />
+              <stop stopColor="#10a969" stopOpacity="0.7" />
               <stop offset="0.5" stopColor="#3b82f6" stopOpacity="0.7" />
               <stop offset="1" stopColor="#ec4899" stopOpacity="0.7" />
             </linearGradient>
@@ -192,7 +192,7 @@ export function CurvedSectionDivider({
           <defs>
             <linearGradient id="crest-gradient" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
               <stop stopColor="#10b981" stopOpacity="0.7" />
-              <stop offset="0.5" stopColor="#f97316" stopOpacity="0.7" />
+              <stop offset="0.5" stopColor="#10a969" stopOpacity="0.7" />
               <stop offset="1" stopColor="#6366f1" stopOpacity="0.7" />
             </linearGradient>
           </defs>
@@ -232,7 +232,7 @@ export function CurvedSectionDivider({
           <defs>
             <linearGradient id="dip-gradient" x1="0" y1="0" x2="1440" y2="0" gradientUnits="userSpaceOnUse">
               <stop stopColor="#3b82f6" stopOpacity="0.7" />
-              <stop offset="0.5" stopColor="#f97316" stopOpacity="0.7" />
+              <stop offset="0.5" stopColor="#10a969" stopOpacity="0.7" />
               <stop offset="1" stopColor="#10b981" stopOpacity="0.7" />
             </linearGradient>
           </defs>

@@ -1,175 +1,313 @@
+import { useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Check, ShieldCheck, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { StitchBadge, StitchSection } from "@/components/stitch/StitchPrimitives";
-import { GettingStartedInteractive } from "./GettingStartedInteractive";
-import { MicroFloaties } from "./MicroFloaties";
-import { InteractiveBentoPillars } from "./InteractiveBentoPillars";
-import { WorkflowDemo } from "./WorkflowDemo";
-import { PayoutExplainer } from "./PayoutExplainer";
-import { DifferenceRail } from "./DifferenceRail";
-import { CategoryTags } from "./CategoryTags";
-import { HeroMarquee } from "./HeroMarquee";
-import { HowItWorksHeroGraphic } from "./HowItWorksHeroGraphic";
-import { CurvedSectionDivider } from "@/components/stitch/CurvedSectionDivider";
-import { FaqAccordion } from "./FaqAccordion";
-import { MagneticButton } from "@/components/motion/MagneticButton";
+import { Plus, Minus } from "@phosphor-icons/react";
+import { STEPS, DIFFERENCES, FAQS, CATEGORIES } from "./content";
+import { CONTACT } from "./content";
+import { ParallaxBand } from "./ParallaxBand";
+import { PageBackdrop } from "./cine/PageBackdrop";
 
-function Section({
-  children,
-  className = "",
-  labelledBy,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  labelledBy?: string;
-}) {
+const GATE_IMAGES = [
+  "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1000&q=75",
+  "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1000&q=75",
+  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=75",
+  "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?auto=format&fit=crop&w=1000&q=75",
+];
+
+function GateStack() {
   return (
-    <StitchSection aria-labelledby={labelledBy} className={`fresh-section ${className}`}>
-      <div className="fresh-container">{children}</div>
-    </StitchSection>
+    <div>
+      {STEPS.map((step, i) => (
+        <div key={step.title} className="sticky" style={{ top: `${88 + i * 20}px` }}>
+          <motion.article
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-5 overflow-hidden border-2 border-ink bg-field"
+          >
+            <div className="grid md:grid-cols-12">
+              <div className="relative min-h-52 overflow-hidden border-b-2 border-ink md:col-span-5 md:border-b-0 md:border-r-2">
+                <img
+                  src={GATE_IMAGES[i] ?? GATE_IMAGES[0]}
+                  alt=""
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover grayscale"
+                />
+                <span className="absolute left-4 top-4 border border-ink bg-bone px-2.5 py-1 font-mono text-[11px] tracking-[0.18em] text-ink">
+                  Gate 0{i + 1} / 04
+                </span>
+              </div>
+              <div className="p-6 md:col-span-7 md:p-8">
+                <p className="font-display text-5xl font-extrabold leading-none text-primary/25" aria-hidden="true">
+                  0{i + 1}
+                </p>
+                <h3 className="mt-3 font-display text-2xl font-extrabold leading-tight text-ink md:text-3xl">
+                  {step.title}
+                </h3>
+                <p className="mt-3 max-w-lg text-sm leading-relaxed text-ink-2 md:text-base">{step.body}</p>
+              </div>
+            </div>
+          </motion.article>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FaqList() {
+  const [open, setOpen] = useState<number | null>(0);
+  return (
+    <div className="border-t-2 border-ink">
+      {FAQS.map((faq, i) => {
+        const isOpen = open === i;
+        return (
+          <div key={faq.question} className="border-b border-ink/25">
+            <button
+              type="button"
+              aria-expanded={isOpen}
+              onClick={() => setOpen(isOpen ? null : i)}
+              className="flex w-full items-center gap-4 py-4 text-left"
+            >
+              <span className="font-mono text-xs font-semibold text-primary" aria-hidden="true">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="flex-1 font-display text-lg font-extrabold text-ink">{faq.question}</span>
+              {isOpen ? (
+                <Minus className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+              ) : (
+                <Plus className="h-5 w-5 shrink-0 text-ink-3" aria-hidden="true" />
+              )}
+            </button>
+            <AnimatePresence initial={false}>
+              {isOpen ? (
+                <motion.div
+                  key="a"
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="overflow-hidden"
+                >
+                  <p className="max-w-3xl pb-5 text-sm leading-relaxed text-ink-2">{faq.answer}</p>
+                </motion.div>
+              ) : null}
+            </AnimatePresence>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
 export function HowItWorksPage() {
   const reduceMotion = useReducedMotion();
-  const reveal = {
-    hidden: { opacity: 0, y: 18 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] as const } },
-  };
+  const reveal = (delay: number) => ({
+    initial: reduceMotion ? ({} as const) : { opacity: 0, y: 18 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: "-50px" },
+    transition: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] as const },
+  });
 
   return (
-    <div className="fresh-page !overflow-visible -mt-[120px]">
-      <section className="relative z-10 pt-[90px] pb-12 lg:pt-[110px] lg:pb-24 flex items-center bg-[#050914] overflow-hidden">
-        {/* Dynamic Light Background Orbs matching Home Hero */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary/20 blur-[120px] mix-blend-screen" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[50%] rounded-full bg-cyan-500/10 blur-[100px] mix-blend-screen" />
-          <div className="absolute inset-0 opacity-[0.15]" style={{ backgroundImage: "radial-gradient(#ffffff 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
-        </div>
-        
-        <MicroFloaties zone="hiw-hero" />
-        
-        <div className="fresh-container fresh-process-hero relative z-10">
-          <motion.div initial={reduceMotion ? false : "hidden"} animate="show" variants={reveal}>
-            <StitchBadge tone="light"><Sparkles className="h-3.5 w-3.5" /> Everything, in the open</StitchBadge>
-            <h1 className="mt-5 max-w-3xl text-white text-[3.5rem] leading-[1.05] sm:text-[4.5rem] lg:text-[5.5rem] font-extrabold tracking-tight font-display">
-              The whole thing,
-              <br />
-              <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-primary pb-2">
-                start to paid.
-                <svg className="absolute -bottom-1 left-0 w-full h-4 text-cyan-400 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
-                  <path d="M 2 8 L 98 4" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </span>
+    <div className="bg-bone">
+      <div className="bg-[#0A1912]">
+        <div className="fresh-container relative pt-[104px] md:pt-[112px]">
+          <PageBackdrop word="PROCESS" compact />
+          <div className="flex items-center justify-between border-y border-white/15 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-white/50">
+            <span>Process record</span>
+            <span>Read before you join</span>
+          </div>
+
+          <motion.div {...reveal(0)} className="py-6 md:py-8">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7FE3A6]">How it works</p>
+            <h1 className="mt-4 max-w-[16ch] font-display text-[clamp(2.2rem,5vw,4rem)] font-extrabold leading-[0.98] tracking-[-0.02em] text-[#F3EFE3]">
+              The whole thing, start to paid.
             </h1>
-            <p className="mt-6 max-w-xl text-lg sm:text-xl text-slate-300 font-medium leading-relaxed">
-              No part of this is hidden until after you sign up. Read it all, then decide.
-            </p>
-            <div className="fresh-process-proof mt-8 flex flex-wrap gap-6 text-sm font-medium text-slate-400">
-              <span className="flex items-center gap-1.5"><Check className="h-4 w-4 text-cyan-400" /> Pay is visible before you accept an offer.</span>
-              <span className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-cyan-400" /> A supervisor carries the client side.</span>
+            <div className="mt-6 max-w-xl">
+              <p className="text-base leading-relaxed text-white/65">
+                No part of this is hidden until after you sign up. Read it all, then decide.
+              </p>
             </div>
           </motion.div>
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 18, rotate: 2 }}
-            animate={reduceMotion ? undefined : { opacity: 1, y: 0, rotate: 0 }}
-            transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full lg:pr-10 xl:pr-16 lg:scale-110 lg:origin-right"
-          >
-            <HowItWorksHeroGraphic />
-          </motion.div>
         </div>
-      </section>
 
-      <div className="relative z-20 pt-2 pb-6 bg-canvas">
-        <HeroMarquee />
+        <div className="mx-auto max-w-[1400px] px-4 pb-10 md:px-8">
+          <div className="flex items-center justify-between border-t border-white/15 pt-4">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/45">Four gates below</p>
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/45">Drag sideways</p>
+          </div>
+          <div className="mt-4 flex snap-x gap-px overflow-x-auto border border-white/25 bg-white/25 pb-0 [scrollbar-width:thin]">
+            {STEPS.map((s, i) => (
+              <motion.a
+                key={s.title}
+                href="#walkthrough"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById("walkthrough")?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+                }}
+                initial={reduceMotion ? false : { opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.55, delay: Math.min(i, 3) * 0.07 }}
+                className="w-[210px] shrink-0 snap-start bg-[#0A1912] p-5 md:w-[250px]"
+              >
+                <p className="font-display text-4xl font-extrabold leading-none text-[#10A969]" aria-hidden="true">
+                  0{i + 1}
+                </p>
+                <p className="mt-3 font-mono text-[11px] tracking-[0.18em] text-[#7FE3A6]">Gate 0{i + 1} / 04</p>
+                <p className="mt-1.5 font-display text-base font-extrabold leading-tight text-white">{s.title}</p>
+              </motion.a>
+            ))}
+          </div>
+        </div>
       </div>
 
-      {/* Redesigned 5x Creative Interactive Four Moments Section */}
-      <section className="bg-surface-2 py-14 lg:py-28 relative">
-        <div className="fresh-container">
-          <GettingStartedInteractive />
-        </div>
-        <CurvedSectionDivider variant="wave" position="bottom" fillColor="fill-[var(--color-canvas)]" />
-      </section>
+      <ParallaxBand
+        caption="Field notes · The process, photographed plainly"
+        images={[
+          {
+            src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1200&q=80",
+            label: "Defined scope",
+            speed: 10,
+          },
+          {
+            src: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=80",
+            label: "Guided work",
+            speed: 6,
+          },
+          {
+            src: "https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?auto=format&fit=crop&w=1200&q=80",
+            label: "Delivered proof",
+            speed: 12,
+          },
+        ]}
+      />
 
-      <Section labelledBy="walkthrough" className="fresh-workflow !pt-20 !pb-12 lg:!pb-16">
-        {/* Real Product Walkthrough - what a project actually looks like, first */}
-        <div><WorkflowDemo /></div>
-      </Section>
-
-      {/* Trio pillars - dark, footer-symmetric */}
-      <section className="fresh-section bg-[#0b0f19] !py-20 relative overflow-clip">
-        <div className="fresh-container">
-          <InteractiveBentoPillars dark />
-        </div>
-      </section>
-
-      <section aria-labelledby="payout" className="fresh-section bg-[#0b0f19] py-20 relative overflow-hidden">
-        <MicroFloaties zone="payout" />
-        <div className="fresh-container relative z-20">
-          <PayoutExplainer />
-        </div>
-      </section>
-
-      <Section labelledBy="differences" className="fresh-difference">
-        <DifferenceRail />
-      </Section>
-
-      <section className="relative fresh-steps fresh-section">
-        <div className="fresh-container">
-          <h2 id="disciplines" className="fresh-section-heading-text">
-            What gets offered here
+      <div id="walkthrough" className="border-t-2 border-ink bg-bone scroll-mt-20">
+        <div className="fresh-container py-14 md:py-20">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">The walkthrough</p>
+          <h2 className="mt-3 max-w-[18ch] font-display text-3xl sm:text-4xl font-extrabold leading-[1.02] text-ink">
+            Four gates, in order.
           </h2>
-          <p className="mt-3 max-w-xl text-md text-ink-2">
+          <div className="mt-8">
+            <GateStack />
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t-2 border-ink bg-[#0A1912]">
+        <div className="fresh-container py-14 md:py-20">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7FE3A6]">Payout path</p>
+          <h2 className="mt-3 max-w-[20ch] font-display text-3xl sm:text-4xl font-extrabold leading-[1.02] text-white">
+            Approved, released, in bank. Each with a receipt.
+          </h2>
+          <ol className="mt-8 divide-y divide-white/15 border-y border-white/15">
+            {[
+              ["Work clears review", "Completeness, quality, safety, originality, and the brief, checked by your supervisor."],
+              ["Approval gate clears", "Client approval, timeout, or exception process. Nothing moves on a promise."],
+              ["Payout lands itemised", "Gross, withholding, and net as separate figures over UPI or NEFT."],
+            ].map(([title, body], i) => (
+              <li key={title} className="flex gap-4 py-4">
+                <span className="font-mono text-xs font-semibold text-[#7FE3A6]">0{i + 1}</span>
+                <div>
+                  <p className="font-extrabold text-white">{title}</p>
+                  <p className="mt-0.5 max-w-2xl text-sm text-white/65">{body}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </div>
+
+      <div className="border-t-2 border-ink bg-bone">
+        <div className="fresh-container py-14 md:py-20">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">What makes this different</p>
+          <h2 className="mt-3 font-display text-3xl sm:text-4xl font-extrabold leading-[1.02] text-ink">
+            Six reasons, pictured.
+          </h2>
+          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2">
+            {DIFFERENCES.map((d, i) => (
+              <motion.article
+                key={d.title}
+                {...reveal(Math.min(i, 2) * 0.06)}
+                className="border-2 border-ink bg-field"
+              >
+                <img
+                  src={[
+                    "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=70",
+                    "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1000&q=70",
+                    "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1000&q=70",
+                    "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1000&q=70",
+                    "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1000&q=70",
+                    "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1000&q=70",
+                  ][i] ?? ""}
+                  alt=""
+                  loading="lazy"
+                  className="aspect-[16/7] w-full border-b-2 border-ink object-cover grayscale"
+                />
+                <div className="p-6">
+                  <p className="font-mono text-[11px] tracking-[0.18em] text-primary">0{i + 1} / 06</p>
+                  <h3 className="mt-2 font-display text-xl font-extrabold text-ink md:text-2xl">{d.title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-ink-2">{d.body}</p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t-2 border-ink bg-bone">
+        <div className="fresh-container py-14 md:py-20">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-2">Disciplines</p>
+          <h2 className="mt-3 font-display text-3xl sm:text-4xl font-extrabold text-ink">What gets offered here</h2>
+          <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink-2">
             Pick the disciplines you are genuinely strong in. Supervisors use them to route suitable
             offers, so accuracy matters more than breadth.
           </p>
-          <div className="mt-10 pb-16">
-            <CategoryTags />
+          <ul className="mt-6 flex flex-wrap gap-2">
+            {CATEGORIES.map((c) => (
+              <li key={c.name} title={c.blurb} className="border border-ink/40 px-3.5 py-2 text-sm font-bold text-ink">
+                {c.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div className="border-t-2 border-ink bg-bone">
+        <div className="fresh-container py-14 md:py-20">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-2">Questions</p>
+          <h2 className="mt-3 font-display text-3xl sm:text-4xl font-extrabold text-ink">Asked often, answered plainly</h2>
+          <div className="mt-8">
+            <FaqList />
           </div>
         </div>
-        <CurvedSectionDivider variant="wave" position="bottom" fillColor="fill-surface-2" />
-      </section>
+      </div>
 
-      <section className="bg-surface-2 py-16 fresh-section">
-        <div className="fresh-container">
-          <FaqAccordion />
-        </div>
-      </section>
-
-      <Section labelledBy="cta">
-        <MicroFloaties zone="cta" />
-        <div className="fresh-final-card mx-auto max-w-4xl">
-          <div className="fresh-final-content flex flex-wrap items-center justify-between gap-8">
-            <div className="min-w-0 flex-1">
-              <StitchBadge>That is all of it</StitchBadge>
-              <h2
-                id="cta"
-                className="mt-4 max-w-md text-3xl font-extrabold leading-[1.1] tracking-[-0.04em]"
-              >
+      <div className="border-t-2 border-ink bg-bone pb-16 md:pb-24">
+        <div className="fresh-container pt-14 md:pt-20">
+          <div className="grid grid-cols-1 gap-8 border-2 border-ink bg-primary p-8 sm:p-10 lg:grid-cols-12 lg:items-end">
+            <div className="lg:col-span-8">
+              <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/80">That is all of it</p>
+              <h2 className="mt-3 font-display text-3xl sm:text-4xl font-extrabold leading-[1.02] text-white">
                 Start earning on your terms.
               </h2>
             </div>
-
-            <div className="fresh-cta-actions flex shrink-0 flex-col gap-2.5">
-              <MagneticButton>
-                <Button asChild size="lg" className="w-full">
-                  <Link to="/sign-up">
-                    Create your account
-                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                  </Link>
-                </Button>
-              </MagneticButton>
-              <Button asChild variant="outline">
-                <Link to="/contact">Ask a question first</Link>
-              </Button>
+            <div className="flex flex-col gap-3 sm:flex-row lg:col-span-4 lg:flex-col">
+              <Link to="/sign-up" className="bg-white px-7 py-3.5 text-center text-sm font-extrabold text-ink active:scale-[0.98]">
+                Create your account
+              </Link>
+              <Link to="/contact" className="border-2 border-white/60 px-7 py-3.5 text-center text-sm font-extrabold text-white">
+                Ask a question first
+              </Link>
             </div>
           </div>
+          <p className="mt-6 text-xs text-ink-3">
+            Operated by {CONTACT.company}, {CONTACT.jurisdiction}.
+          </p>
         </div>
-      </Section>
+      </div>
     </div>
   );
 }

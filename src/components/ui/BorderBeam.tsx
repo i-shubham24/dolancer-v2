@@ -19,7 +19,7 @@ export function BorderBeam({
           to { --beam-angle: 360deg; }
         }
         .border-beam-bg {
-          background: conic-gradient(from var(--beam-angle), transparent 80%, var(--color-primary, #ff7b54), var(--color-secondary, #3b82f6), transparent);
+          background: conic-gradient(from var(--beam-angle), transparent 80%, var(--color-primary, #10a969), var(--color-secondary, #0e7a4f), transparent);
           animation: border-beam-spin ${duration}s linear infinite;
         }
         .border-beam-mask {

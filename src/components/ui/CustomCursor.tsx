@@ -97,7 +97,7 @@ export function CustomCursor() {
 
   return (
     <>
-      {/* Soft Blue Spotlight Glow */}
+      {/* Soft Green Spotlight Glow */}
       <div
         ref={glowRef}
         className="fixed top-0 left-0 pointer-events-none z-[9998]"
@@ -110,7 +110,7 @@ export function CustomCursor() {
         <div 
           className="w-[400px] h-[400px] rounded-full" 
           style={{ 
-            background: "radial-gradient(circle, rgba(59,130,246,0.12) 0%, rgba(59,130,246,0.03) 40%, transparent 70%)",
+            background: "radial-gradient(circle, rgba(16,169,105,0.12) 0%, rgba(16,169,105,0.03) 40%, transparent 70%)",
             transform: isHovering ? "scale(1.5)" : "scale(1)",
             transition: "transform 0.3s ease",
             willChange: "transform"
@@ -118,7 +118,7 @@ export function CustomCursor() {
         />
       </div>
 
-      {/* Solid Glowing Blue Ball with Hover Ring */}
+      {/* Solid Glowing Green Ball with Hover Ring */}
       <div
         ref={cursorRef}
         className="fixed top-0 left-0 pointer-events-none z-[9999] flex items-center justify-center"
@@ -128,11 +128,11 @@ export function CustomCursor() {
           transition: "opacity 0.2s ease",
         }}
       >
-        <div className="w-2.5 h-2.5 bg-blue-500 rounded-full shadow-[0_0_12px_2px_rgba(59,130,246,0.8)] relative z-10" />
+        <div className="w-2.5 h-2.5 bg-[#10A969] rounded-full shadow-[0_0_12px_2px_rgba(16,169,105,0.8)] relative z-10" />
         
         {/* Expanding Ring on Hover */}
         <div
-          className="absolute w-9 h-9 border-[1.5px] border-blue-400 rounded-full"
+          className="absolute w-9 h-9 border-[1.5px] border-[#7FE3A6] rounded-full"
           style={{ 
             opacity: isHovering ? 1 : 0,
             transform: isHovering ? "scale(1)" : "scale(0.3)",

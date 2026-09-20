@@ -1,17 +1,14 @@
 import { useEffect } from "react";
 
 /**
- * Single-shot loader takeover referencing https://www.aardvarkbookclub.com/
+ * Single-shot loader takeover.
  *
- * index.html already paints the full loader (palette colour, logo, dots,
- * blobs) before the bundle loads. This component renders nothing new - it
- * simply holds that same frame for a beat, then irises it out with the Web
- * Animations API and removes it. One continuous window: no second copy, no
- * restarted animation phases, no jitter.
+ * index.html already paints the boot letters before the bundle loads. This
+ * component renders nothing new - it simply holds that same frame for a beat,
+ * then lifts it away like a curtain with the Web Animations API and removes
+ * it. One continuous window: no second copy, no restarted animation phases,
+ * no jitter.
  */
-const IRIS_OPEN = "circle(142% at 50% 50%)";
-const IRIS_CLOSED = "circle(0% at 50% 50%)";
-
 export function SplashLoader() {
   useEffect(() => {
     const boot = document.getElementById("boot-splash");
@@ -39,11 +36,14 @@ export function SplashLoader() {
           }
           return;
         }
-        const exit = boot.animate([{ clipPath: IRIS_OPEN }, { clipPath: IRIS_CLOSED }], {
-          duration: 1000,
-          easing: "cubic-bezier(0.76, 0, 0.24, 1)",
-          fill: "forwards",
-        });
+        const exit = boot.animate(
+          [{ transform: "translateY(0)" }, { transform: "translateY(-100%)" }],
+          {
+            duration: 800,
+            easing: "cubic-bezier(0.76, 0, 0.24, 1)",
+            fill: "forwards",
+          }
+        );
         exit.onfinish = finish;
         // Safety net so the page is never trapped behind the splash.
         setTimeout(finish, 1500);
