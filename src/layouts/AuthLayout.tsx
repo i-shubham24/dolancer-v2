@@ -32,7 +32,17 @@ export function AuthLayout() {
           D.
         </span>
 
-        <div className="relative flex h-full flex-col justify-end p-10 xl:p-12">
+        <div className="relative flex h-full flex-col p-10 xl:p-12">
+          <div className="relative mb-auto h-56 w-full">
+            <div aria-hidden="true" className="absolute right-0 top-0 h-48 w-48 border-2 border-[#7FE3A6]/50" />
+            <div aria-hidden="true" className="absolute right-6 top-6 h-36 w-36 border border-white/25 motion-safe:animate-[spin_16s_linear_infinite]" />
+            <div aria-hidden="true" className="absolute right-[5.5rem] top-[5.5rem] h-3 w-3 bg-[#10A969] motion-safe:animate-pulse" />
+            <p className="absolute bottom-1 right-1 font-mono text-[11px] tracking-[0.18em] text-[#7FE3A6]">
+              01
+            </p>
+          </div>
+
+          <div className="mt-8">
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7FE3A6]">
             Field record · Auth gate
           </p>
@@ -47,25 +57,14 @@ export function AuthLayout() {
           </blockquote>
 
           <div className="mt-8 max-w-md border-2 border-white/20 bg-white/[0.04] p-5">
-            <div className="flex items-center justify-between border-b border-white/15 pb-3">
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/50">
-                Example brief format
-              </p>
-              <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#7FE3A6]">Ex. 001</p>
-            </div>
-            <p className="mt-3 font-display text-xl font-extrabold leading-tight text-[#F3EFE3]">
-              Proofread 8-page guide · ~3h · Remote
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/50">
+              Example brief
             </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {["Anonymized brief", "Human review", "Terms upfront"].map((chip) => (
-                <span
-                  key={chip}
-                  className="border border-[#10A969]/40 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[#7FE3A6]"
-                >
-                  {chip}
-                </span>
-              ))}
-            </div>
+            <p className="mt-2 font-display text-xl font-extrabold leading-tight text-[#F3EFE3]">
+              Proofread an 8-page guide.
+            </p>
+            <p className="mt-1.5 text-sm text-white/65">Fixed pay, told upfront. Human review.</p>
+          </div>
           </div>
         </div>
       </div>

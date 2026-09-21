@@ -2,11 +2,15 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 /**
- * Start every navigation at the top.
+ * Start every navigation at the top, instantly.
  *
  * A single-page app keeps the scroll position across route changes, so following a
  * link from halfway down one page drops you halfway down the next one, which reads
  * as a broken page rather than a new one.
+ *
+ * The jump is instant, never smooth: animating to the top reads as another
+ * loading state and fights pinned scroll sections. ScrollTrigger positions are
+ * refreshed after the jump so pinned and scrubbed sections measure correctly.
  *
  * Two exceptions are deliberate. An in-page hash is left alone, since the browser is
  * already handling it and overriding would break every anchor link. And a POP, which
@@ -24,7 +28,11 @@ export function ScrollToTop() {
       | undefined;
     if (navigation?.type === "back_forward") return;
 
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    const raf = requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    });
+    return () => cancelAnimationFrame(raf);
   }, [pathname, hash]);
 
   return null;

@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 const STEPS = [
   { q: "What do you like doing most?", options: ["Write words", "Design visuals", "Cut audio and video", "Build and ship", "Check and secure", "Research and analyze"] },
-  { q: "How do you want to be guided?", options: ["Solo with a clear brief", "Checkpoints plus support", "Close review"] },
+  { q: "How much guidance do you want?", options: ["Solo with a clear brief", "Checkpoints plus support", "Close review"] },
   { q: "How much effort per task?", options: ["Under 3 hours", "3 to 5 hours", "5 hours plus"] },
-  { q: "What must be visible upfront?", options: ["Scope", "Payout terms", "Review path"] },
+  { q: "What do you want to see first?", options: ["Scope", "Payout terms", "Review path"] },
 ];
 
 const RESULT: Record<string, { discipline: string; brief: string }> = {
@@ -53,9 +53,14 @@ export function FitQuiz() {
             No account needed. Answer four questions and we will point you at work that fits.
           </p>
           {!done ? (
-            <p className="mt-6 font-mono text-xs tracking-[0.18em] text-ink-3">
-              Q{Math.min(step + 1, 4)}/04
-            </p>
+            <>
+              <p className="mt-6 font-mono text-xs tracking-[0.18em] text-ink-3">
+                Q{Math.min(step + 1, 4)}/04
+              </p>
+              <p aria-hidden="true" className="mt-2 select-none font-display text-[7rem] font-extrabold leading-[0.85] text-ink/10 md:text-[9rem]">
+                {String(Math.min(step + 1, 4)).padStart(2, "0")}
+              </p>
+            </>
           ) : null}
         </div>
 

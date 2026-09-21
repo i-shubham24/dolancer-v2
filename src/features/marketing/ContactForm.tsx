@@ -80,8 +80,8 @@ export function ContactForm() {
       <h2 className="text-2xl font-extrabold tracking-[-0.03em]">Send us a message</h2>
       <p className="mt-2 text-sm leading-relaxed text-ink-2">
         {session
-          ? "This opens a support ticket on your account, so whoever picks it up already has your details and you can follow the whole thread."
-          : "This opens your mail app with the message ready to send, so you keep a copy and can see it actually went."}
+          ? "This opens a ticket on your account. Follow the whole thread there."
+          : "This opens your mail app with the message ready. You keep a copy."}
       </p>
 
       <div className="mt-6 space-y-4">
@@ -95,7 +95,7 @@ export function ContactForm() {
                 onChange={(event) => setName(event.target.value)}
                 autoComplete="name"
                 required
-                className="rounded-none border-2 border-ink bg-field shadow-none"
+                className="rounded-none border border-ink/30 bg-field shadow-none"
               />
             </div>
             <div className="space-y-2">
@@ -107,7 +107,7 @@ export function ContactForm() {
                 onChange={(event) => setEmail(event.target.value)}
                 autoComplete="email"
                 required
-                className="rounded-none border-2 border-ink bg-field shadow-none"
+                className="rounded-none border border-ink/30 bg-field shadow-none"
               />
             </div>
           </div>
@@ -123,7 +123,7 @@ export function ContactForm() {
             id="contact-category"
             value={category}
             onChange={(event) => setCategory(event.target.value)}
-            className="w-full border-2 border-ink bg-field px-4 py-[11px] text-sm font-medium outline-none focus:border-primary"
+            className="w-full border border-ink/30 bg-field px-4 py-[11px] text-sm font-medium outline-none focus:border-primary"
           >
             {TICKET_CATEGORIES.map((option) => (
               <option key={option.id} value={option.id}>
@@ -142,7 +142,7 @@ export function ContactForm() {
               onChange={(event) => setSubject(event.target.value)}
               placeholder="A short summary"
               required
-              className="rounded-none border-2 border-ink bg-field shadow-none"
+              className="rounded-none border border-ink/30 bg-field shadow-none"
             />
         </div>
 
@@ -156,7 +156,7 @@ export function ContactForm() {
               onChange={(event) => setMessage(event.target.value)}
               placeholder="Tell us what is going on."
               required
-              className="rounded-none border-2 border-ink bg-field shadow-none"
+              className="rounded-none border border-ink/30 bg-field shadow-none"
             />
         </div>
 
@@ -180,8 +180,7 @@ export function ContactForm() {
         >
           <Check className="mt-0.5 h-4 w-4 shrink-0 text-success-ink" aria-hidden="true" />
           <p className="text-xs font-semibold leading-snug text-success-ink">
-            Your mail app should have opened with the message ready. If nothing happened,
-            email {CONTACT.email} directly.
+            Your mail app should have opened. If not, email {CONTACT.email} directly.
           </p>
         </div>
       ) : null}

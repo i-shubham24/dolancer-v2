@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Layers, ArrowUpRight, ShieldCheck, Sparkles, GraduationCap, Check } from "lucide-react";
+import { Stack, ArrowUpRight, ShieldCheck, Sparkle, GraduationCap, Check } from "@phosphor-icons/react";
 import { Card } from "@/components/brutal/Card";
 import { cn } from "@/lib/cn";
 import { MAX_ACTIVE_PROJECTS, SUPERVISOR_LABEL } from "@/lib/constants";
@@ -27,7 +27,7 @@ export function CapacityRail({
   const steps = gate
     ? [
         { id: "kyc", label: "Verified", done: gate.kycDone, icon: ShieldCheck, to: "/verification" },
-        { id: "skills", label: "Skills picked", done: gate.skillsDone, icon: Sparkles, to: "/skills" },
+        { id: "skills", label: "Skills picked", done: gate.skillsDone, icon: Sparkle, to: "/skills" },
         {
           id: "training",
           label: "Training done",
@@ -46,16 +46,16 @@ export function CapacityRail({
       className="space-y-4"
       aria-label="Capacity and next steps"
     >
-      <Card className="border-[var(--dl-secondary)]/15 bg-gradient-to-br from-[var(--dl-secondary-light)]/60 to-surface shadow-soft-lg">
+      <Card>
         <div className="flex items-center justify-between gap-3">
-          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.05em] text-ink-muted">
-            <Layers className="h-3.5 w-3.5" aria-hidden="true" />
+          <span className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-3">
+            <Stack className="h-3.5 w-3.5" aria-hidden="true" />
             Capacity
           </span>
           <span
             className={cn(
-              "rounded-full border border-line-card px-2.5 py-0.5 text-2xs font-extrabold",
-              atCap ? "bg-warning-bg text-warning-ink" : "bg-[var(--dl-accent)]",
+              "border px-2.5 py-0.5 font-mono text-[11px] font-bold uppercase tracking-[0.12em]",
+              atCap ? "border-warning-ink/40 bg-warning-bg text-warning-ink" : "bg-primary text-white",
             )}
           >
             {activeCount} of {MAX_ACTIVE_PROJECTS}
@@ -67,8 +67,8 @@ export function CapacityRail({
             <div
               key={index}
               className={cn(
-                "h-2.5 flex-1 rounded-full border border-line-card transition-colors",
-                index < activeCount ? (atCap ? "bg-[var(--dl-primary)]" : "bg-[var(--dl-accent)]") : "bg-surface",
+                "h-2.5 flex-1 border border-ink/25",
+                index < activeCount ? "bg-primary" : "bg-ink/10",
               )}
             />
           ))}
@@ -85,8 +85,8 @@ export function CapacityRail({
       </Card>
 
       {gate && !gate.unlocked ? (
-        <Card className="border-[var(--dl-purple)]/15 bg-[var(--dl-purple-light)]/35 shadow-soft-md">
-          <h3 className="text-sm font-extrabold uppercase tracking-[0.05em] text-ink-muted">
+        <Card>
+          <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-3">
             To unlock earning
           </h3>
           <ul className="mt-3 space-y-2">
@@ -95,16 +95,16 @@ export function CapacityRail({
                 <Link
                   to={step.to}
                   className={cn(
-                    "flex items-center gap-2.5 rounded-lg border px-3 py-2 text-sm font-bold transition-colors",
+                    "flex items-center gap-2.5 border px-3 py-2 text-sm font-bold",
                     step.done
-                      ? "border-line-card bg-surface-2 text-ink-muted"
-                      : "border-[var(--dl-purple)]/20 bg-surface shadow-soft-sm hover:bg-[var(--dl-purple-light)]",
+                      ? "border-ink/20 bg-bone text-ink-3"
+                      : "border-ink/40 bg-field text-ink",
                   )}
                 >
                   <span
                     className={cn(
-                      "flex h-6 w-6 shrink-0 items-center justify-center rounded-md border border-line-card",
-                      step.done ? "bg-success-bg text-success-ink" : "bg-[var(--dl-accent)]",
+                      "flex h-6 w-6 shrink-0 items-center justify-center border",
+                      step.done ? "border-success-ink/40 bg-success-bg text-success-ink" : "border-ink/30 bg-primary text-white",
                     )}
                   >
                     {step.done ? (
@@ -124,8 +124,8 @@ export function CapacityRail({
         </Card>
       ) : null}
 
-      <Card className="border-line-card/70 bg-surface-2/80 shadow-soft-sm">
-        <h3 className="text-sm font-extrabold uppercase tracking-[0.05em] text-ink-muted">
+      <Card>
+        <h3 className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-3">
           How work runs here
         </h3>
         <ul className="mt-3 space-y-2.5 text-xs leading-relaxed text-ink-2">

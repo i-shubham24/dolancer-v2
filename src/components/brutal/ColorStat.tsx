@@ -44,13 +44,10 @@ export function ColorStat({
     <motion.div
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
-      whileHover={{ y: -4, scale: 1.01, transition: { duration: 0.22, ease: [0.16, 1, 0.3, 1] } }}
       whileTap={{ scale: 0.99 }}
       transition={{ duration: 0.38, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
-        "relative isolate overflow-hidden rounded-2xl border border-line-card p-5 shadow-soft-md",
-        "transition-shadow duration-[200ms] ease-spring",
-        "hover:shadow-soft-lg",
+        "relative isolate overflow-hidden border-2 border-ink p-5",
         TONES[tone],
         className,
       )}
@@ -71,7 +68,7 @@ export function ColorStat({
         {icon ? (
           <span
             className={cn(
-              "flex h-8 w-8 items-center justify-center rounded-xl border border-line-card [&>svg]:h-4 [&>svg]:w-4",
+              "flex h-8 w-8 items-center justify-center border border-ink/25 [&>svg]:h-4 [&>svg]:w-4",
               inverse ? "bg-white/15" : "bg-surface/70",
             )}
           >
@@ -91,7 +88,7 @@ export function ColorStat({
       {loading ? (
         <div
           className={cn(
-            "mt-4 h-10 w-32 animate-pulse rounded-md",
+            "mt-4 h-10 w-32 animate-pulse",
             inverse ? "bg-white/25" : "bg-ink/15",
           )}
           aria-hidden="true"

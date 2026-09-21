@@ -12,15 +12,15 @@ const BLOCKED = [
 ];
 
 const PILLARS = [
-  ["01", "Scope, review criteria, and payment terms visible before commitment."],
-  ["02", "No passwords or unnecessary personal data, ever."],
-  ["03", "Report unclear or unsafe requests through support."],
+  ["01", "See the scope, the review rules, and the pay before you commit."],
+  ["02", "Never share passwords. Never share more than needed."],
+  ["03", "Unsure or unsafe? Report it to support."],
 ];
 
 const PAYOUT = [
-  ["01", "Approved", "Work clears review against the stated criteria."],
-  ["02", "Released", "Payout moves on the disclosed rail with an itemised receipt."],
-  ["03", "In bank", "Timing, deductions, and exceptions follow the brief."],
+  ["01", "Approved", "Your work passes review."],
+  ["02", "Released", "The payout moves, with its own receipt."],
+  ["03", "In bank", "Timing and deductions follow the brief."],
 ];
 
 export function SafetySection() {
@@ -38,7 +38,7 @@ export function SafetySection() {
             <ShieldCheck className="h-4 w-4" aria-hidden="true" /> Safety and standards
           </span>
           <h2 className="mt-4 max-w-[18ch] font-display text-3xl sm:text-4xl md:text-5xl font-extrabold leading-[1.02] tracking-[-0.02em] text-white">
-            Legitimate work. Visible terms.
+            Real work. Clear terms.
           </h2>
 
           <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">

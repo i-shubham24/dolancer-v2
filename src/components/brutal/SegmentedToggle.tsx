@@ -26,7 +26,7 @@ export function SegmentedToggle<T extends string>({
       role="tablist"
       aria-label={label}
       className={cn(
-        "inline-flex max-w-full items-center gap-1 overflow-x-auto rounded-full border border-line-card bg-subtle p-1 shadow-soft-sm",
+        "inline-flex max-w-full items-center gap-1 overflow-x-auto border-2 border-ink bg-field p-1",
         className,
       )}
     >
@@ -40,14 +40,14 @@ export function SegmentedToggle<T extends string>({
             aria-selected={selected}
             onClick={() => onChange(option.id)}
             className={cn(
-              "relative inline-flex min-h-[42px] shrink-0 items-center gap-1.5 rounded-full px-4 py-2 text-xs font-extrabold tracking-[-0.01em] transition-colors duration-150",
-              selected ? "text-ink" : "text-ink-2 hover:text-ink",
+              "relative inline-flex min-h-[42px] shrink-0 items-center gap-1.5 px-4 py-2 text-xs font-extrabold tracking-[-0.01em]",
+              selected ? "text-bone" : "text-ink-2",
             )}
           >
             {selected && (
               <motion.span
                 layoutId={`segmented-active-${layoutId}`}
-                className="absolute inset-0 rounded-full border border-line-card bg-surface shadow-soft-sm"
+                className="absolute inset-0 bg-ink"
                 transition={{ type: "spring", stiffness: 450, damping: 35 }}
               />
             )}
@@ -55,8 +55,8 @@ export function SegmentedToggle<T extends string>({
             {typeof option.count === "number" ? (
               <span
                 className={cn(
-                  "relative z-10 rounded-full px-1.5 py-0.5 text-[10px] font-extrabold",
-                  selected ? "bg-primary text-ink" : "bg-muted text-ink-2",
+                  "relative z-10 px-1.5 py-0.5 text-[10px] font-extrabold",
+                  selected ? "bg-primary text-white" : "bg-ink/10 text-ink-2",
                 )}
               >
                 {option.count}

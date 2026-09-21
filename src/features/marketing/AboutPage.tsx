@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { CONTACT } from "./content";
 import { ParallaxBand } from "./ParallaxBand";
 import { PageBackdrop } from "./cine/PageBackdrop";
+import { StepsMotif } from "./cine/StepsMotif";
 import { ensureGsap, gsap, motionOK } from "@/lib/scrollMotion";
 
 function AboutManifesto() {
@@ -33,8 +34,9 @@ function AboutManifesto() {
   }, []);
 
   return (
-    <section ref={ref} className="overflow-clip border-t-2 border-ink bg-[#0A1912]">
-      <div className="mx-auto max-w-[1400px] px-4 py-16 md:px-8 md:py-24">
+    <section ref={ref} className="relative overflow-clip border-t-2 border-ink bg-[#0A1912]">
+      <StepsMotif tone="text-white/15" className="bottom-6 right-4 hidden w-52 md:right-8 lg:block" />
+      <div className="relative mx-auto max-w-[1400px] px-4 py-16 md:px-8 md:py-24">
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7FE3A6]">The exchange</p>
         <h2 className="mt-4 font-display text-[clamp(2.6rem,7vw,6rem)] font-extrabold leading-[0.95] tracking-[-0.02em]">
           <span data-mani-line className="block overflow-hidden pb-[0.06em]">
@@ -46,7 +48,7 @@ function AboutManifesto() {
         </h2>
         <div className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <p data-mani-fade className="max-w-[46ch] text-base leading-relaxed text-white/65">
-            Client chaos stays on our side. Briefs, review, payout admin, awkward conversations.
+            Client chaos stays on our side. Briefs, review, payouts, hard talks.
             Your side stays clean: one brief, one deliverable, one receipt.
           </p>
           <div data-mani-fade className="flex flex-wrap items-center gap-4">
@@ -70,17 +72,17 @@ const PRINCIPLES = [
   {
     n: "01",
     title: "You stay anonymous",
-    body: "Clients never learn your name, where you are, what you are paid, or that you work through us. They see a discipline and nothing else. This protects you as much as it protects them.",
+      body: "Clients never learn your name, where you are, or what you are paid. They see the field, nothing else. This protects you too.",
   },
   {
     n: "02",
     title: "You are not an employee",
-    body: "You choose what to accept and when to stop. Nothing is assigned to you against your will, and pausing is a switch you control.",
+      body: "You choose what to accept and when to stop. Nothing is forced on you, and pausing is your call.",
   },
   {
     n: "03",
     title: "You are always paid",
-    body: "If work you delivered was sound and the client changed their mind, that is our problem to absorb, not yours. If we ever part ways, anything you have earned is still paid out.",
+      body: "If work you delivered was sound and the client changed their mind, that is our problem, not yours. If we ever part ways, anything you have earned is still paid out.",
   },
 ];
 
@@ -91,18 +93,44 @@ const PRINCIPLE_IMAGES = [
 ];
 
 const RECORD = [
-  ["Managed, not listed", "A supervisor routes each offer to a vetted doer. There is no public pool, no bidding, no proposal race."],
-  ["Anonymous by design", "The client sees a discipline label. Your name and details stay on this side of the platform."],
-  ["Pay stated upfront", "Every offer shows the doer payout before you accept. No mid-project negotiation."],
+  ["Managed, not listed", "A supervisor sends each offer to a vetted doer. No public pool. No bidding. No proposals."],
+  ["Anonymous by design", "The client sees the field, not your name. Your details stay on this side."],
+  ["Pay stated upfront", "Every offer shows the pay before you accept. No mid-project negotiation."],
 ];
 
 export function AboutPage() {
   const reduceMotion = useReducedMotion();
+  const scopeRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    ensureGsap();
+    if (!motionOK()) return;
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray<HTMLElement>("[data-about-plx]").forEach((el) => {
+        const speed = parseFloat(el.dataset.aboutPlx || "7");
+        gsap.fromTo(
+          el,
+          { yPercent: -speed },
+          {
+            yPercent: speed,
+            ease: "none",
+            scrollTrigger: {
+              trigger: el.parentElement,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          }
+        );
+      });
+    }, scopeRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div className="bg-bone">
+    <div ref={scopeRef} className="bg-bone">
       <div className="fresh-container relative pt-[130px] md:pt-[150px]">
-        <PageBackdrop word="STEWARD" dark={false} />
+        <PageBackdrop word="ABOUT" dark={false} />
         <div className="flex items-center justify-between border-y-2 border-ink py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-2">
           <span>About the platform</span>
           <span>Three rules, kept</span>
@@ -117,7 +145,7 @@ export function AboutPage() {
           <div className="lg:col-span-7">
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-2">About</p>
             <h1 className="mt-4 font-display text-[clamp(2.6rem,6vw,4.8rem)] font-extrabold leading-[0.98] tracking-[-0.02em] text-ink">
-              Clear work needs clear stewardship.
+              Clear work needs clear owners.
             </h1>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-ink-2">
               Dolancer is a managed service, not an open marketplace. Freelancing works best when
@@ -134,7 +162,8 @@ export function AboutPage() {
               src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=900&q=80"
               alt=""
               loading="eager"
-              className="aspect-[4/3] w-full border-2 border-ink object-cover grayscale"
+              data-about-plx="7"
+              className="aspect-[4/3] w-full scale-[1.15] border-2 border-ink object-cover grayscale will-change-transform"
             />
             <figcaption className="flex items-center justify-between border-2 border-t-0 border-ink px-3 py-2 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-2">
               <span>Fig. 01</span>
@@ -203,12 +232,13 @@ export function AboutPage() {
                 transition={{ duration: 0.55 }}
                 className="grid grid-cols-1 gap-4 border-b border-ink/25 py-6 sm:grid-cols-12 sm:gap-6"
               >
-                <div className="sm:col-span-4">
+                <div className="overflow-hidden sm:col-span-4">
                   <img
                     src={PRINCIPLE_IMAGES[i] ?? PRINCIPLE_IMAGES[0]}
                     alt=""
                     loading="lazy"
-                    className="aspect-[16/10] w-full border-2 border-ink object-cover grayscale"
+                    data-about-plx="5"
+                    className="aspect-[16/10] w-full scale-[1.12] border-2 border-ink object-cover grayscale will-change-transform"
                   />
                 </div>
                 <span className="font-mono text-sm font-semibold tracking-[0.18em] text-primary sm:col-span-1" aria-hidden="true">

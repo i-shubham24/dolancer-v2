@@ -25,16 +25,16 @@ export function Preloader() {
         { opacity: 1, duration: 0.3, ease: "power2.out" },
         0
       )
-        .to("[data-boot-hold]", { duration: 0.55 })
+        .to("[data-boot-hold]", { duration: 0.3 })
         .to(
           "[data-boot-inner]",
-          { yPercent: -6, duration: 0.8, ease: "power3.in" },
-          0.85
+          { yPercent: -6, duration: 0.7, ease: "power3.in" },
+          0.6
         )
         .to(
           ref.current,
-          { yPercent: -100, duration: 0.8, ease: "power4.inOut" },
-          0.9
+          { yPercent: -100, duration: 0.75, ease: "power4.inOut" },
+          0.65
         );
     }, ref);
     return () => ctx.revert();

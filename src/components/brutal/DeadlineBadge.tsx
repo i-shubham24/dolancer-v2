@@ -1,4 +1,4 @@
-import { Clock, AlertTriangle } from "lucide-react";
+import { Clock, Warning } from "@phosphor-icons/react";
 import { cn } from "@/lib/cn";
 import { relativeDeadline, deadlineUrgency, formatDateTime } from "@/lib/datetime";
 
@@ -43,7 +43,7 @@ export function DeadlineBadge({
       title={deadline ? formatDateTime(deadline) : undefined}
     >
       {critical ? (
-        <AlertTriangle className="h-3 w-3 shrink-0" aria-hidden="true" />
+        <Warning className="h-3 w-3 shrink-0" aria-hidden="true" />
       ) : (
         <Clock className="h-3 w-3 shrink-0" aria-hidden="true" />
       )}

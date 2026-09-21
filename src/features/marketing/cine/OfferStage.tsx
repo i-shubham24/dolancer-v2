@@ -123,11 +123,11 @@ export function OfferStage() {
           <div>
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">Example task formats</p>
             <h2 className="mt-3 max-w-[14ch] font-display text-[clamp(2.2rem,5vw,4.2rem)] font-extrabold leading-[0.95] tracking-[-0.02em] text-ink">
-              Pick a format. Read it fully.
+              Pick a task. Read it fully.
             </h2>
           </div>
           <p className="max-w-[30ch] text-sm leading-relaxed text-ink-2">
-            Representative briefs with scope and payment conditions visible. Labeled examples, not live claims.
+            Sample briefs. Scope and pay shown upfront. Marked as examples.
           </p>
         </div>
 

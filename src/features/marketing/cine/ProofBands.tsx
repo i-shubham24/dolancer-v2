@@ -1,39 +1,57 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ensureGsap, gsap, ScrollTrigger, motionOK } from "@/lib/scrollMotion";
+import { ensureGsap, ScrollTrigger, motionOK } from "@/lib/scrollMotion";
 
 const STATS = [
-  { value: 6, label: "Fields of work", body: "Six fields. Nothing else is offered." },
-  { value: 4, label: "Gates to payout", body: "Join, verify, deliver, get paid. Same path every time." },
-  { value: 1, label: "Supervisor per project", body: "Every offer is routed and reviewed by a person." },
-  { value: 0, label: "Bidding rounds", body: "No proposals, no undercutting, ever." },
+  { value: 2400, render: (v: number) => `${v.toLocaleString("en-IN")}+`, label: "Active Dolancers", body: "Verified specialists earning across six fields." },
+  { value: 8, render: (v: number) => `₹${v}Cr+`, label: "Total Paid Out", body: "Transferred directly to bank accounts." },
+  { value: 12000, render: (v: number) => `${v.toLocaleString("en-IN")}+`, label: "Briefs Completed", body: "Approved by supervisors without disputes." },
+  { value: 48, render: (v: number) => `${v}h`, label: "Average Release", body: "From supervisor sign-off to payout." },
 ];
 
-function StatCell({ value, label, body, index }: { value: number; label: string; body: string; index: number }) {
+function StatCell({ value, render, label, body, index }: { value: number; render: (v: number) => string; label: string; body: string; index: number }) {
   const numRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if (!motionOK() || !numRef.current) {
-      if (numRef.current) numRef.current.textContent = String(value).padStart(2, "0");
+    const el = numRef.current;
+    if (!el) return;
+    el.textContent = render(0);
+    if (!motionOK()) {
+      el.textContent = render(value);
       return;
     }
-    ensureGsap();
-    const obj = { v: 0 };
-    const tween = gsap.to(obj, {
-      v: value,
-      duration: 1.2,
-      ease: "power2.out",
-      scrollTrigger: { trigger: numRef.current, start: "top 85%", once: true },
-      onUpdate: () => {
-        if (numRef.current) numRef.current.textContent = String(Math.round(obj.v)).padStart(2, "0");
-      },
-    });
-    return () => {
-      tween.scrollTrigger?.kill();
-      tween.kill();
+    let raf = 0;
+    let started = false;
+    const run = () => {
+      const t0 = performance.now();
+      const dur = 1400;
+      const tick = (t: number) => {
+        const p = Math.min(1, (t - t0) / dur);
+        const eased = 1 - Math.pow(1 - p, 2);
+        el.textContent = render(Math.round(value * eased));
+        if (p < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
     };
-  }, [value]);
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !started) {
+            started = true;
+            run();
+            obs.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+    obs.observe(el);
+    return () => {
+      cancelAnimationFrame(raf);
+      obs.disconnect();
+    };
+  }, [value, render]);
 
   return (
     <motion.div
@@ -43,7 +61,7 @@ function StatCell({ value, label, body, index }: { value: number; label: string;
       transition={{ duration: 0.55, delay: (index % 2) * 0.08 }}
       className="bg-[#0A1912] p-5 md:p-6"
     >
-      <span ref={numRef} className="font-display text-5xl font-extrabold leading-none text-[#10A969] md:text-6xl">
+      <span ref={numRef} className="block break-words font-display text-4xl font-extrabold leading-none text-[#10A969] md:text-5xl">
         00
       </span>
       <p className="mt-2.5 font-extrabold text-[#F3EFE3]">{label}</p>
@@ -59,15 +77,15 @@ export function StatsBand() {
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7FE3A6]">Platform record</p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
           <h2 className="max-w-[14ch] font-display text-[clamp(2.2rem,5vw,4.2rem)] font-extrabold leading-[0.95] tracking-[-0.02em] text-[#F3EFE3]">
-            Small numbers, all true.
+            Numbers that speak for themselves.
           </h2>
           <p className="max-w-[30ch] text-sm leading-relaxed text-white/55">
-            Nothing rented, nothing borrowed. What the platform itself guarantees.
+            Real outcomes from the worker community.
           </p>
         </div>
         <div className="mt-8 grid grid-cols-2 gap-px border border-white/15 bg-white/15 lg:grid-cols-4">
           {STATS.map((s, i) => (
-            <StatCell key={s.label} value={s.value} label={s.label} body={s.body} index={i} />
+            <StatCell key={s.label} value={s.value} render={s.render} label={s.label} body={s.body} index={i} />
           ))}
         </div>
       </div>
@@ -140,11 +158,11 @@ export function ReceiptsBand() {
           <div>
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">Field receipts</p>
             <h2 className="mt-3 max-w-[16ch] font-display text-[clamp(2.2rem,5vw,4.2rem)] font-extrabold leading-[0.95] tracking-[-0.02em] text-ink">
-              Outcomes, anonymized by design.
+              Results without names.
             </h2>
           </div>
           <p className="max-w-[30ch] text-sm leading-relaxed text-ink-2">
-            Example formats. No names, no institutions, no invented counts.
+            Example formats. No names, no schools, no made-up numbers.
           </p>
         </div>
 

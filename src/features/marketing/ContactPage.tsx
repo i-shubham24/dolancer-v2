@@ -90,8 +90,7 @@ export function ContactPage() {
               <h2 className="mt-3 font-display text-xl font-extrabold text-ink">When we are around</h2>
               <p className="mt-2 text-sm font-bold text-ink">{CONTACT.hours}</p>
               <p className="mt-3 text-xs leading-relaxed text-ink-2">
-                Anything about a project you are actively working on is best raised with your
-                supervisor in that project thread. They will see it soonest.
+                For live project issues, message your supervisor in the project thread. They see it soonest.
               </p>
             </div>
 
@@ -99,8 +98,7 @@ export function ContactPage() {
               <Scales className="h-6 w-6 text-primary" aria-hidden="true" />
               <h2 className="mt-3 font-display text-xl font-extrabold text-ink">Grievances</h2>
               <p className="mt-2 text-sm leading-relaxed text-ink-2">
-                If something has not been resolved through support, or concerns how your data has
-                been handled, our grievance officer is reachable directly.
+                If support could not resolve it, or it concerns your data, write to our grievance officer directly.
               </p>
               <a
                 href={`mailto:${CONTACT.grievanceEmail}`}

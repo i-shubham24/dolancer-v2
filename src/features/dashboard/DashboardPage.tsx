@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { Inbox, Layers, ArrowRight, Wallet, Receipt, Briefcase } from "lucide-react";
+import { Tray, Stack, ArrowRight, Wallet, Receipt, Briefcase } from "@phosphor-icons/react";
 import { SkeletonCard, LoadingAnnounce } from "@/components/brutal/Skeleton";
 import { EmptyState, ErrorState } from "@/components/brutal/EmptyState";
 import { ProjectCard } from "@/components/brutal/ProjectCard";
@@ -92,20 +92,23 @@ export function DashboardPage() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45, ease: "easeOut" }}
     >
-      <header className="flex flex-wrap items-start justify-between gap-4 rounded-2xl border border-line-card bg-surface p-5 shadow-soft-md transition-all duration-200 hover:shadow-soft-lg sm:p-6">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-[-0.04em] text-ink sm:text-4xl">
-            {profile.isLoading ? (
-              <span className="skeleton inline-block h-9 w-64 align-middle" />
-            ) : (
-              <>Hey {firstName(profile.data?.full_name)}.</>
-            )}
-          </h1>
-          <p className="mt-2 text-md font-medium text-ink-2">
-            Here is where your work and your money stand today.
-          </p>
+      <header className="border-2 border-ink bg-field p-5 sm:p-6">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">Doer ledger</p>
+            <h1 className="mt-2 font-display text-3xl font-extrabold tracking-[-0.02em] text-ink sm:text-4xl">
+              {profile.isLoading ? (
+                <span className="skeleton inline-block h-9 w-64 align-middle" />
+              ) : (
+                <>Hey {firstName(profile.data?.full_name)}.</>
+              )}
+            </h1>
+            <p className="mt-2 text-md font-medium text-ink-2">
+              Here is where your work and your money stand today.
+            </p>
+          </div>
+          <AvailabilityToggle />
         </div>
-        <AvailabilityToggle />
       </header>
 
       {gate.isLoading ? <SkeletonCard /> : gate.data ? <ReadinessCard gate={gate.data} /> : null}
@@ -151,7 +154,7 @@ export function DashboardPage() {
         Three figures, and only three. Gross, tax and net are always shown as separate
         numbers rather than collapsed into one, so what was withheld is never implicit.
       */}
-      <section aria-labelledby="figures" className="rounded-2xl border border-line-card bg-surface p-4 shadow-soft-md transition-all duration-200 hover:shadow-soft-lg sm:p-5">
+      <section aria-labelledby="figures" className="border-2 border-ink bg-field p-4 sm:p-5">
         <h2 id="figures" className="sr-only">
           Your figures
         </h2>
@@ -201,8 +204,8 @@ export function DashboardPage() {
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
         <div className="min-w-0 space-y-7">
           {linkNeeded > 0 ? (
-            <div className="flex flex-wrap items-center gap-3 rounded-xl border border-line-card bg-warning-bg px-4 py-3 shadow-soft-sm">
-              <span className="rounded-full border border-line-card bg-surface px-2.5 py-0.5 text-2xs font-extrabold">
+            <div className="flex flex-wrap items-center gap-3 border-2 border-warning-ink/40 bg-warning-bg px-4 py-3">
+              <span className="border border-ink/25 bg-field px-2.5 py-0.5 text-2xs font-extrabold">
                 {linkNeeded} waiting
               </span>
               <p className="min-w-0 flex-1 text-sm font-bold">
@@ -210,7 +213,7 @@ export function DashboardPage() {
                   ? "One project is frozen until you add its working link."
                   : `${linkNeeded} projects are frozen until you add their working links.`}
               </p>
-              <Button asChild size="sm" variant="outline">
+              <Button asChild size="sm" variant="outline" className="rounded-none">
                 <Link to="/work">Fix now</Link>
               </Button>
             </div>
@@ -218,11 +221,11 @@ export function DashboardPage() {
 
           <section aria-labelledby="active-work" className="space-y-4">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <h2 id="active-work" className="text-2xl font-extrabold tracking-[-0.03em]">
+              <h2 id="active-work" className="font-display text-2xl font-extrabold tracking-[-0.02em] text-ink">
                 Your work
               </h2>
               {activeCount > 0 ? (
-                <Button asChild variant="ghost" size="sm">
+                <Button asChild variant="ghost" size="sm" className="rounded-none">
                   <Link to="/work">
                     See all
                     <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -253,7 +256,7 @@ export function DashboardPage() {
               />
             ) : activeCount === 0 ? (
               <EmptyState
-                icon={<Inbox className="h-6 w-6" aria-hidden="true" />}
+                icon={<Tray className="h-6 w-6" aria-hidden="true" />}
                 title="No active work yet"
                 description={
                   gate.data?.unlocked
@@ -261,22 +264,22 @@ export function DashboardPage() {
                     : "Once you are verified, assigned offers can appear here when a supervisor routes a suitable project."
                 }
                 action={
-                  <Button asChild>
-                    <Link to={gate.data?.unlocked ? "/pool" : "/verification"}>
-                      {gate.data?.unlocked ? "View assigned offers" : "Get verified"}
-                    </Link>
-                  </Button>
+                <Button asChild>
+                  <Link to={gate.data?.unlocked ? "/pool" : "/verification"} className="rounded-none">
+                    {gate.data?.unlocked ? "View assigned offers" : "Get verified"}
+                  </Link>
+                </Button>
                 }
               />
             ) : visible.length === 0 ? (
               <EmptyState
-                icon={<Layers className="h-6 w-6" aria-hidden="true" />}
+                icon={<Stack className="h-6 w-6" aria-hidden="true" />}
                 title={`Nothing ${active.label.toLowerCase()}`}
                 description="Try another filter to see the rest of your work."
                 action={
-                  <Button variant="outline" onClick={() => setFilter("all")}>
-                    Show all
-                  </Button>
+                <Button variant="outline" className="rounded-none" onClick={() => setFilter("all")}>
+                  Show all
+                </Button>
                 }
               />
             ) : (
@@ -292,12 +295,12 @@ export function DashboardPage() {
         <CapacityRail activeCount={activeCount} gate={gate.data} />
       </div>
 
-      <section aria-labelledby="assigned-offers" className="space-y-4 rounded-2xl border border-line-card bg-surface p-5 shadow-soft-md transition-all duration-200 hover:shadow-soft-lg sm:p-6">
+      <section aria-labelledby="assigned-offers" className="space-y-4 border-2 border-ink bg-field p-5 sm:p-6">
             <div className="flex items-center justify-between gap-4">
-              <h2 id="assigned-offers" className="text-2xl font-extrabold tracking-[-0.03em]">
+              <h2 id="assigned-offers" className="font-display text-2xl font-extrabold tracking-[-0.02em] text-ink">
                 Assigned offers
               </h2>
-              <Button asChild variant="ghost" size="sm">
+              <Button asChild variant="ghost" size="sm" className="rounded-none">
                 <Link to="/pool">
                   View all offers
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -312,9 +315,9 @@ export function DashboardPage() {
               </div>
             ) : pool.isError || !pool.data?.length ? (
               <EmptyState
-                icon={<Layers className="h-6 w-6" aria-hidden="true" />}
+                icon={<Stack className="h-6 w-6" aria-hidden="true" />}
                 title="Nothing matching right now"
-                description="Offers appear here when a supervisor routes a project that fits your verified disciplines and capacity."
+                description="Offers appear here when a supervisor sends work that fits you."
               />
             ) : (
               <div className="grid gap-3 md:grid-cols-2">
@@ -327,7 +330,7 @@ export function DashboardPage() {
                   >
                     <MotionCard
                       hoverable
-                      className="flex h-full flex-wrap items-center gap-4 transition-colors hover:border-highlight/35"
+                      className="flex h-full flex-wrap items-center gap-4 hover:border-primary"
                     >
                       <div className="min-w-0 flex-1 space-y-2">
                         <CategoryPill>{offer.category}</CategoryPill>
@@ -337,10 +340,10 @@ export function DashboardPage() {
                         <p className="text-xs text-ink-muted">{relativeDeadline(offer.deliveryAt)}</p>
                       </div>
                       <div className="shrink-0 text-right">
-                        <div className="text-2xs font-bold uppercase tracking-[0.05em] text-ink-muted">
+                        <div className="text-2xs font-bold uppercase tracking-[0.05em] text-ink-3">
                           Payout
                         </div>
-                        <div className="text-2xl font-extrabold tracking-[-0.03em]">
+                        <div className="font-display text-2xl font-extrabold tracking-[-0.02em] text-ink">
                           {formatPaise(offer.payoutPaise)}
                         </div>
                       </div>

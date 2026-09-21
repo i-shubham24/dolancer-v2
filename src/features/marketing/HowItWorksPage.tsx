@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Plus, Minus } from "@phosphor-icons/react";
@@ -6,6 +6,9 @@ import { STEPS, DIFFERENCES, FAQS, CATEGORIES } from "./content";
 import { CONTACT } from "./content";
 import { ParallaxBand } from "./ParallaxBand";
 import { PageBackdrop } from "./cine/PageBackdrop";
+import { BarColumns } from "./cine/Motifs";
+import { SquareGrid } from "./cine/Motifs";
+import { ensureGsap, gsap, ScrollTrigger, motionOK } from "@/lib/scrollMotion";
 
 const GATE_IMAGES = [
   "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1000&q=75",
@@ -52,6 +55,118 @@ function GateStack() {
         </div>
       ))}
     </div>
+  );
+}
+
+const PAYOUT_ROWS = [
+  ["Work clears review", "Your supervisor checks the work against the brief."],
+  ["Approval gate clears", "Client approval, timeout, or exception. Nothing moves on a promise."],
+  ["Payout lands itemised", "Gross, deductions, and net shown separately. Paid over UPI or NEFT."],
+];
+
+function PayoutJourney() {
+  const ref = useRef<HTMLElement>(null);
+  const [active, setActive] = useState(0);
+
+  useLayoutEffect(() => {
+    ensureGsap();
+    if (!motionOK()) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        "[data-po-rule]",
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          ease: "none",
+          scrollTrigger: { trigger: "[data-po-list]", start: "top 72%", end: "bottom 55%", scrub: true },
+        }
+      );
+      gsap.utils.toArray<HTMLElement>("[data-po-row]").forEach((el, i) => {
+        ScrollTrigger.create({
+          trigger: el,
+          start: "top 62%",
+          end: "bottom 38%",
+          onToggle: (self) => {
+            if (self.isActive) setActive(i);
+          },
+        });
+      });
+      gsap.fromTo(
+        "[data-po-ghost]",
+        { xPercent: 3 },
+        {
+          xPercent: -5,
+          ease: "none",
+          scrollTrigger: { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: true },
+        }
+      );
+    }, ref);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={ref} className="relative overflow-clip border-t border-white/15 bg-[#0A1912]">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-8 flex justify-end overflow-hidden">
+        <span
+          data-po-ghost
+          className="whitespace-nowrap pr-4 font-display font-extrabold leading-[0.85] md:pr-8"
+          style={{
+            fontSize: "clamp(3.5rem,9vw,8rem)",
+            color: "transparent",
+            WebkitTextStroke: "1.5px rgba(243,239,227,0.10)",
+          }}
+        >
+          PAYOUT
+        </span>
+      </div>
+      <BarColumns tone="text-white/15" className="bottom-6 left-4 hidden w-40 md:left-8 lg:block" />
+      <div className="relative mx-auto max-w-[1400px] px-4 py-14 md:px-8 md:py-20">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7FE3A6]">Payout path</p>
+            <h2 className="mt-3 max-w-[20ch] font-display text-3xl sm:text-4xl font-extrabold leading-[1.02] text-white">
+              Approved, released, in bank. Each with a receipt.
+            </h2>
+          </div>
+          <p className="max-w-[30ch] text-sm leading-relaxed text-white/55">
+            Every payout leaves a paper trail you can check.
+          </p>
+        </div>
+        <div className="mt-8 flex items-center gap-4" aria-hidden="true">
+          <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/40">Path</span>
+          <div className="h-[3px] flex-1 bg-white/15">
+            <div data-po-rule className="h-full w-full origin-left bg-primary" style={{ transform: "scaleX(0)" }} />
+          </div>
+          <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/40">
+            {String(Math.min(active + 1, 3)).padStart(2, "0")}/03
+          </span>
+        </div>
+        <ol data-po-list className="mt-8 grid grid-cols-1 gap-px border border-white/15 bg-white/15 md:grid-cols-3">
+          {PAYOUT_ROWS.map(([title, body], i) => {
+            const isActive = active === i;
+            return (
+              <li
+                key={title}
+                data-po-row
+                className={isActive ? "bg-[#0E2A1F] p-6 md:p-7" : "bg-[#0A1912] p-6 md:p-7"}
+              >
+                <p
+                  aria-hidden="true"
+                  className={isActive ? "font-display text-6xl font-extrabold leading-none text-[#10A969]" : "font-display text-6xl font-extrabold leading-none text-white/15"}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+                <p className="mt-4 font-display text-xl font-extrabold leading-tight text-white">{title}</p>
+                <p className="mt-2 text-sm leading-relaxed text-white/60">{body}</p>
+                <p className="mt-5 border-t border-white/15 pt-3 font-mono text-[11px] uppercase tracking-[0.16em] text-white/40">
+                  Receipt {String(i + 1).padStart(2, "0")} / 03
+                </p>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </section>
   );
 }
 
@@ -122,7 +237,7 @@ export function HowItWorksPage() {
           <motion.div {...reveal(0)} className="py-6 md:py-8">
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7FE3A6]">How it works</p>
             <h1 className="mt-4 max-w-[16ch] font-display text-[clamp(2.2rem,5vw,4rem)] font-extrabold leading-[0.98] tracking-[-0.02em] text-[#F3EFE3]">
-              The whole thing, start to paid.
+              The whole thing, start to payout.
             </h1>
             <div className="mt-6 max-w-xl">
               <p className="text-base leading-relaxed text-white/65">
@@ -196,32 +311,11 @@ export function HowItWorksPage() {
         </div>
       </div>
 
-      <div className="border-t-2 border-ink bg-[#0A1912]">
-        <div className="fresh-container py-14 md:py-20">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7FE3A6]">Payout path</p>
-          <h2 className="mt-3 max-w-[20ch] font-display text-3xl sm:text-4xl font-extrabold leading-[1.02] text-white">
-            Approved, released, in bank. Each with a receipt.
-          </h2>
-          <ol className="mt-8 divide-y divide-white/15 border-y border-white/15">
-            {[
-              ["Work clears review", "Completeness, quality, safety, originality, and the brief, checked by your supervisor."],
-              ["Approval gate clears", "Client approval, timeout, or exception process. Nothing moves on a promise."],
-              ["Payout lands itemised", "Gross, withholding, and net as separate figures over UPI or NEFT."],
-            ].map(([title, body], i) => (
-              <li key={title} className="flex gap-4 py-4">
-                <span className="font-mono text-xs font-semibold text-[#7FE3A6]">0{i + 1}</span>
-                <div>
-                  <p className="font-extrabold text-white">{title}</p>
-                  <p className="mt-0.5 max-w-2xl text-sm text-white/65">{body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </div>
+      <PayoutJourney />
 
       <div className="border-t-2 border-ink bg-bone">
-        <div className="fresh-container py-14 md:py-20">
+        <div className="fresh-container relative py-14 md:py-20">
+          <SquareGrid tone="text-ink/20" className="right-4 top-10 hidden w-28 md:right-8 lg:block" />
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">What makes this different</p>
           <h2 className="mt-3 font-display text-3xl sm:text-4xl font-extrabold leading-[1.02] text-ink">
             Six reasons, pictured.
@@ -231,9 +325,10 @@ export function HowItWorksPage() {
               <motion.article
                 key={d.title}
                 {...reveal(Math.min(i, 2) * 0.06)}
-                className="border-2 border-ink bg-field"
+                className={`border-2 border-ink bg-field ${i % 2 === 1 ? "md:mt-12" : ""}`}
               >
-                <img
+                <div className="overflow-hidden border-b-2 border-ink">
+                  <img
                   src={[
                     "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=70",
                     "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=1000&q=70",
@@ -244,8 +339,10 @@ export function HowItWorksPage() {
                   ][i] ?? ""}
                   alt=""
                   loading="lazy"
-                  className="aspect-[16/7] w-full border-b-2 border-ink object-cover grayscale"
+                  data-hiw-plx="6"
+                  className="aspect-[16/7] w-full scale-[1.12] object-cover grayscale will-change-transform"
                 />
+              </div>
                 <div className="p-6">
                   <p className="font-mono text-[11px] tracking-[0.18em] text-primary">0{i + 1} / 06</p>
                   <h3 className="mt-2 font-display text-xl font-extrabold text-ink md:text-2xl">{d.title}</h3>
@@ -262,8 +359,7 @@ export function HowItWorksPage() {
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-2">Disciplines</p>
           <h2 className="mt-3 font-display text-3xl sm:text-4xl font-extrabold text-ink">What gets offered here</h2>
           <p className="mt-3 max-w-xl text-sm leading-relaxed text-ink-2">
-            Pick the disciplines you are genuinely strong in. Supervisors use them to route suitable
-            offers, so accuracy matters more than breadth.
+            Pick what you are genuinely strong in. Supervisors match offers to it, so honesty beats breadth.
           </p>
           <ul className="mt-6 flex flex-wrap gap-2">
             {CATEGORIES.map((c) => (

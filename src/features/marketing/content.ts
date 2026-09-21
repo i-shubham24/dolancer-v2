@@ -27,19 +27,19 @@ export interface Step {
 export const STEPS: Step[] = [
   {
     title: "Create your account",
-    body: "Use passwordless email access, confirm that you are 18 or older, and tell us which disciplines you can genuinely deliver.",
+    body: "Sign in with email, confirm you are 18 or older, and tell us what you can genuinely deliver.",
   },
   {
     title: "Complete verification",
-    body: "Share the identity and payout details required for safe payments. Verification can be reviewed while you explore your account, but it must be complete before payout.",
+    body: "Share identity and payout details for safe payments. Must be done before payout.",
   },
   {
     title: "Receive an assigned offer",
-    body: "A supervisor sends you a specific project with its scope, deadline, workspace and agreed doer payout. There is no public task pool, bidding or proposal race.",
+    body: "A supervisor sends you a project with scope, deadline, workspace, and pay. No public pool. No bidding.",
   },
   {
     title: "Deliver through review",
-    body: "Work in the company workspace, speak with your supervisor, submit for quality review, and receive payout only after the approval gate clears.",
+    body: "Work in the company workspace. Talk to your supervisor. Get paid after the approval gate clears.",
   },
 ];
 

@@ -27,7 +27,7 @@ export function StatusBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border border-transparent px-2.5 py-[5px]",
+        "inline-flex items-center gap-1.5 border border-transparent px-2.5 py-[5px]",
         "text-2xs font-bold leading-tight tracking-[0.02em]",
         spec.wrap,
         className,
@@ -35,7 +35,7 @@ export function StatusBadge({
     >
       <span
         aria-hidden="true"
-        className={cn("h-1.5 w-1.5 shrink-0 rounded-full", spec.dot, spec.pulse && "status-dot-pulse")}
+        className={cn("h-1.5 w-1.5 shrink-0", spec.dot, spec.pulse && "status-dot-pulse")}
       />
       {label}
     </span>

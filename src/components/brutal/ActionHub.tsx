@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { AlertCircle, ArrowRight } from "lucide-react";
+import { WarningCircle, ArrowRight } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 
 interface ActionHubProps {
@@ -19,11 +19,11 @@ export function ActionHub({ title, description, actionLabel, onAction, tone = "p
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`relative overflow-hidden rounded-2xl border ${border} ${bg} p-5 shadow-soft-sm`}
+      className={`relative overflow-hidden border-2 ${border} ${bg} p-5`}
     >
       <div className="flex items-start gap-4">
-        <div className={`mt-0.5 rounded-full p-1.5 ${tone === "primary" ? "bg-accent/20" : "bg-white/20"}`}>
-          <AlertCircle className={`h-5 w-5 ${iconColor}`} />
+        <div className={`mt-0.5 p-1.5 ${tone === "primary" ? "bg-accent/20" : "bg-white/20"}`}>
+          <WarningCircle className={`h-5 w-5 ${iconColor}`} aria-hidden="true" />
         </div>
         <div className="flex-1">
           <h3 className="text-base font-extrabold text-ink">{title}</h3>

@@ -41,9 +41,9 @@ export function SiteFooter() {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         "[data-footer-wm]",
-        { xPercent: 5 },
+        { xPercent: 4 },
         {
-          xPercent: -9,
+          xPercent: -2,
           ease: "none",
           scrollTrigger: { trigger: scopeRef.current, start: "top bottom", end: "bottom top", scrub: true },
         }
@@ -71,8 +71,8 @@ export function SiteFooter() {
                 </span>
               </Link>
               <p className="mt-4 max-w-[32ch] text-sm leading-relaxed text-white/60">
-                Skilled work, briefed properly, paid reliably. Supervisor-routed briefs with terms
-                visible before commitment.
+                Skilled work, briefed properly, paid reliably. A supervisor sends the briefs.
+                Terms shown before you commit.
               </p>
               <a
                 href={`mailto:${CONTACT.email}`}

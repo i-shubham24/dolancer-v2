@@ -1,5 +1,5 @@
 import * as Switch from "@radix-ui/react-switch";
-import { Lock } from "lucide-react";
+import { Lock } from "@phosphor-icons/react";
 import { cn } from "@/lib/cn";
 import { availabilityState, AVAILABILITY_COPY } from "@/stores/useAvailabilityStore";
 import { useAvailability } from "./queries";
@@ -28,7 +28,7 @@ export function AvailabilityToggle({ compact = false }: { compact?: boolean }) {
   const { available, activeCount, isLoading, isSaving, setAvailable } = useAvailability();
 
   if (isLoading) {
-    return <div className="skeleton h-9 w-36 rounded-full" aria-hidden="true" />;
+    return <div className="skeleton h-9 w-36" aria-hidden="true" />;
   }
 
   const state = availabilityState({ activeCount, available });
@@ -39,12 +39,12 @@ export function AvailabilityToggle({ compact = false }: { compact?: boolean }) {
     <div className={cn("flex flex-col gap-1.5", compact ? "items-start" : "items-end")}>
       <div
         className={cn(
-          "inline-flex items-center gap-2.5 rounded-full border border-line-card bg-surface/90 px-3 py-1.5 shadow-soft-md backdrop-blur-sm",
+          "inline-flex items-center gap-2.5 border-2 border-ink bg-field px-3 py-1.5",
           TONE[state],
           isSaving && "opacity-70",
         )}
       >
-        <span aria-hidden="true" className={cn("h-2 w-2 rounded-full", DOT[state])} />
+        <span aria-hidden="true" className={cn("h-2 w-2", DOT[state])} />
         <span className="text-xs font-extrabold tracking-[-0.01em]">{copy.label}</span>
 
         {locked ? (
@@ -56,11 +56,11 @@ export function AvailabilityToggle({ compact = false }: { compact?: boolean }) {
             disabled={isSaving}
             aria-label={"Availability: " + copy.label}
             className={cn(
-              "relative h-5 w-9 rounded-full border border-line-card transition-colors",
-              available ? "bg-surface" : "bg-muted",
+              "relative h-5 w-9 border-2 border-ink",
+              available ? "bg-primary" : "bg-ink/15",
             )}
           >
-            <Switch.Thumb className="block h-3 w-3 translate-x-[3px] rounded-full bg-ink transition-transform data-[state=checked]:translate-x-[18px]" />
+            <Switch.Thumb className="block h-3 w-3 translate-x-[3px] bg-white transition-transform data-[state=checked]:translate-x-[18px]" />
           </Switch.Root>
         )}
       </div>

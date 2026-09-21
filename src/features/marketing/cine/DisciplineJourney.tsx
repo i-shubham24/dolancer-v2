@@ -58,7 +58,7 @@ export function DisciplineJourney() {
             One clear brief at a time.
           </h2>
           <p className="max-w-[30ch] text-sm leading-relaxed text-white/55">
-            Six fields. Each one is a bounded format, not an open marketplace.
+            Six kinds of work, each with clear limits.
           </p>
         </div>
       </div>

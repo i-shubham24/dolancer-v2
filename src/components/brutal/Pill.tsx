@@ -1,12 +1,12 @@
 import * as React from "react";
 import { cn } from "@/lib/cn";
 
-/** Category pill: a quiet metadata label in the shared soft system. */
+/** Category tag: a quiet metadata label, squared to the ledger. */
 export function CategoryPill({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border border-line-card bg-subtle px-3 py-1",
+        "inline-flex items-center border border-ink/30 bg-subtle px-2.5 py-1",
         "text-2xs font-bold uppercase tracking-[0.04em]",
         className,
       )}
@@ -16,12 +16,12 @@ export function CategoryPill({ children, className }: { children: React.ReactNod
   );
 }
 
-/** Progress pill: the active work accent. */
+/** Progress tag: the active work accent. */
 export function ProgressPill({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border border-transparent bg-accent-light px-2.5 py-[3px]",
+        "inline-flex items-center border border-transparent bg-accent-light px-2.5 py-[3px]",
         "text-[11.5px] font-bold text-ink",
         className,
       )}
@@ -31,12 +31,12 @@ export function ProgressPill({ children, className }: { children: React.ReactNod
   );
 }
 
-/** Quiet metadata chip, no black border. */
+/** Quiet metadata chip. */
 export function MicroChip({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full border border-line-card bg-subtle px-2.5 py-[3px]",
+        "inline-flex items-center border border-ink/25 bg-subtle px-2.5 py-[3px]",
         "text-[11.5px] font-semibold text-ink-2",
         className,
       )}

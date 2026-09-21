@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Check, ShieldCheck, Sparkles, GraduationCap, FileText } from "lucide-react";
+import { Check, ShieldCheck, Sparkle, GraduationCap, FileText } from "@phosphor-icons/react";
 import { Card } from "@/components/brutal/Card";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/cn";
@@ -58,7 +58,7 @@ function buildSteps(gate: DoerGateState): Step[] {
       done: gate.skillsDone,
       href: "/skills",
       cta: "Choose skills",
-      icon: <Sparkles className="h-4 w-4" aria-hidden="true" />,
+      icon: <Sparkle className="h-4 w-4" aria-hidden="true" />,
     },
     {
       id: "training",
@@ -80,24 +80,24 @@ export function ReadinessCard({ gate }: { gate: DoerGateState }) {
   const pct = Math.round((gate.stepsDone / gate.totalSteps) * 100);
 
   return (
-    <Card className="relative overflow-hidden border-[var(--dl-purple)]/20 bg-gradient-to-br from-[var(--dl-purple-light)] via-surface to-[var(--dl-accent-light)] shadow-soft-lg">
-      <div className="pointer-events-none absolute -right-10 -top-16 h-40 w-40 rounded-full bg-[var(--dl-purple)]/10 blur-3xl" />
+    <Card className="relative overflow-hidden border-primary">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-extrabold tracking-[-0.03em] text-ink">
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">Readiness</p>
+          <h2 className="mt-2 font-display text-2xl font-extrabold tracking-[-0.02em] text-ink">
             Want to start earning? Get verified.
           </h2>
           <p className="mt-1.5 max-w-xl text-sm text-ink-2">
             You have full access already. Finishing these unlocks project offers and payouts.
           </p>
         </div>
-        <div className="shrink-0 rounded-full border border-line-card bg-surface px-3 py-1 text-xs font-extrabold shadow-soft-sm">
+        <div className="shrink-0 border border-ink/30 bg-bone px-3 py-1 font-mono text-xs font-bold text-ink">
           {gate.stepsDone} of {gate.totalSteps} done
         </div>
       </div>
 
       <div
-        className="mt-4 h-2.5 w-full overflow-hidden rounded-full border border-line-card bg-surface/80"
+        className="mt-4 h-2.5 w-full overflow-hidden bg-ink/10"
         role="progressbar"
         aria-valuenow={pct}
         aria-valuemin={0}
@@ -105,7 +105,7 @@ export function ReadinessCard({ gate }: { gate: DoerGateState }) {
         aria-label="Readiness progress"
       >
         <div
-          className="h-full rounded-full bg-gradient-to-r from-[var(--dl-purple)] to-[var(--dl-secondary)] transition-[width] duration-500 ease-spring"
+          className="h-full bg-primary transition-[width] duration-500"
           style={{ width: `${pct}%` }}
         />
       </div>
@@ -115,18 +115,18 @@ export function ReadinessCard({ gate }: { gate: DoerGateState }) {
           <li
             key={step.id}
             className={cn(
-              "flex flex-wrap items-center gap-3 rounded-xl border px-3.5 py-3 transition-colors",
+              "flex flex-wrap items-center gap-3 border px-3.5 py-3",
               step.done
-                ? "border-line-card bg-surface-2"
+                ? "border-ink/20 bg-bone"
                 : step.waiting
-                  ? "border-line-card bg-warning-bg"
-                  : "border-highlight/20 bg-surface/80 shadow-soft-sm",
+                  ? "border-warning-ink/40 bg-warning-bg"
+                  : "border-ink/40 bg-field",
             )}
           >
             <span
               className={cn(
-                "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-line-card",
-                step.done ? "bg-success-bg text-success-ink" : "bg-surface text-ink",
+                "flex h-8 w-8 shrink-0 items-center justify-center border",
+                step.done ? "border-success-ink/40 bg-success-bg text-success-ink" : "border-ink/30 bg-primary text-white",
               )}
             >
               {step.done ? <Check className="h-4 w-4" aria-hidden="true" /> : step.icon}
@@ -137,13 +137,13 @@ export function ReadinessCard({ gate }: { gate: DoerGateState }) {
                 <span
                   className={cn(
                     "text-sm font-extrabold tracking-[-0.01em]",
-                    step.done && "text-ink-muted line-through",
+                    step.done && "text-ink-3 line-through",
                   )}
                 >
                   {step.label}
                 </span>
                 {step.waiting ? (
-                  <span className="rounded-full border border-line-card bg-warning-bg px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-warning-ink">
+                  <span className="border border-ink/25 bg-warning-bg px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide text-warning-ink">
                     Waiting on us
                   </span>
                 ) : null}
@@ -154,7 +154,7 @@ export function ReadinessCard({ gate }: { gate: DoerGateState }) {
             </div>
 
             {!step.done && !step.waiting ? (
-              <Button asChild size="sm" variant={step.id === next?.id ? "primary" : "secondary"}>
+              <Button asChild size="sm" variant={step.id === next?.id ? "primary" : "secondary"} className="rounded-none">
                 <Link to={step.href}>{step.cta}</Link>
               </Button>
             ) : null}

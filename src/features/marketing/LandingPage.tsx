@@ -1,10 +1,11 @@
 import { CineHero } from "./cine/CineHero";
+import { StatsBand, ReceiptsBand, useRefreshOnLoad } from "./cine/ProofBands";
 import { SectionTicker } from "./SectionTicker";
 import { DisciplineJourney } from "./cine/DisciplineJourney";
 import { OfferStage } from "./cine/OfferStage";
 import { StickySteps } from "./StickySteps";
 import { FitQuiz } from "./cine/FitQuiz";
-import { StatsBand, ReceiptsBand, useRefreshOnLoad } from "./cine/ProofBands";
+import { BriefStrip } from "./cine/BriefStrip";
 import { SafetySection } from "./SafetySection";
 import { FinalCta } from "./FinalCta";
 
@@ -16,12 +17,12 @@ const WORKFLOW_STEPS = [
   },
   {
     n: "02",
-    title: "Find a suitable opportunity",
+    title: "Find work that fits",
     body: "Get briefs that match your profile. No names, no bidding.",
   },
   {
     n: "03",
-    title: "Review requirements and terms",
+    title: "Read the terms",
     body: "Read the full brief first. Scope, pay, deadline, everything.",
   },
   {
@@ -36,16 +37,16 @@ const WORKFLOW_STEPS = [
   },
   {
     n: "06",
-    title: "Receive payout per disclosed terms",
+    title: "Get paid",
     body: "The payout lands per the brief terms.",
   },
 ];
 
 const WORKFLOW_IMAGES = [
-  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
 ];
@@ -55,6 +56,7 @@ export function LandingPage() {
   return (
     <div className="bg-[#0A1912]">
       <CineHero />
+      <StatsBand />
       <SectionTicker />
       <DisciplineJourney />
       <OfferStage />
@@ -63,15 +65,15 @@ export function LandingPage() {
           <StickySteps
             dark
             kicker="How Dolancer works"
-            title="From join to payout, in the open."
+            title="From joining to payout."
             steps={WORKFLOW_STEPS}
             images={WORKFLOW_IMAGES}
           />
         </div>
       </section>
       <FitQuiz />
-      <StatsBand />
       <ReceiptsBand />
+      <BriefStrip />
       <div className="bg-bone">
         <SafetySection />
       </div>
