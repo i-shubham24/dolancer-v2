@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ensureGsap, gsap, ScrollTrigger, motionOK } from "@/lib/scrollMotion";
 
@@ -14,6 +14,12 @@ const DISCIPLINES = [
 function JourneyImage({ src, n }: { src: string; n: string }) {
   const [ready, setReady] = useState(false);
   const [dead, setDead] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+  useEffect(() => {
+    // Cached images can finish before onLoad attaches; catch that path.
+    const el = imgRef.current;
+    if (el && el.complete && el.naturalWidth > 0) setReady(true);
+  }, [src]);
   return (
     <>
       <span
@@ -25,6 +31,7 @@ function JourneyImage({ src, n }: { src: string; n: string }) {
       </span>
       {!dead && (
         <img
+          ref={imgRef}
           src={src}
           alt=""
           loading="eager"
@@ -46,14 +53,38 @@ export function DisciplineJourney() {
   const progRef = useRef<HTMLDivElement>(null);
   const numRef = useRef<HTMLSpanElement>(null);
 
+  const step = (dir: number) => {
+    const track = trackRef.current;
+    if (!track) return;
+    track.scrollBy({ left: dir * track.clientWidth * 0.86, behavior: "smooth" });
+  };
+
+  const onRailScroll = () => {
+    const track = trackRef.current;
+    if (!track || window.innerWidth >= 768) return;
+    const max = track.scrollWidth - track.clientWidth;
+    if (max <= 0) return;
+    const idx = Math.min(6, Math.floor((track.scrollLeft / max) * 6) + 1);
+    if (numRef.current) {
+      numRef.current.textContent = `${String(idx).padStart(2, "0")} / 06`;
+    }
+    if (progRef.current) {
+      progRef.current.style.width = `${Math.round((track.scrollLeft / max) * 100)}%`;
+    }
+  };
+
+  const pinActive = useRef<boolean | null>(null);
+  if (pinActive.current === null) pinActive.current = motionOK();
+
   useLayoutEffect(() => {
     ensureGsap();
     const mm = gsap.matchMedia();
-    mm.add("(min-width: 768px)", () => {
+    mm.add("all", () => {
       if (!motionOK()) return;
       const wrap = wrapRef.current;
       const track = trackRef.current;
       if (!wrap || !track) return;
+      gsap.set(track, { overflowX: "visible", overflowY: "visible" });
       gsap.to(track, {
         x: () => -(track.scrollWidth - window.innerWidth),
         ease: "none",
@@ -115,15 +146,35 @@ export function DisciplineJourney() {
         </div>
       </div>
 
+      {!pinActive.current && (
+        <div className="mx-auto mt-4 flex max-w-[1400px] gap-3 px-4 md:hidden">
+          <button
+            type="button"
+            onClick={() => step(-1)}
+            className="border border-white/25 px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-[#F3EFE3] active:bg-white/10"
+          >
+            Prev
+          </button>
+          <button
+            type="button"
+            onClick={() => step(1)}
+            className="bg-[#10A969] px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-white active:brightness-110"
+          >
+            Next
+          </button>
+        </div>
+      )}
+
       <div
         ref={trackRef}
         data-rail="disciplines"
-        className="mt-4 flex snap-x snap-mandatory gap-0 overflow-x-auto [scrollbar-width:none] lg:w-max lg:overflow-visible [&::-webkit-scrollbar]:hidden"
+        onScroll={onRailScroll}
+        className="mt-4 flex snap-x snap-mandatory gap-0 overflow-x-auto overscroll-x-contain [scrollbar-width:none] lg:w-max lg:overflow-visible [&::-webkit-scrollbar]:hidden"
       >
         {DISCIPLINES.map((d) => (
           <article
             key={d.n}
-            className="relative min-h-[82svh] w-[86vw] shrink-0 snap-center overflow-hidden border-y border-r border-white/15 bg-[#0A1912] first:border-l sm:w-[52vw] md:w-[44vw] lg:h-[82svh] lg:max-h-[720px] lg:min-h-[480px] lg:w-[32vw]"
+            className="relative min-h-[72svh] w-[72vw] shrink-0 snap-center overflow-hidden border-y border-r border-white/15 bg-[#0A1912] first:border-l sm:w-[52vw] md:min-h-[82svh] md:w-[44vw] lg:h-[82svh] lg:max-h-[720px] lg:min-h-[480px] lg:w-[32vw]"
           >
             <JourneyImage src={d.img} n={d.n} />
             <div className="absolute inset-0 bg-[#060D0A]/55" />
@@ -146,7 +197,7 @@ export function DisciplineJourney() {
           </article>
         ))}
 
-        <div className="flex min-h-[82svh] w-[86vw] shrink-0 snap-center flex-col justify-between border-y border-r border-white/15 bg-[#10A969] p-6 sm:w-[52vw] md:w-[44vw] md:p-8 lg:h-[82svh] lg:max-h-[720px] lg:min-h-[480px] lg:w-[30vw]">
+        <div className="flex min-h-[72svh] w-[72vw] shrink-0 snap-center flex-col justify-between border-y border-r border-white/15 bg-[#10A969] p-6 sm:w-[52vw] md:min-h-[82svh] md:w-[44vw] md:p-8 lg:h-[82svh] lg:max-h-[720px] lg:min-h-[480px] lg:w-[30vw]">
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#06281a]/70">Not sure where you fit</p>
           <p className="font-display text-4xl font-extrabold leading-[0.95] text-[#06281a] md:text-5xl">
             Answer 4 questions. Get a direction.
@@ -166,7 +217,7 @@ export function DisciplineJourney() {
 
       <div className="mx-auto max-w-[1400px] px-4 py-6 md:px-8">
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">
-          Pinned journey on tablet and desktop · Swipe rail on mobile
+          Pinned journey · Swipe rail when reduced motion is on
         </p>
       </div>
     </section>

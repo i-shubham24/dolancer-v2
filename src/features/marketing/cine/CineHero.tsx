@@ -12,7 +12,7 @@ export function CineHero() {
     if (!motionOK()) return;
     const ctx = gsap.context(() => {
       const seen = sessionStorage.getItem("dl-boot-v3");
-      const base = seen ? 0.15 : 1.0;
+      const base = seen ? 0.15 : 1.3;
       gsap.from("[data-ch-line] span", { yPercent: 115, duration: 1, stagger: 0.12, ease: "power3.out", delay: base });
       gsap.from("[data-ch-fade]", { y: 26, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out", delay: base + 0.35 });
       if (window.innerWidth < 1024) return;
