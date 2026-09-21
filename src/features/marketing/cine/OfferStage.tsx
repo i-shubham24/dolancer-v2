@@ -193,7 +193,7 @@ export function OfferStage() {
                 </div>
               </div>
 
-              <div className="border-t-2 border-ink p-6 md:p-8 lg:border-l-2 lg:border-t-0 lg:p-10">
+              <div className="min-w-0 border-t-2 border-ink p-6 md:p-8 lg:border-l-2 lg:border-t-0 lg:p-10">
                 <AnimatePresence mode="wait" initial={false}>
                   <motion.div
                     key={offer.id}

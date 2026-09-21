@@ -65,12 +65,13 @@ export function DisciplineJourney() {
 
       <div
         ref={trackRef}
+        data-rail="disciplines"
         className="mt-6 flex snap-x snap-mandatory gap-0 overflow-x-auto [scrollbar-width:none] lg:w-max lg:overflow-visible [&::-webkit-scrollbar]:hidden"
       >
         {DISCIPLINES.map((d) => (
           <article
             key={d.n}
-            className="relative h-[82svh] max-h-[720px] min-h-[480px] w-[86vw] shrink-0 snap-center overflow-hidden border-y border-r border-white/15 first:border-l sm:w-[52vw] lg:w-[44vw]"
+            className="relative min-h-[540px] w-[86vw] shrink-0 snap-center overflow-hidden border-y border-r border-white/15 first:border-l sm:w-[52vw] lg:h-[82svh] lg:max-h-[720px] lg:min-h-[480px] lg:w-[44vw]"
           >
             <img src={d.img} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover grayscale" />
             <div className="absolute inset-0 bg-[#060D0A]/55" />
@@ -93,7 +94,7 @@ export function DisciplineJourney() {
           </article>
         ))}
 
-        <div className="flex h-[82svh] max-h-[720px] min-h-[480px] w-[86vw] shrink-0 snap-center flex-col justify-between border-y border-r border-white/15 bg-[#10A969] p-6 sm:w-[52vw] md:p-8 lg:w-[36vw]">
+        <div className="flex min-h-[540px] w-[86vw] shrink-0 snap-center flex-col justify-between border-y border-r border-white/15 bg-[#10A969] p-6 sm:w-[52vw] md:p-8 lg:h-[82svh] lg:max-h-[720px] lg:min-h-[480px] lg:w-[36vw]">
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#06281a]/70">Not sure where you fit</p>
           <p className="font-display text-4xl font-extrabold leading-[0.95] text-[#06281a] md:text-5xl">
             Answer 4 questions. Get a direction.

@@ -79,6 +79,19 @@ export function MarketingLayout() {
     return () => obs.disconnect();
   }, [currentOutlet, pathname]);
 
+  useEffect(() => {
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.documentElement.style.overflow = "";
+    };
+  }, [open ]);
+
+  useEffect(() => {
+    document.querySelectorAll<HTMLElement>("[data-rail]").forEach((el) => {
+      el.scrollLeft = 0;
+    });
+  }, [currentOutlet]);
+
   return (
     <div className="fresh-site flex min-h-dvh flex-col bg-canvas relative">
       <Preloader />

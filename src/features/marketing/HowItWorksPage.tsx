@@ -252,7 +252,7 @@ export function HowItWorksPage() {
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/45">Four gates below</p>
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/45">Drag sideways</p>
           </div>
-          <div className="mt-4 flex snap-x gap-px overflow-x-auto border border-white/25 bg-white/25 pb-0 [scrollbar-width:thin]">
+          <div className="mt-4 flex snap-x gap-px overflow-x-auto border border-white/25 bg-white/25 pb-0 pr-4 [scrollbar-width:thin] md:pr-8" data-rail="gates">
             {STEPS.map((s, i) => (
               <motion.a
                 key={s.title}

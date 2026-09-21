@@ -54,7 +54,8 @@ export function BriefStrip() {
       </div>
       <div
         ref={stripRef}
-        className="mt-6 flex cursor-grab gap-5 overflow-x-auto pb-2 pl-[max(1rem,calc((100vw-1400px)/2+2rem))] pr-4 [scrollbar-width:none] md:pr-8 active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
+        data-rail="briefs"
+        className="mt-6 flex cursor-grab gap-5 overflow-x-auto pb-2 pl-[max(1rem,calc((100vw-1400px)/2+2rem))] pr-4 [scrollbar-width:none] [touch-action:pan-y] md:pr-8 active:cursor-grabbing [&::-webkit-scrollbar]:hidden"
       >
         {STRIP.map((b) => (
           <article key={b.title} className="w-[80vw] shrink-0 border border-white/15 bg-white/[0.04] sm:w-[420px]">

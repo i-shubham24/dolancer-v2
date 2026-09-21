@@ -182,7 +182,7 @@ export function ReceiptsBand() {
                   Example
                 </span>
               </div>
-              <h3 className="font-display text-2xl font-extrabold leading-[0.98] text-ink md:col-span-4 md:text-[2rem]">
+              <h3 className="min-w-0 font-display text-2xl font-extrabold leading-[0.98] text-ink md:col-span-4 md:text-[2rem]">
                 {r.title}
               </h3>
               <p
@@ -191,7 +191,7 @@ export function ReceiptsBand() {
               >
                 {String(i + 1).padStart(2, "0")}
               </p>
-              <dl className="md:col-span-4">
+              <dl className="min-w-0 md:col-span-4">
                 {r.rows.map(([k, v]) => (
                   <div key={k} className="flex items-baseline justify-between gap-3 border-t border-ink/15 py-1.5 text-sm first:border-t-0 first:pt-0">
                     <dt className="shrink-0 font-mono text-[11px] uppercase tracking-[0.14em] text-ink-3">{k}</dt>
