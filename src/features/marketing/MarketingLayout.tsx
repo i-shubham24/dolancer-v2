@@ -198,7 +198,7 @@ export function MarketingLayout() {
                         className="flex items-baseline gap-4 py-4"
                       >
                         <span className="font-mono text-xs text-[#7FE3A6]">{item.n}</span>
-                        <span className="font-display text-4xl font-extrabold tracking-tight text-white">
+                        <span className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
                           {item.label}
                         </span>
                       </a>
@@ -209,7 +209,7 @@ export function MarketingLayout() {
                         className="flex items-baseline gap-4 py-4"
                       >
                         <span className="font-mono text-xs text-[#7FE3A6]">{item.n}</span>
-                        <span className="font-display text-4xl font-extrabold tracking-tight text-white">
+                        <span className="font-display text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
                           {item.label}
                         </span>
                       </Link>

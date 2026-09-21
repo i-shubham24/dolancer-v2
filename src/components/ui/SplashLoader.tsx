@@ -39,18 +39,18 @@ export function SplashLoader() {
         const exit = boot.animate(
           [{ transform: "translateY(0)" }, { transform: "translateY(-100%)" }],
           {
-            duration: 800,
+            duration: 700,
             easing: "cubic-bezier(0.76, 0, 0.24, 1)",
             fill: "forwards",
           }
         );
         exit.onfinish = finish;
         // Safety net so the page is never trapped behind the splash.
-        setTimeout(finish, 1500);
+        setTimeout(finish, 1300);
       } catch {
         finish();
       }
-    }, reduceMotion ? 150 : 400);
+    }, reduceMotion ? 150 : 250);
 
     return () => clearTimeout(timer);
   }, []);

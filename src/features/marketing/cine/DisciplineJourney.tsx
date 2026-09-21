@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { ensureGsap, gsap, ScrollTrigger, motionOK } from "@/lib/scrollMotion";
 
@@ -11,48 +11,94 @@ const DISCIPLINES = [
   { n: "06", name: "Research, data and strategy", scope: "Make sense of it all.", example: "Analysis, reports, research and planning.", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=75" },
 ];
 
+function JourneyImage({ src, n }: { src: string; n: string }) {
+  const [ready, setReady] = useState(false);
+  const [dead, setDead] = useState(false);
+  return (
+    <>
+      <span
+        aria-hidden="true"
+        className="absolute inset-0 flex items-center justify-center font-display text-[11rem] font-extrabold leading-none text-transparent lg:text-[15rem]"
+        style={{ WebkitTextStroke: "1.5px rgba(243,239,227,0.22)" }}
+      >
+        {n}
+      </span>
+      {!dead && (
+        <img
+          src={src}
+          alt=""
+          loading="eager"
+          decoding="async"
+          onLoad={() => setReady(true)}
+          onError={() => setDead(true)}
+          className={`absolute inset-0 h-full w-full object-cover grayscale transition-opacity duration-500 ${
+            ready ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      )}
+    </>
+  );
+}
+
 export function DisciplineJourney() {
   const wrapRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const progRef = useRef<HTMLDivElement>(null);
+  const numRef = useRef<HTMLSpanElement>(null);
 
   useLayoutEffect(() => {
     ensureGsap();
-    if (!motionOK() || window.innerWidth < 1024) return;
-    const wrap = wrapRef.current;
-    const track = trackRef.current;
-    if (!wrap || !track) return;
-    const ctx = gsap.context(() => {
-      const distance = track.scrollWidth - window.innerWidth;
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 768px)", () => {
+      if (!motionOK()) return;
+      const wrap = wrapRef.current;
+      const track = trackRef.current;
+      if (!wrap || !track) return;
       gsap.to(track, {
-        x: -distance,
+        x: () => -(track.scrollWidth - window.innerWidth),
         ease: "none",
         scrollTrigger: {
           trigger: wrap,
           start: "top top",
-          end: () => `+=${distance}`,
+          end: () => `+=${track.scrollWidth - window.innerWidth}`,
           pin: true,
           scrub: 0.6,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            if (progRef.current) {
+              progRef.current.style.width = `${Math.round(self.progress * 100)}%`;
+            }
+            if (numRef.current) {
+              const idx = Math.min(6, Math.floor(self.progress * 6) + 1);
+              numRef.current.textContent = `${String(idx).padStart(2, "0")} / 06`;
+            }
+          },
         },
       });
-    }, wrap);
-    const onLoad = () => ScrollTrigger.refresh();
-    if (document.readyState === "complete") {
-      onLoad();
-    } else {
-      window.addEventListener("load", onLoad);
-    }
-    return () => {
-      window.removeEventListener("load", onLoad);
-      ctx.revert();
-    };
+      const onLoad = () => ScrollTrigger.refresh();
+      if (document.readyState === "complete") {
+        onLoad();
+      } else {
+        window.addEventListener("load", onLoad);
+      }
+      if (document.fonts) {
+        document.fonts.ready.then(onLoad).catch(() => {});
+      }
+      return () => {
+        window.removeEventListener("load", onLoad);
+      };
+    });
+    return () => mm.revert();
   }, []);
 
   return (
     <section ref={wrapRef} id="disciplines" className="relative overflow-clip bg-[#060D0A] scroll-mt-16">
       <div className="mx-auto max-w-[1400px] px-4 pt-10 md:px-8 md:pt-14">
-          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#7FE3A6]">Six fields</p>
+          <p className="flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.2em] text-[#7FE3A6]">
+            <span>Six fields</span>
+            <span ref={numRef} className="text-white/50">01 / 06</span>
+          </p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
           <h2 className="max-w-[14ch] font-display text-[clamp(2.2rem,5vw,4.2rem)] font-extrabold leading-[0.95] tracking-[-0.02em] text-[#F3EFE3]">
             One clear brief at a time.
@@ -63,17 +109,23 @@ export function DisciplineJourney() {
         </div>
       </div>
 
+      <div className="mx-auto mt-6 max-w-[1400px] px-4 md:px-8" aria-hidden="true">
+        <div className="h-[3px] bg-white/10">
+          <div ref={progRef} className="h-full w-0 bg-[#10A969]" />
+        </div>
+      </div>
+
       <div
         ref={trackRef}
         data-rail="disciplines"
-        className="mt-6 flex snap-x snap-mandatory gap-0 overflow-x-auto [scrollbar-width:none] lg:w-max lg:overflow-visible [&::-webkit-scrollbar]:hidden"
+        className="mt-4 flex snap-x snap-mandatory gap-0 overflow-x-auto [scrollbar-width:none] lg:w-max lg:overflow-visible [&::-webkit-scrollbar]:hidden"
       >
         {DISCIPLINES.map((d) => (
           <article
             key={d.n}
-            className="relative min-h-[540px] w-[86vw] shrink-0 snap-center overflow-hidden border-y border-r border-white/15 first:border-l sm:w-[52vw] lg:h-[82svh] lg:max-h-[720px] lg:min-h-[480px] lg:w-[44vw]"
+            className="relative min-h-[82svh] w-[86vw] shrink-0 snap-center overflow-hidden border-y border-r border-white/15 bg-[#0A1912] first:border-l sm:w-[52vw] md:w-[44vw] lg:h-[82svh] lg:max-h-[720px] lg:min-h-[480px] lg:w-[32vw]"
           >
-            <img src={d.img} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover grayscale" />
+            <JourneyImage src={d.img} n={d.n} />
             <div className="absolute inset-0 bg-[#060D0A]/55" />
             <div className="absolute inset-x-0 top-0 flex items-center justify-between p-5">
               <span className="border border-black/40 bg-black/65 px-3 py-1.5 font-mono text-[11px] tracking-[0.18em] text-[#7FE3A6]">
@@ -94,7 +146,7 @@ export function DisciplineJourney() {
           </article>
         ))}
 
-        <div className="flex min-h-[540px] w-[86vw] shrink-0 snap-center flex-col justify-between border-y border-r border-white/15 bg-[#10A969] p-6 sm:w-[52vw] md:p-8 lg:h-[82svh] lg:max-h-[720px] lg:min-h-[480px] lg:w-[36vw]">
+        <div className="flex min-h-[82svh] w-[86vw] shrink-0 snap-center flex-col justify-between border-y border-r border-white/15 bg-[#10A969] p-6 sm:w-[52vw] md:w-[44vw] md:p-8 lg:h-[82svh] lg:max-h-[720px] lg:min-h-[480px] lg:w-[30vw]">
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-[#06281a]/70">Not sure where you fit</p>
           <p className="font-display text-4xl font-extrabold leading-[0.95] text-[#06281a] md:text-5xl">
             Answer 4 questions. Get a direction.
@@ -114,7 +166,7 @@ export function DisciplineJourney() {
 
       <div className="mx-auto max-w-[1400px] px-4 py-6 md:px-8">
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/40">
-          Pinned journey on desktop · Swipe rail on mobile
+          Pinned journey on tablet and desktop · Swipe rail on mobile
         </p>
       </div>
     </section>

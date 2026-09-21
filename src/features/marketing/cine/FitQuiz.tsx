@@ -42,7 +42,7 @@ export function FitQuiz() {
   }
 
   return (
-    <section id="quiz" className="border-t-2 border-ink bg-bone py-16 md:py-24 scroll-mt-16">
+    <section id="quiz" className="overflow-x-clip border-t-2 border-ink bg-bone py-16 md:py-24 scroll-mt-16">
       <div className="mx-auto grid max-w-[1400px] gap-10 px-4 md:px-8 lg:grid-cols-12">
         <div className="lg:col-span-5">
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-primary">Find your fit · 04 questions</p>

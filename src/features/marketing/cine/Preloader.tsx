@@ -11,6 +11,15 @@ export function Preloader() {
       setGone(true);
       return;
     }
+    if (force) {
+      // Replay requested: drop the static splash instantly and play our own hold.
+      document.getElementById("boot-splash")?.remove();
+    } else if (document.getElementById("boot-splash")) {
+      // Fresh boot: the static splash already played the letter rise, and
+      // SplashLoader lifts that same frame. Never render a second hold.
+      setGone(true);
+      return;
+    }
     ensureGsap();
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({

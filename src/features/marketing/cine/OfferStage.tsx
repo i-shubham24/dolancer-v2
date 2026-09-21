@@ -117,7 +117,7 @@ export function OfferStage() {
   }, [tab]);
 
   return (
-    <section id="offers" className="border-t-2 border-ink bg-bone py-16 md:py-24 scroll-mt-16">
+    <section id="offers" className="overflow-x-clip border-t-2 border-ink bg-bone py-16 md:py-24 scroll-mt-16">
       <div className="mx-auto max-w-[1400px] px-4 md:px-8">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div>

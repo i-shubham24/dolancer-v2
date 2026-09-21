@@ -6,10 +6,6 @@
 @import "./styles/theme.css";
 @import "./styles/base.css";
 
-html {
-  overflow-x: clip;
-}
-
 @keyframes dl-ticker {
   from {
     transform: translateX(0);
