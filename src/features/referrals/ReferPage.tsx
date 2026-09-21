@@ -81,11 +81,11 @@ export function ReferPage() {
       <div className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-highlight/10 blur-3xl" aria-hidden="true" />
       <div className="pointer-events-none absolute -right-20 top-48 h-64 w-64 rounded-full bg-secondary/10 blur-3xl" aria-hidden="true" />
       <header className="relative rounded-3xl bg-surface/70 px-5 py-6 backdrop-blur-sm sm:px-7">
-        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-highlight">Network protocol · 5% bonus</p>
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.14em] text-highlight">Refer and earn · 200 credits</p>
         <h1 className="text-3xl font-extrabold tracking-[-0.035em] sm:text-4xl">Referrals &amp; network</h1>
         <p className="mt-2 text-md text-ink-2">
-          Know someone good? Invite them, and you earn a bonus once they finish and get
-          approved on their first project.
+          Know someone skilled? Invite them. You earn 200 credits and they earn 100
+          when they join with your code and complete verification.
         </p>
       </header>
 
@@ -144,9 +144,9 @@ export function ReferPage() {
               </li>
               <li className="rounded-2xl border border-dashed border-line-card bg-surface-2 p-4">
                 <div className="text-2xl font-extrabold tracking-[-0.03em]">Auto</div>
-                <div className="mt-1 text-sm font-extrabold">Bonus on approval</div>
+                <div className="mt-1 text-sm font-extrabold">200 credits on verification</div>
                 <div className="text-[11px] text-ink-muted">
-                  Lands automatically when their first project is approved.
+                  Land automatically when they complete verification. They get 100 too.
                 </div>
               </li>
             </ol>
@@ -167,14 +167,14 @@ export function ReferPage() {
               <EmptyState
                 icon={<Gift className="h-6 w-6" aria-hidden="true" />}
                 title="Nobody yet"
-                description="Share your link. When someone joins with it and gets their first project approved, your bonus lands in your balance."
+                description="Share your link. When someone joins with it and completes verification, 200 credits land in your balance and 100 in theirs."
               />
             )}
           </section>
 
           <p className="text-[11px] leading-relaxed text-ink-muted">
-            The bonus is credited to your balance and is paid out with your next payout. It
-            counts toward your earnings for tax, the same as project work does.
+            Credits are added to your balance and count toward your earnings for tax, the
+            same as project work does.
           </p>
         </>
       )}

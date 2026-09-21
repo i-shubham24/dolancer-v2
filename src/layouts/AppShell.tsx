@@ -20,7 +20,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/cn";
 import { preloadRoute } from "@/lib/preload";
 import { CommandMenu } from "@/components/CommandMenu";
-import { isDemo } from "@/lib/demo-data";
 import { useAuth } from "@/providers/AuthProvider";
 import { signOut } from "@/features/auth/api";
 import { useProfile } from "@/features/dashboard/queries";
@@ -88,18 +87,6 @@ function NavItem({
   );
 }
 
-/** Marks the sample-data build, so nobody mistakes it for a live account. */
-function DemoBadge() {
-  return (
-    <span
-      title="Sample data. Changes last until you reload."
-      className="rounded-full border border-line-card bg-accent px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wide"
-    >
-      Demo
-    </span>
-  );
-}
-
 function SidebarContent({ onNavigate, collapsed, setCollapsed }: { onNavigate?: () => void; collapsed?: boolean; setCollapsed?: (v: boolean) => void }) {
   const { user } = useAuth();
   const profile = useProfile();
@@ -117,7 +104,6 @@ function SidebarContent({ onNavigate, collapsed, setCollapsed }: { onNavigate?: 
               Dolancer<span className="text-primary">.</span>
             </span>
           )}
-          {!collapsed && isDemo() ? <DemoBadge /> : null}
         </Link>
         {setCollapsed && (
           <button
@@ -214,7 +200,6 @@ export function AppShell() {
         <Link to="/dashboard" className="flex items-center gap-2 min-w-0">
           <Logo size="sm" />
           <span className="text-lg font-extrabold tracking-[-0.04em] hidden sm:block truncate">Dolancer</span>
-          {isDemo() ? <DemoBadge /> : null}
         </Link>
         <div className="flex items-center gap-2 shrink-0">
           <button

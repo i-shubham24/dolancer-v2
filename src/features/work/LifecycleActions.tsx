@@ -173,7 +173,7 @@ export function LifecycleActions({ project }: { project: DoerProject }) {
                 >
                   <Check className="h-3 w-3" />
                 </span>
-                Deliverable checked against the brief
+                Deliverable checked against the task
               </li>
             </ul>
             <Button

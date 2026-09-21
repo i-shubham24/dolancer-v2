@@ -1,7 +1,9 @@
 import { CineHero } from "./cine/CineHero";
 import { StatsBand, ReceiptsBand, useRefreshOnLoad } from "./cine/ProofBands";
+import { SampleStories } from "./cine/SampleStories";
 import { SectionTicker } from "./SectionTicker";
 import { DisciplineJourney } from "./cine/DisciplineJourney";
+import { PayoutPromise } from "./cine/PayoutPromise";
 import { OfferStage } from "./cine/OfferStage";
 import { StickySteps } from "./StickySteps";
 import { FitQuiz } from "./cine/FitQuiz";
@@ -18,17 +20,17 @@ const WORKFLOW_STEPS = [
   {
     n: "02",
     title: "Find work that fits",
-    body: "Get briefs that match your profile. No names, no bidding.",
+    body: "Get tasks that match your profile. No names, no bidding.",
   },
   {
     n: "03",
     title: "Read the terms",
-    body: "Read the full brief first. Scope, pay, deadline, everything.",
+    body: "Read the full task first. Scope, pay, deadline, everything.",
   },
   {
     n: "04",
     title: "Complete the work safely",
-    body: "Do the work as briefed. Your supervisor is one message away.",
+    body: "Do the work as assigned. Your supervisor is one message away.",
   },
   {
     n: "05",
@@ -38,16 +40,16 @@ const WORKFLOW_STEPS = [
   {
     n: "06",
     title: "Get paid",
-    body: "The payout lands per the brief terms.",
+    body: "The payout lands per the task terms.",
   },
 ];
 
 const WORKFLOW_IMAGES = [
-  "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
   "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
 ];
 
@@ -59,6 +61,7 @@ export function LandingPage() {
       <StatsBand />
       <SectionTicker />
       <DisciplineJourney />
+      <PayoutPromise />
       <OfferStage />
       <section id="workflow" className="border-t border-white/15 bg-[#0A1912] py-16 md:py-24 scroll-mt-16">
         <div className="mx-auto max-w-[1400px] px-4 md:px-8">
@@ -73,6 +76,7 @@ export function LandingPage() {
       </section>
       <FitQuiz />
       <ReceiptsBand />
+      <SampleStories />
       <BriefStrip />
       <div className="bg-bone">
         <SafetySection />

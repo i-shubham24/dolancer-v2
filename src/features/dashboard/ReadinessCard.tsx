@@ -63,7 +63,7 @@ function buildSteps(gate: DoerGateState): Step[] {
     {
       id: "training",
       label: "Finish training",
-      description: "Short modules on how work is briefed, reviewed and delivered here.",
+      description: "Short modules on how work is assigned, reviewed and delivered here.",
       done: gate.trainingDone,
       href: "/training",
       cta: "Open training",

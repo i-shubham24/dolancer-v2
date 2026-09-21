@@ -1,12 +1,13 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useAuth } from "@/providers/AuthProvider";
 import { ensureGsap, ScrollTrigger, motionOK } from "@/lib/scrollMotion";
 
 const STATS = [
   { value: 2400, render: (v: number) => `${v.toLocaleString("en-IN")}+`, label: "Active Dolancers", body: "Verified specialists earning across six fields." },
   { value: 8, render: (v: number) => `₹${v}Cr+`, label: "Total Paid Out", body: "Transferred directly to bank accounts." },
-  { value: 12000, render: (v: number) => `${v.toLocaleString("en-IN")}+`, label: "Briefs Completed", body: "Approved by supervisors without disputes." },
+  { value: 12000, render: (v: number) => `${v.toLocaleString("en-IN")}+`, label: "Tasks Completed", body: "Approved by supervisors without disputes." },
   { value: 48, render: (v: number) => `${v}h`, label: "Average Release", body: "From supervisor sign-off to payout." },
 ];
 
@@ -100,7 +101,7 @@ const RECEIPTS = [
     rows: [
       ["Delivered", "Marked-up plus clean copy"],
       ["Review", "Cleared in one pass"],
-      ["Payout", "Released per brief terms"],
+      ["Payout", "Released per task terms"],
     ],
   },
   {
@@ -109,7 +110,7 @@ const RECEIPTS = [
     rows: [
       ["Delivered", "Sized pack, brand-checked"],
       ["Review", "One revision inside boundary"],
-      ["Payout", "Released per brief terms"],
+      ["Payout", "Released per task terms"],
     ],
   },
   {
@@ -118,7 +119,7 @@ const RECEIPTS = [
     rows: [
       ["Delivered", "16:9 and 9:16 exports"],
       ["Review", "Timing and captions checked"],
-      ["Payout", "Released per brief terms"],
+      ["Payout", "Released per task terms"],
     ],
   },
   {
@@ -127,7 +128,7 @@ const RECEIPTS = [
     rows: [
       ["Delivered", "Patch plus test evidence"],
       ["Review", "Checklist run, no regressions"],
-      ["Payout", "Released per brief terms"],
+      ["Payout", "Released per task terms"],
     ],
   },
   {
@@ -136,7 +137,7 @@ const RECEIPTS = [
     rows: [
       ["Delivered", "Gap sheet, nothing touched live"],
       ["Review", "Sampled against checklist"],
-      ["Payout", "Released per brief terms"],
+      ["Payout", "Released per task terms"],
     ],
   },
   {
@@ -145,12 +146,13 @@ const RECEIPTS = [
     rows: [
       ["Delivered", "Validated sheet plus notes"],
       ["Review", "Schema check passed"],
-      ["Payout", "Released per brief terms"],
+      ["Payout", "Released per task terms"],
     ],
   },
 ];
 
 export function ReceiptsBand() {
+  const { session } = useAuth();
   return (
     <section className="border-t-2 border-ink bg-bone py-14 md:py-20">
       <div className="mx-auto max-w-[1400px] px-4 md:px-8">
@@ -204,9 +206,15 @@ export function ReceiptsBand() {
         </div>
 
         <div className="mt-8 flex flex-wrap items-center gap-5">
-          <Link to="/sign-up" className="inline-block bg-ink px-6 py-3 text-sm font-extrabold text-bone">
-            Start your first brief
-          </Link>
+          {session ? (
+            <Link to="/dashboard" className="inline-block bg-ink px-6 py-3 text-sm font-extrabold text-bone">
+              Open your dashboard
+            </Link>
+          ) : (
+            <Link to="/sign-up" className="inline-block bg-ink px-6 py-3 text-sm font-extrabold text-bone">
+              Start your first task
+            </Link>
+          )}
           <p className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-3">
             Receipts 001 to 006 · Terms shown upfront
           </p>

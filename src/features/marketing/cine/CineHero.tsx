@@ -33,7 +33,7 @@ export function CineHero() {
       <CornerTicks tone="text-white/20" className="right-4 top-24 hidden w-28 md:right-8 lg:block" />
       <div className="mx-auto max-w-[1400px] px-4 md:px-8">
         <div className="flex items-center justify-between border-y border-white/15 py-2.5 font-mono text-[11px] uppercase tracking-[0.18em] text-white/50">
-          <span>Field brief Nº 001</span>
+          <span>Field task Nº 001</span>
           <span>Supervisor routed</span>
         </div>
 

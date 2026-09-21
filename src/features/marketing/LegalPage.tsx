@@ -50,7 +50,7 @@ An accepted project is not permission to expand the scope without written approv
 
 # 5. Work, review and approval
 
-You must do the work yourself, use lawful and properly licensed materials, keep confidential information secure and use the company workspace or other channel specified by your supervisor. Your work may be reviewed for completeness, quality, safety, originality and compliance with the brief. If changes are requested within the accepted scope, you must reasonably revise and resubmit them. Work outside scope must be discussed before it is performed.
+You must do the work yourself, use lawful and properly licensed materials, keep confidential information secure and use the company workspace or other channel specified by your supervisor. Your work may be reviewed for completeness, quality, safety, originality and compliance with the task. If changes are requested within the accepted scope, you must reasonably revise and resubmit them. Work outside scope must be discussed before it is performed.
 
 A supervisor review does not remove the client approval gate. Payout is released only after the applicable approval, timeout or exception process has cleared. The earnings record may show gross payout, withholding and net payout as separate figures.
 
@@ -64,7 +64,7 @@ You are responsible for your own tax filings and statutory obligations except fo
 
 You must not use Dolancer for coursework, essays, dissertations, exams, graded assignments, impersonation, plagiarism, fabrication of research or data, fake reviews, deception, regulated professional advice without required authorisation, unauthorised access or cyber activity, infringement, harassment, discrimination, unlawful financial activity, malware, child sexual abuse material or any other illegal or harmful request.
 
-You must not bypass the supervisor, reveal confidential client information, identify another participant, manipulate reviews or payout records, submit another person's work, or use automation to misrepresent authorship or activity. Report a suspicious or prohibited brief to support instead of completing it.
+You must not bypass the supervisor, reveal confidential client information, identify another participant, manipulate reviews or payout records, submit another person's work, or use automation to misrepresent authorship or activity. Report a suspicious or prohibited task to support instead of completing it.
 
 # 8. Intellectual property and licence
 

@@ -81,7 +81,7 @@ export function ClaimDrawer({
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">The brief</h3>
+                  <h3 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">The task</h3>
                   <div className="whitespace-pre-wrap rounded-2xl border border-line-card bg-surface p-4 text-sm leading-relaxed shadow-soft-sm">
                     {offer.brief?.trim() || "Your supervisor will share the detail with this offer."}
                   </div>

@@ -154,7 +154,11 @@ export function DashboardPage() {
         Three figures, and only three. Gross, tax and net are always shown as separate
         numbers rather than collapsed into one, so what was withheld is never implicit.
       */}
-      <section aria-labelledby="figures" className="border-2 border-ink bg-field p-4 sm:p-5">
+      {/*
+        Three figures, and only three. Gross, tax and net are always shown as separate
+        numbers rather than collapsed into one, so what was withheld is never implicit.
+      */}
+      <section aria-labelledby="figures">
         <h2 id="figures" className="sr-only">
           Your figures
         </h2>

@@ -9,7 +9,7 @@ const MODULES = [
     id: "review",
     icon: ClipboardCheck,
     title: "Review queue",
-    body: "Submissions waiting on a supervisor, oldest first, with the brief beside the deliverable.",
+    body: "Submissions waiting on a supervisor, oldest first, with the task beside the deliverable.",
   },
   {
     id: "pool",

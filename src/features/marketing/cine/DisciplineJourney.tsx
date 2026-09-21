@@ -132,7 +132,7 @@ export function DisciplineJourney() {
           </p>
         <div className="mt-3 flex flex-wrap items-end justify-between gap-4">
           <h2 className="max-w-[14ch] font-display text-[clamp(2.2rem,5vw,4.2rem)] font-extrabold leading-[0.95] tracking-[-0.02em] text-[#F3EFE3]">
-            One clear brief at a time.
+            One clear task at a time.
           </h2>
           <p className="max-w-[30ch] text-sm leading-relaxed text-white/55">
             Six kinds of work, each with clear limits.

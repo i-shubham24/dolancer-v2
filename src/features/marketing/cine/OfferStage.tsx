@@ -25,7 +25,7 @@ const OFFERS: Offer[] = [
     id: "proofread", group: "Words", tag: "Words · Proofreading",
     title: "Proofread 8-page product guide", deliverable: "Return marked-up document and clean final copy.",
     effort: "~3 hours", deadline: "3 days", mode: "Remote", reqs: ["English"],
-    pay: "Fixed pay, told upfront",
+    pay: "Example payout \u20B9900. Fixed pay, told upfront",
     scope: "Proofread the supplied copy. Nothing else.",
     exclusions: "No academic work. No impersonation. No credential use.",
     review: "A supervisor checks it, then clears payout.",
@@ -35,7 +35,7 @@ const OFFERS: Offer[] = [
     id: "uifix", group: "Code", tag: "Code · UI fix",
     title: "Fix checkout button overlap on mobile", deliverable: "Return patched component plus test evidence.",
     effort: "~3 hours", deadline: "3 days", mode: "Remote", reqs: ["React"],
-    pay: "Fixed pay, told upfront",
+    pay: "Example payout \u20B91,800. Fixed pay, told upfront",
     scope: "Fix the overlap shown in the test link.",
     exclusions: "No production access. No credential sharing.",
     review: "A supervisor runs the checks, then clears payout.",
@@ -45,7 +45,7 @@ const OFFERS: Offer[] = [
     id: "banner", group: "Visual", tag: "Visual · Banner set",
     title: "Adapt brand system to 6 social banners", deliverable: "Export sized pack plus source files.",
     effort: "~4 hours", deadline: "4 days", mode: "Remote", reqs: ["Figma"],
-    pay: "Fixed pay, told upfront",
+    pay: "Example payout \u20B92,200. Fixed pay, told upfront",
     scope: "Make 6 banners from the supplied brand kit. One round of changes.",
     exclusions: "No stock theft. No client contact.",
     review: "A supervisor checks sizes and rules, then clears payout.",
@@ -55,7 +55,7 @@ const OFFERS: Offer[] = [
     id: "harden", group: "Security", tag: "Security · Hardening review",
     title: "Review a staging build against a hardening checklist", deliverable: "Return gap sheet with findings ranked.",
     effort: "~4 hours", deadline: "4 days", mode: "Remote", reqs: ["Checklists"],
-    pay: "Fixed pay, told upfront",
+    pay: "Example payout \u20B93,000. Fixed pay, told upfront",
     scope: "Check the staging link against the supplied checklist. Flag gaps, change nothing.",
     exclusions: "No production systems. No live testing. No credential sharing.",
     review: "A supervisor reads the sheet, then clears payout.",
@@ -65,7 +65,7 @@ const OFFERS: Offer[] = [
     id: "captions", group: "Audio", tag: "Audio · Captioned cut",
     title: "Cut 90s demo with captions to spec", deliverable: "Return 16:9 and 9:16 exports plus captions.",
     effort: "~6 hours", deadline: "5 days", mode: "Remote", reqs: ["Premiere"],
-    pay: "Fixed pay, told upfront",
+    pay: "Example payout \u20B91,500. Fixed pay, told upfront",
     scope: "Cut the supplied clips. Add captions.",
     exclusions: "No unlicensed media. No voice cloning.",
     review: "A supervisor watches it through, then clears payout.",
@@ -75,9 +75,9 @@ const OFFERS: Offer[] = [
     id: "dataset", group: "Research", tag: "Research · Data cleanup",
     title: "Reconcile 500-row ops dataset", deliverable: "Return validated sheet plus notes.",
     effort: "~5 hours", deadline: "5 days", mode: "Remote", reqs: ["Sheets"],
-    pay: "Fixed pay, told upfront",
+    pay: "Example payout \u20B91,200. Fixed pay, told upfront",
     scope: "Clean the sheet to match the schema. Note every change.",
-    exclusions: "No sensitive data beyond what the brief allows.",
+    exclusions: "No sensitive data beyond what the task allows.",
     review: "A supervisor checks the sheet, then clears payout.",
     img: "https://images.unsplash.com/photo-1543286386-713bdd548da4?auto=format&fit=crop&w=1000&q=75",
   },
@@ -127,7 +127,7 @@ export function OfferStage() {
             </h2>
           </div>
           <p className="max-w-[30ch] text-sm leading-relaxed text-ink-2">
-            Sample briefs. Scope and pay shown upfront. Marked as examples.
+            Sample tasks with example payouts. Real tasks carry their own scope and pay.
           </p>
         </div>
 
@@ -228,9 +228,9 @@ export function OfferStage() {
                         className="inline-flex items-center gap-2 border-b-2 border-primary pb-0.5 text-sm font-extrabold text-ink"
                       >
                         {open ? (
-                          <>Hide the full brief <Minus className="h-4 w-4" aria-hidden="true" /></>
+                           <>Hide the full task <Minus className="h-4 w-4" aria-hidden="true" /></>
                         ) : (
-                          <>Read the full brief <Plus className="h-4 w-4" aria-hidden="true" /></>
+                           <>Read the full task <Plus className="h-4 w-4" aria-hidden="true" /></>
                         )}
                       </button>
                       <Link to="/sign-up" className="bg-ink px-5 py-2.5 text-sm font-extrabold text-bone">

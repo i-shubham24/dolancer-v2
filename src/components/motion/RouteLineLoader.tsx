@@ -3,7 +3,7 @@ import { FileText, ShieldCheck, User, CheckCircle2, Wallet } from "lucide-react"
 
 /**
  * A Dolancer-specific route-line visual system for loading/empty states.
- * Represents the core model: Brief -> Supervisor -> Doer -> Review -> Payout
+  * Represents the core model: Task -> Supervisor -> Doer -> Review -> Payout
  */
 export function RouteLineLoader({ label = "Loading route..." }: { label?: string }) {
   const nodeVariants: Variants = {

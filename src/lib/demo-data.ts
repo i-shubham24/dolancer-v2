@@ -264,7 +264,7 @@ const closedProjects: DoerProject[] = [
     status: "approved",
     brief:
       "SEO content hub of 12 articles\n\n" +
-      "Two pillar pages and ten supporting articles on home loans, linked to each other, with a keyword brief for each.",
+      "Two pillar pages and ten supporting articles on home loans, linked to each other, with a keyword guide for each.",
     payoutPaise: 1_400_000,
     workingDocUrl: "https://docs.google.com/document/d/demo-home-loans-hub",
     progressPct: 100,
@@ -288,7 +288,7 @@ const grossPaise = ledger.reduce((sum, row) => sum + row.amountPaise, 0);
 const taxWithheldPaise = Math.round(grossPaise / 10);
 
 /**
- * Open work on the board. The Copywriting brief stays hidden until a Copywriting
+  * Open work on the board. The Copywriting task stays hidden until a Copywriting
  * skill is picked, which is how the real board matches work to skills.
  */
 const pool: PoolOffer[] = [
@@ -435,13 +435,13 @@ export const demo: DemoState = {
       moduleOrder: 1,
       completed: true,
       body:
-        "Every project is scoped by a supervisor before it reaches you. They turn the request into a clear brief, set the deadline and fix your payout, so anything assigned to you is ready to work on.\n\n" +
+        "Every project is scoped by a supervisor before it reaches you. They turn the request into a clear task, set the deadline and fix your payout, so anything assigned to you is ready to work on.\n\n" +
         "You will only receive offers in categories you have picked on the Skills page, and only while you are set to Available. If you are not receiving offers, check those two things first.\n\n" +
-        "An offer is yours the moment you accept it. Read the brief and the deadline before you commit, because each accepted offer uses one of your three slots.",
+        "An offer is yours the moment you accept it. Read the task and the deadline before you commit, because each accepted offer uses one of your three slots.",
       questions: [
         {
           id: "lesson-1-q1",
-          prompt: "Who writes the brief and fixes your payout before a project reaches the board?",
+          prompt: "Who writes the task and fixes your payout before a project reaches the board?",
           options: ["The client", "Your supervisor", "Another doer", "It is set automatically"],
           sortOrder: 1,
         },
@@ -507,7 +507,7 @@ export const demo: DemoState = {
       completed: true,
       body:
         "Your supervisor is your only point of contact on a project. You never deal with the client directly, and the client never learns who you are.\n\n" +
-        "Ask early. A short message when something in the brief is unclear saves a round of changes later.\n\n" +
+        "Ask early. A short message when something in the task is unclear saves a round of changes later.\n\n" +
         "Your payout is fixed when you accept an offer and released once the work is approved. Every payout lands with an itemised receipt on your earnings page.",
       questions: [
         {
@@ -601,7 +601,7 @@ export const demo: DemoState = {
     [demoThreadId(BLOG_SERIES_ID)]: [
       supervisorSays(
         "message-blog-1",
-        "Hi Shubham, thanks for picking this up. The style guide is attached, and the keyword list is on its second page. Shout if anything in the brief is unclear.",
+        "Hi Shubham, thanks for picking this up. The style guide is attached, and the keyword list is on its second page. Shout if anything in the task is unclear.",
         daysAgo(4.8),
       ),
       doerSays(
@@ -621,14 +621,14 @@ export const demo: DemoState = {
       ),
       supervisorSays(
         "message-blog-5",
-        "Read the first five. Solid work, and the practical angle is exactly what the brief needs. Keep going.",
+        "Read the first five. Solid work, and the practical angle is exactly what the task needs. Keep going.",
         daysAgo(0.3),
       ),
     ],
     [demoThreadId(LAUNCH_CALENDAR_ID)]: [
       supervisorSays(
         "message-launch-1",
-        "Welcome aboard. The product one-pager is in the brief. Keep LinkedIn captions under 150 words.",
+        "Welcome aboard. The product one-pager is in the task. Keep LinkedIn captions under 150 words.",
         daysAgo(7.5),
       ),
       doerSays(
@@ -776,7 +776,7 @@ export function demoClaim(projectId: string): boolean {
   demo.messages[demoThreadId(projectId)] = [
     supervisorSays(
       demoId("message"),
-      "Thanks for picking this up. Everything you need should be in the brief, and I am here if anything is unclear. Add your working link when you start so I can follow along.",
+      "Thanks for picking this up. Everything you need should be in the task, and I am here if anything is unclear. Add your working link when you start so I can follow along.",
       claimedAt,
     ),
   ];

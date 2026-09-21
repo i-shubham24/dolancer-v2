@@ -5,7 +5,7 @@ import { ShieldCheck } from "@phosphor-icons/react";
  * Split auth screen. The side panel is decorative and hidden on small viewports,
  * so the form always gets the full width when it matters.
  *
- * Boxy forest ledger: hairline frame, ghost outline mark, ruled brief plate.
+  * Boxy forest ledger: hairline frame, ghost outline mark, ruled task plate.
  * Sharp corners, green accents only, no fabricated metrics.
  */
 export function AuthLayout() {
@@ -58,7 +58,7 @@ export function AuthLayout() {
 
           <div className="mt-8 max-w-md border-2 border-white/20 bg-white/[0.04] p-5">
             <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-white/50">
-              Example brief
+              Example task
             </p>
             <p className="mt-2 font-display text-xl font-extrabold leading-tight text-[#F3EFE3]">
               Proofread an 8-page guide.

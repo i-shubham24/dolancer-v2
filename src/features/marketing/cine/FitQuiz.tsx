@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const STEPS = [
   { q: "What do you like doing most?", options: ["Write words", "Design visuals", "Cut audio and video", "Build and ship", "Check and secure", "Research and analyze"] },
-  { q: "How much guidance do you want?", options: ["Solo with a clear brief", "Checkpoints plus support", "Close review"] },
+  { q: "How much guidance do you want?", options: ["Solo with clear instructions", "Checkpoints plus support", "Close review"] },
   { q: "How much effort per task?", options: ["Under 3 hours", "3 to 5 hours", "5 hours plus"] },
   { q: "What do you want to see first?", options: ["Scope", "Payout terms", "Review path"] },
 ];
@@ -146,7 +146,7 @@ export function FitQuiz() {
                       </button>
                     </div>
                     <p className="mt-4 text-xs leading-relaxed text-ink-3">
-                      Example format. Full scope, effort, eligibility, and payment conditions appear in the brief
+                        Example format. Full scope, effort, eligibility, and payment conditions appear in the task
                       before you accept.
                     </p>
                   </motion.div>

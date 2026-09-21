@@ -15,12 +15,13 @@ const PILLARS = [
   ["01", "See the scope, the review rules, and the pay before you commit."],
   ["02", "Never share passwords. Never share more than needed."],
   ["03", "Unsure or unsafe? Report it to support."],
+  ["04", "To the client you are simply Expert. Your name and details never leave the platform."],
 ];
 
 const PAYOUT = [
   ["01", "Approved", "Your work passes review."],
   ["02", "Released", "The payout moves, with its own receipt."],
-  ["03", "In bank", "Timing and deductions follow the brief."],
+  ["03", "In bank", "Timing and deductions follow the task."],
 ];
 
 export function SafetySection() {

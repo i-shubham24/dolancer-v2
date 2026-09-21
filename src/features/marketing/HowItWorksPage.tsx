@@ -59,7 +59,7 @@ function GateStack() {
 }
 
 const PAYOUT_ROWS = [
-  ["Work clears review", "Your supervisor checks the work against the brief."],
+  ["Work clears review", "Your supervisor checks the work against the task."],
   ["Approval gate clears", "Client approval, timeout, or exception. Nothing moves on a promise."],
   ["Payout lands itemised", "Gross, deductions, and net shown separately. Paid over UPI or NEFT."],
 ];

@@ -10,6 +10,7 @@ const COLS: { head: string; links: { to: string; label: string }[] }[] = [
     links: [
       { to: "/how-it-works", label: "How it works" },
       { to: "/sign-up", label: "Start earning" },
+      { to: "/refer", label: "Refer and earn" },
       { to: "/sign-in", label: "Sign in" },
     ],
   },
@@ -71,7 +72,7 @@ export function SiteFooter() {
                 </span>
               </Link>
               <p className="mt-4 max-w-[32ch] text-sm leading-relaxed text-white/60">
-                Skilled work, briefed properly, paid reliably. A supervisor sends the briefs.
+                Skilled work, assigned properly, paid reliably. A supervisor sends the work.
                 Terms shown before you commit.
               </p>
               <a

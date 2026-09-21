@@ -130,7 +130,7 @@ export function CapacityRail({
         </h3>
         <ul className="mt-3 space-y-2.5 text-xs leading-relaxed text-ink-2">
           <li>
-            <strong className="font-extrabold text-ink">The pay is fixed.</strong> Every brief
+            <strong className="font-extrabold text-ink">The pay is fixed.</strong> Every task
             shows exactly what you earn before you accept it. No public marketplace.
           </li>
           <li>

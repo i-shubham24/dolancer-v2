@@ -48,8 +48,8 @@ function AboutManifesto() {
         </h2>
         <div className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <p data-mani-fade className="max-w-[46ch] text-base leading-relaxed text-white/65">
-            Client chaos stays on our side. Briefs, review, payouts, hard talks.
-            Your side stays clean: one brief, one deliverable, one receipt.
+            Client chaos stays on our side. Tasks, review, payouts, hard talks.
+            Your side stays clean: one task, one deliverable, one receipt.
           </p>
           <div data-mani-fade className="flex flex-wrap items-center gap-4">
             <Link to="/how-it-works" className="bg-[#10A969] px-7 py-3.5 text-sm font-extrabold text-white active:scale-[0.98]">

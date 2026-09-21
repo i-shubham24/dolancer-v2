@@ -46,7 +46,7 @@ export function BriefStrip() {
     <section className="border-t border-white/15 bg-[#0A1912] py-14 md:py-20">
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 md:px-8">
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/50">
-          Example formats · 05 briefs
+          Example formats · 05 tasks
         </p>
         <span className="border border-white/25 px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] text-white">
           Drag

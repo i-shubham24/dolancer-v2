@@ -63,15 +63,15 @@ export const DIFFERENCES: Difference[] = [
   },
   {
     title: "You choose what to accept",
-    body: "You can accept or decline an offer. When you accept, you commit to the stated scope and deadline and work within the active-project limit.",
+    body: "You can accept or decline an offer. When you accept, you commit to the stated scope and deadline and work within the active-project limit. Take what fits around your classes or your job. Busy week? Skip it. Your schedule stays yours.",
   },
   {
     title: "No chasing invoices",
     body: "You are not billing a client. When the project clears its approval gate, the payout is released to the account you registered.",
   },
   {
-    title: "Your share grows",
-    body: "Consistent, well-rated work can move you through the platform levels and unlock stronger opportunities over time.",
+    title: "Grow into better offers",
+    body: "Hold a 4.7 average over 15 projects to move from L1 Starter to L2 Pro. Better offers reach you first as your rating builds.",
   },
 ];
 
@@ -99,7 +99,7 @@ export const FAQS: Faq[] = [
   {
     question: "How do projects reach me?",
     answer:
-      "A supervisor manually routes specific projects to vetted doers whose verified disciplines fit the brief. There is no public work pool, bidding, proposal process or client search.",
+      "A supervisor manually routes specific projects to vetted doers whose verified disciplines fit the task. There is no public work pool, bidding, proposal process or client search.",
   },
   {
     question: "Can I work on several projects at once?",
@@ -119,12 +119,27 @@ export const FAQS: Faq[] = [
   {
     question: "What work is not allowed?",
     answer:
-      "Dolancer does not accept coursework, essays, dissertations, exams, graded assignments, impersonation, plagiarism, fabrication, unauthorised cyber security work or other unlawful requests. Ask support if a brief is unclear.",
+      "Dolancer does not accept coursework, essays, dissertations, exams, graded assignments, impersonation, plagiarism, fabrication, unauthorised cyber security work or other unlawful requests. Ask support if a task is unclear.",
   },
   {
     question: "What happens if my work needs changes?",
     answer:
-      "Your supervisor explains what needs changing and you revise within the accepted brief. Work outside the original scope must be raised with the supervisor before you continue.",
+      "Your supervisor explains what needs changing and you revise within the accepted task. Work outside the original scope must be raised with the supervisor before you continue.",
+  },
+  {
+    question: "What does it cost to join?",
+    answer:
+      "Nothing. Joining is free and there is no fee to receive work. You earn from the projects you complete.",
+  },
+  {
+    question: "Must I accept every project?",
+    answer:
+      "No. Every offer shows its task, deadline and payout before you decide. Take what fits your skills and schedule and skip the rest.",
+  },
+  {
+    question: "What is the verification and training step?",
+    answer:
+      "A quick identity check plus a short skills walkthrough of about 25 minutes. It makes you a trusted doer and teaches you how the platform works. It is built to get you ready, not to slow you down.",
   },
 ];
 

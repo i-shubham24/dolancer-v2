@@ -20,7 +20,7 @@ export function TrainingPage() {
       <header>
         <h1 className="text-4xl font-extrabold tracking-[-0.035em]">Training</h1>
         <p className="mt-2 max-w-2xl text-md text-ink-2">
-          Short modules on how work is briefed, reviewed and delivered here. Finishing them
+          Short modules on how work is assigned, reviewed and delivered here. Finishing them
           is one of the steps that unlocks receiving offers.
         </p>
       </header>

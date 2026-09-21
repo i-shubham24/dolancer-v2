@@ -151,7 +151,7 @@ export function WorkbenchPage() {
         <div className="min-w-0 space-y-5">
           <Card className="rounded-3xl border border-line-card shadow-soft-md">
             <h2 className="text-xs font-extrabold uppercase tracking-[0.05em] text-ink-muted">
-              The brief
+              The task
             </h2>
             <div className="mt-3 whitespace-pre-wrap text-sm leading-relaxed">
               {data.brief?.trim() || "Your supervisor will share the detail here."}
