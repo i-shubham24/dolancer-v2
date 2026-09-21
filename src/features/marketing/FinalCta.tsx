@@ -25,7 +25,7 @@ export function FinalCta() {
   }, []);
 
   return (
-    <section ref={scopeRef} className="overflow-clip border-t-2 border-ink bg-bone pb-16 md:pb-24">
+    <section ref={scopeRef} className="overflow-clip border-t-2 border-ink bg-bone pb-16 pt-12 md:pb-24 md:pt-16">
       <div className="fresh-container">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -1,13 +1,13 @@
 import { CineHero } from "./cine/CineHero";
 import { StatsBand, ReceiptsBand, useRefreshOnLoad } from "./cine/ProofBands";
 import { SampleStories } from "./cine/SampleStories";
+import { OperatorBand } from "./cine/OperatorBand";
 import { SectionTicker } from "./SectionTicker";
 import { DisciplineJourney } from "./cine/DisciplineJourney";
 import { PayoutPromise } from "./cine/PayoutPromise";
 import { OfferStage } from "./cine/OfferStage";
 import { StickySteps } from "./StickySteps";
 import { FitQuiz } from "./cine/FitQuiz";
-import { BriefStrip } from "./cine/BriefStrip";
 import { SafetySection } from "./SafetySection";
 import { FinalCta } from "./FinalCta";
 
@@ -58,10 +58,9 @@ export function LandingPage() {
   return (
     <div className="bg-[#0A1912]">
       <CineHero />
-      <StatsBand />
+      <PayoutPromise />
       <SectionTicker />
       <DisciplineJourney />
-      <PayoutPromise />
       <OfferStage />
       <section id="workflow" className="border-t border-white/15 bg-[#0A1912] py-16 md:py-24 scroll-mt-16">
         <div className="mx-auto max-w-[1400px] px-4 md:px-8">
@@ -74,13 +73,14 @@ export function LandingPage() {
           />
         </div>
       </section>
-      <FitQuiz />
+      <StatsBand />
       <ReceiptsBand />
       <SampleStories />
-      <BriefStrip />
+      <FitQuiz />
       <div className="bg-bone">
         <SafetySection />
       </div>
+      <OperatorBand />
       <div className="bg-bone">
         <FinalCta />
       </div>

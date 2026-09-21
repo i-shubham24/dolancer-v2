@@ -12,7 +12,6 @@ import { Preloader } from "./cine/Preloader";
 
 const NAV = [
   { to: "/how-it-works", label: "How it works" },
-  { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -47,9 +46,7 @@ export function MarketingLayout() {
       setSpy(
         pathname.startsWith("/how-it-works")
           ? "How it works"
-          : pathname.startsWith("/about")
-            ? "About"
-            : pathname.startsWith("/contact")
+          : pathname.startsWith("/contact")
               ? "Contact"
               : pathname.startsWith("/legal")
                 ? "Legal"

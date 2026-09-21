@@ -17,7 +17,6 @@ const COLS: { head: string; links: { to: string; label: string }[] }[] = [
   {
     head: "Studio",
     links: [
-      { to: "/about", label: "About" },
       { to: "/contact", label: "Contact" },
       { to: "/tickets", label: "Report work" },
     ],

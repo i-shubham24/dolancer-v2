@@ -32,10 +32,10 @@ export function SampleStories() {
     <section className="relative overflow-clip border-t border-white/15 bg-[#060D0A] py-14 md:py-20">
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute -top-2 left-0 block whitespace-nowrap font-display font-extrabold leading-[0.85] tracking-[-0.02em] text-transparent"
+        className="pointer-events-none absolute right-4 top-5 block whitespace-nowrap font-display font-extrabold leading-[0.85] tracking-[-0.02em] text-transparent md:right-8 md:top-7"
         style={{
-          fontSize: "clamp(6rem,17vw,15rem)",
-          WebkitTextStroke: "1.5px rgba(243,239,227,0.12)",
+          fontSize: "clamp(2.6rem,7vw,6.5rem)",
+          WebkitTextStroke: "1.5px rgba(243,239,227,0.14)",
         }}
       >
         PAID ON TIME
